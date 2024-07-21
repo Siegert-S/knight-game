@@ -81,6 +81,6 @@ class Keyboard {
         const y = touches.clientY - rect.top;
         console.log(' X ' + x + ' Y ' + y);
         // alert('X ' + x + ' Y ' + y);
-
+        console.log('das hier habe ich auf dem handy geschrieben');
     }
 }
