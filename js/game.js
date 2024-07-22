@@ -2,6 +2,7 @@ let canvas;
 let ctx;
 let world;
 let keyboard;
+let system;
 
 function init() {
     // console.log('finish loading');
@@ -11,5 +12,6 @@ function init() {
     keyboard = new Keyboard();
     // console.log(canvas);
     // console.log(canvas.getAttribute('width'));
-    world = new World(canvas, keyboard);
+    // world = new World();
+    system = new System();
 }

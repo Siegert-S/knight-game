@@ -26,19 +26,23 @@ class MenuButton extends DrawableObject {
     }
 
     draw() {
-
+        this.drawButton();
+        this.drawText();
     }
 
     drawButton() {
-
+        console.log('button is');
+        console.log(ctx.fillStyle);
         ctx.fillStyle = 'darkbrown';
         ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
     }
 
     drawText() {
+        console.log('text is');
+        console.log(ctx.fillStyle);
         ctx.font = '25px Arial';
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
-        ctx.fillText(this.cash, this.positionX + 40, this.positionY + 21);
+        ctx.fillText(this.text, this.positionX + 40, this.positionY + 21);
     }
 }

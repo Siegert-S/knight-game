@@ -16,11 +16,11 @@ class World {
     ];
     character = new Character();
 
-    constructor() {
+    constructor(stage = 0, difficulty = 0) {
         // this.canvas = canvas;
         // this.ctx = canvas.getContext("2d");
 
-        this.loadLevel(1, 1);
+        this.loadLevel(stage, difficulty);
 
         this.draw();
         this.checkCollisions();
