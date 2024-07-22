@@ -1,30 +1,30 @@
 class System {
-    show='main';
-    menu =[];
+    show = 'main';
+    menu = [];
     world;
 
-    constructor(){
+    constructor() {
 
     }
 
-    loadMenu(){
+    loadMenu() {
         this.menu.push(new Menu('main'));
-        this.menu.push(new Menu('settings'));       
+        this.menu.push(new Menu('settings'));
         this.menu.push(new Menu('controlls'));
         this.menu.push(new Menu('legal'));
         this.menu.push(new Menu('game'));
         this.menu.push(new Menu('skills'));
     }
 
-    renderCanvas(){
+    renderCanvas() {
         // die schleifen die den ihalt des canvas rendert
     }
 
-    switchingMenu(){
+    switchingMenu() {
         // die funktion wechseld das angezeigte menu bzw das spiel
     }
 
-    saveGame(){
+    saveGame() {
         // funktion zum speichern des spielstandes
     }
 }
