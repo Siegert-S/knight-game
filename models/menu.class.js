@@ -24,11 +24,10 @@ class Menu {
 
     selectButtons() {
         MenuButton.storage.forEach(button => {
+            button.isActiv = false;
             if (button.partOfMenu == this.name) {
                 this.buttons.push(button);
                 button.isActiv = true;
-            } else {
-                button.isActiv = false;
             }
         });
     }

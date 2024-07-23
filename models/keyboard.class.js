@@ -54,7 +54,7 @@ class Keyboard {
         canvas.addEventListener('mousedown', (event) => {
             console.log(event);
             let pos = this.getXYCoordinates(event);
-            this.checkButtons(pos.x,pos.y);
+            this.checkButtons(pos.x, pos.y);
             // const rect = canvas.getBoundingClientRect();
             // const x = e.clientX - rect.left;
             // const y = e.clientY - rect.top;
@@ -63,8 +63,8 @@ class Keyboard {
         })
     }
 
-    addMouseUpListener(){
-        canvas.addEventListener('mouseup',(event)=>{
+    addMouseUpListener() {
+        canvas.addEventListener('mouseup', (event) => {
             // alle button isClickt set to false
         })
     }
@@ -75,17 +75,17 @@ class Keyboard {
 
             for (let i = 0; i < event.touches.length; i++) {
 
-            let pos = this.getXYCoordinates(event.touches[i]);
-            this.checkButtons(pos.x,pos.y);
-        }
+                let pos = this.getXYCoordinates(event.touches[i]);
+                this.checkButtons(pos.x, pos.y);
+            }
         });
     }
 
-addToucheEndListener(){
-    canvas.addEventListener('touchend',(event)=>{
-        // set alle buttons zu isClickt false und reset bestehende touched butten to true
-    });
-}
+    addToucheEndListener() {
+        canvas.addEventListener('touchend', (event) => {
+            // set alle buttons zu isClickt false und reset bestehende touched butten to true
+        });
+    }
 
     getXYCoordinates(touches) {
         const rect = canvas.getBoundingClientRect();
@@ -94,24 +94,28 @@ addToucheEndListener(){
         console.log(' X ' + x + ' Y ' + y);
         // alert('X ' + x + ' Y ' + y);
         console.log('das hier habe ich auf dem handy geschrieben');
-    return {"x":x,"y":y};
+        return { "x": x, "y": y };
     }
 
-    checkButtons(x,y){
-        Menubutton.storage.forEach(button => {
-            if (this.checkBoundrys()) {
-                // eventuell this mit self ersetzen oder checkBoundrys global machen.
+    checkButtons(x, y) {
+        console.log('X ' + x + ' Y ' + y);
+        MenuButton.storage.forEach(button => {
+            // if (this.checkBoundrys()) {
+            // eventuell this mit self ersetzen oder checkBoundrys global machen.
+            // }
+            if (button.isActiv) {
+                if (button.positionX < x && x < button.positionX + button.width &&
+                    button.positionY < y && y < button.positionY + button.height) {
+                    button.isClickt = true;
+                    button.connectedFunction();
+                }
             }
-            if (button.positionX < x && x< button.positionX+button.width &&
-                button.positionY < y && y< button.positionY+button.height) {
-                button.isClickt=true;
-                button.connectedFunction();
-            }
+
         });
     }
 
-    checkBoundrys(button,x,y){
-     return     button.positionX < x && x < button.positionX + button.width && 
-                button.positionY < y && y < button.positionY + button.height ;
+    checkBoundrys(button, x, y) {
+        return button.positionX < x && x < button.positionX + button.width &&
+            button.positionY < y && y < button.positionY + button.height;
     }
 }
