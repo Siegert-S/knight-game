@@ -14,3 +14,7 @@ function initButton() {
 function canvasCenter() {
     return (canvas.width / 2) - (buttonWidth / 2);
 }
+
+function test() {
+    console.log('test');
+}
