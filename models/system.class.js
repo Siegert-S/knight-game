@@ -45,6 +45,7 @@ class System {
 
     switchingMenu() {
         // die funktion wechseld das angezeigte menu bzw das spiel
+        // breits in buttons implementiert
     }
 
     saveGame() {
