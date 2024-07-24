@@ -30,7 +30,7 @@ class System {
     renderCanvas() {
         // die schleifen die den ihalt des canvas rendert
         this.setContent();
-        
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.renderContent.draw();
 
@@ -40,6 +40,7 @@ class System {
 
     setContent() {
         this.renderContent = this.menu[this.show];
+        this.menu[this.show].selectButtons();
     }
 
     switchingMenu() {

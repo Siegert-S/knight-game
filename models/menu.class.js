@@ -4,7 +4,6 @@ class Menu {
 
     constructor(name) {
         this.name = name;
-        this.selectButtons();
     }
 
     draw() {
