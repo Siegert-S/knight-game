@@ -40,11 +40,14 @@ class MenuButton extends DrawableObject {
     }
 
     drawText() {
-        // console.log('text is');
-        // console.log(ctx.fillStyle);
         ctx.font = '20px Arial';
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
-        ctx.fillText(this.text, this.positionX + 50, this.positionY + 20);
+
+
+        const textWidth = ctx.measureText(this.text).width;
+        // console.log('Text width: von '+ this.text+' ist ' + textWidth + ' pixels');
+
+        ctx.fillText(this.text, this.positionX + (this.width / 2), this.positionY + 20);
     }
 }
