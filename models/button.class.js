@@ -48,6 +48,6 @@ class MenuButton extends DrawableObject {
         const textWidth = ctx.measureText(this.text).width;
         // console.log('Text width: von '+ this.text+' ist ' + textWidth + ' pixels');
 
-        ctx.fillText(this.text, this.positionX + (this.width / 2), this.positionY + 20);
+        ctx.fillText(this.text, this.positionX + (this.width / 2), this.positionY + (this.height / 1.5));
     }
 }
