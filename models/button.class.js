@@ -1,8 +1,4 @@
 class MenuButton extends DrawableObject {
-    // x;
-    // y;
-    // width;
-    // height;
     isClickt = false;
     isHovered = false;
     text;
@@ -27,15 +23,11 @@ class MenuButton extends DrawableObject {
 
     draw() {
         this.drawButton();
-        // let self = this;
-        // setTimeout(() => { self.drawText(); }, 100);
         this.drawText();
     }
 
     drawButton() {
-        // console.log('button is');
-        // console.log(ctx.fillStyle);
-        ctx.fillStyle = '#123456';
+        ctx.fillStyle = (isHovered) ? '#abcdef' :'#123456';
         ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
     }
 

@@ -69,6 +69,12 @@ class Keyboard {
         })
     }
 
+    addMouseMoveListener(){
+        canvas.addEventListener('mousemove', (event) =>{
+            let pos = getXYCoordinates(event);
+        })
+    }
+
     addTouchListener() {
         canvas.addEventListener('touchstart', (event) => {
             console.log(event);
@@ -98,7 +104,7 @@ class Keyboard {
     }
 
     checkButtons(x, y) {
-        console.log('X ' + x + ' Y ' + y);
+        // console.log('X ' + x + ' Y ' + y);
         MenuButton.storage.forEach(button => {
             // if (this.checkBoundrys()) {
             // eventuell this mit self ersetzen oder checkBoundrys global machen.
@@ -110,8 +116,18 @@ class Keyboard {
                     button.connectedFunction();
                 }
             }
-
         });
+    }
+
+    hoverButton(x,y){
+        MenuButton.storage.forEach(button => {
+            if (button.isActiv==true) {
+                button.isHovered=false;
+                if (checkBoundrys(button,x,y)) {
+                    button.isHovered=true;
+                }
+            }
+        })
     }
 
     checkBoundrys(button, x, y) {
