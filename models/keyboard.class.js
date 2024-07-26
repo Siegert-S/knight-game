@@ -14,6 +14,7 @@ class Keyboard {
         this.addKeydownListener();
         this.addKeyupListener();
         this.addMouseDownListerner();
+        this.addMouseMoveListener();
         this.addTouchListener();
     }
 
@@ -52,7 +53,7 @@ class Keyboard {
 
     addMouseDownListerner() {
         canvas.addEventListener('mousedown', (event) => {
-            console.log(event);
+            // console.log(event);
             let pos = this.getXYCoordinates(event);
             this.checkButtons(pos.x, pos.y);
             // const rect = canvas.getBoundingClientRect();
@@ -69,9 +70,10 @@ class Keyboard {
         })
     }
 
-    addMouseMoveListener(){
-        canvas.addEventListener('mousemove', (event) =>{
-            let pos = getXYCoordinates(event);
+    addMouseMoveListener() {
+        canvas.addEventListener('mousemove', (event) => {
+            let pos = this.getXYCoordinates(event);
+            this.hoverButton(pos.x, pos.y);
         })
     }
 
@@ -97,9 +99,9 @@ class Keyboard {
         const rect = canvas.getBoundingClientRect();
         const x = touches.clientX - rect.left;
         const y = touches.clientY - rect.top;
-        console.log(' X ' + x + ' Y ' + y);
+        // console.log(' X ' + x + ' Y ' + y);
         // alert('X ' + x + ' Y ' + y);
-        console.log('das hier habe ich auf dem handy geschrieben');
+        // console.log('das hier habe ich auf dem handy geschrieben');
         return { "x": x, "y": y };
     }
 
@@ -119,12 +121,12 @@ class Keyboard {
         });
     }
 
-    hoverButton(x,y){
+    hoverButton(x, y) {
         MenuButton.storage.forEach(button => {
-            if (button.isActiv==true) {
-                button.isHovered=false;
-                if (checkBoundrys(button,x,y)) {
-                    button.isHovered=true;
+            if (button.isActiv == true) {
+                button.isHovered = false;
+                if (this.checkBoundrys(button, x, y)) {
+                    button.isHovered = true;
                 }
             }
         })

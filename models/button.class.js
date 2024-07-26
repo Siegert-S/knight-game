@@ -27,7 +27,7 @@ class MenuButton extends DrawableObject {
     }
 
     drawButton() {
-        ctx.fillStyle = (isHovered) ? '#abcdef' :'#123456';
+        ctx.fillStyle = (this.isHovered) ? '#abcdef' :'#123456';
         ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
     }
 

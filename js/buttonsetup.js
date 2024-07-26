@@ -6,7 +6,7 @@ let spaceBetweenHorizontel = 20;
 function initButton() {
     MenuButton.produce(canvasCenter(0, 1, buttonWidth), stackButtons(0, 3), buttonWidth, buttonHeight, 'main', 'Play', () => { console.log('Play is pressed'); });
     MenuButton.produce(canvasCenter(0, 1, buttonWidth), stackButtons(1, 3), buttonWidth, buttonHeight, 'main', 'Settings', () => { console.log('Settings is pressed'); switchTo('settings'); });
-    MenuButton.produce(canvasCenter(0, 1, buttonWidth), stackButtons(2, 3), buttonWidth, buttonHeight, 'main', 'Controlls', () => { console.log('Controlls is pressed'); });
+    MenuButton.produce(canvasCenter(0, 1, buttonWidth), stackButtons(2, 3), buttonWidth, buttonHeight, 'main', 'Controlls', () => { console.log('Controlls is pressed');  });
   
     MenuButton.produce(10, 430, 40, 40, 'controlls', 'left', () => { console.log('left'); });
     MenuButton.produce(60, 430, 40, 40, 'controlls', 'reight', () => { console.log('reight'); });
