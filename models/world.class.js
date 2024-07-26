@@ -31,6 +31,7 @@ class World {
         // console.log(Enemy.storage);
         if (this.cameraX == -6450 && Enemy.storage.length == 0) {
             console.log('sieg');
+            endWorld();
         }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -103,5 +104,8 @@ class World {
         this.hud.push(CoinCounter.storage);
     }
 
+    endWorld(){
+        // löschen aller objekte und speichern von fortschrit bei sieg rückker zum play menu
+    }
 
 }
