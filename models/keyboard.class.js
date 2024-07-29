@@ -97,7 +97,12 @@ class Keyboard {
     getXYCoordinates(touches) {
         const rect = canvas.getBoundingClientRect();
         const x = touches.clientX - rect.left;
+        let faktorOfX= x/ canvas.width;
+        let canvasX=720 *faktorOfX;
         const y = touches.clientY - rect.top;
+        let faktorOfY= y/ canvas.height;
+        let canvasY = 480 * faktorOfY;
+        // return {"x":canvasX, "y":canvasY};
         return { "x": x, "y": y };
     }
 

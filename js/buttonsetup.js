@@ -54,8 +54,11 @@ function createMenuShowControlls() {
 
 }
 
-function createMenu() {
-
+function createMenuPlay() {
+    Panel.produce();// starte spiel
+    Panel.produce();// schwierigkeit 
+    Panel.produce();// level
+    Panel.produce();// skills
 }
 
 
