@@ -6,6 +6,8 @@ class Keyboard {
     DOWN = false;
     SPACE = false;
 
+    testtime = 0;
+
     constructor() {
         this.addKeyListener();
     }
@@ -14,6 +16,7 @@ class Keyboard {
         this.addKeydownListener();
         this.addKeyupListener();
         this.addMouseDownListerner();
+        this.addMouseUpListener();
         this.addMouseMoveListener();
         this.addTouchListener();
     }
@@ -53,20 +56,20 @@ class Keyboard {
 
     addMouseDownListerner() {
         canvas.addEventListener('mousedown', (event) => {
-            // console.log(event);
             let pos = this.getXYCoordinates(event);
-            this.checkButtons(pos.x, pos.y);
-            // const rect = canvas.getBoundingClientRect();
-            // const x = e.clientX - rect.left;
-            // const y = e.clientY - rect.top;
-            // console.log('Mouse X ' + x + ' Y ' + y);
-            // alert('X ' + x + ' Y ' + y);
+            this.checkButtons(pos.x, pos.y, true);
+            this.testin();
         })
     }
 
     addMouseUpListener() {
         canvas.addEventListener('mouseup', (event) => {
-            // alle button isClickt set to false
+            MenuButton.storage.forEach(button => {
+                if (button.isActiv) {
+                    button.isClickt = false;
+                }
+            });
+            this.testout();
         })
     }
 
@@ -84,7 +87,7 @@ class Keyboard {
             for (let i = 0; i < event.touches.length; i++) {
 
                 let pos = this.getXYCoordinates(event.touches[i]);
-                this.checkButtons(pos.x, pos.y);
+                this.checkButtons(pos.x, pos.y, true);
             }
         });
     }
@@ -99,22 +102,14 @@ class Keyboard {
         const rect = canvas.getBoundingClientRect();
         const x = touches.clientX - rect.left;
         const y = touches.clientY - rect.top;
-        // console.log(' X ' + x + ' Y ' + y);
-        // alert('X ' + x + ' Y ' + y);
-        // console.log('das hier habe ich auf dem handy geschrieben');
         return { "x": x, "y": y };
     }
 
-    checkButtons(x, y) {
-        // console.log('X ' + x + ' Y ' + y);
+    checkButtons(x, y, set) {
         MenuButton.storage.forEach(button => {
-            // if (this.checkBoundrys()) {
-            // eventuell this mit self ersetzen oder checkBoundrys global machen.
-            // }
             if (button.isActiv) {
-                if (button.positionX < x && x < button.positionX + button.width &&
-                    button.positionY < y && y < button.positionY + button.height) {
-                    button.isClickt = true;
+                if (this.checkBoundrys(button, x, y)) {
+                    button.isClickt = set;
                     button.connectedFunction();
                 }
             }
@@ -135,5 +130,20 @@ class Keyboard {
     checkBoundrys(button, x, y) {
         return button.positionX < x && x < button.positionX + button.width &&
             button.positionY < y && y < button.positionY + button.height;
+    }
+
+    setTime() {
+        let time = new Date().getTime();
+        console.log(time - this.testtime);
+        this.testtime = time;
+    }
+
+    testin() {
+        this.testtime = new Date().getTime();
+    }
+
+    testout() {
+        let time = new Date().getTime();
+        console.log(time - this.testtime);
     }
 }

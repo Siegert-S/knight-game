@@ -4,6 +4,9 @@ let world;
 let keyboard;
 let system;
 
+let volume = 50;
+let SFX = 50;
+
 function init() {
     // console.log('finish loading');
 
