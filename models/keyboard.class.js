@@ -58,18 +58,14 @@ class Keyboard {
         canvas.addEventListener('mousedown', (event) => {
             let pos = this.getXYCoordinates(event);
             this.checkButtons(pos.x, pos.y, true);
-            this.testin();
         })
     }
 
     addMouseUpListener() {
         canvas.addEventListener('mouseup', (event) => {
             MenuButton.storage.forEach(button => {
-                if (button.isActiv) {
-                    button.isClickt = false;
-                }
+                button.isClickt = false;
             });
-            this.testout();
         })
     }
 
@@ -110,7 +106,7 @@ class Keyboard {
             if (button.isActiv) {
                 if (this.checkBoundrys(button, x, y)) {
                     button.isClickt = set;
-                    button.connectedFunction();
+                    button.onClick();
                 }
             }
         });

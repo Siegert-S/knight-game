@@ -15,8 +15,6 @@ class Panel extends DrawableObject {
         this.partOfMenu = partOfMenu;
         this.name = name;
         this.setTextValue(text);
-        // this.text = text;
-        console.log(this.refreshPanel);
         this.refreshPanel();
     }
 

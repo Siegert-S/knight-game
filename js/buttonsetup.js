@@ -92,14 +92,12 @@ function increaseVolume() {
     if (volume < 100) {
         volume++;
     }
-    console.log(volume);
 }
 
 function decreaseVolume() {
     if (volume > 0) {
         volume--;
     }
-    console.log(volume);
 }
 
 function increaseSfx() {

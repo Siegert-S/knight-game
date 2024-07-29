@@ -19,7 +19,10 @@ class MenuButton extends DrawableObject {
     }
 
     onClick() {
-        this.connectedFunction();
+        if (this.isClickt) {
+            this.connectedFunction();
+            setTimeout(this.onClick.bind(this), 200);
+        }
     }
 
     draw() {
@@ -28,7 +31,7 @@ class MenuButton extends DrawableObject {
     }
 
     drawButton() {
-        ctx.fillStyle = (this.isHovered) ? '#abcdef' : '#123456';
+        ctx.fillStyle = (this.isHovered) ? this.loadImage('assets/img/brett/brett_2.png') : this.loadImage('assets/img/brett/brett.png');
         if (this.isClickt) {
             ctx.drawImage(this.img, this.positionX, this.positionY + 5, this.width, this.height);
             // ctx.fillRect(this.positionX, this.positionY + 5, this.width, this.height);
