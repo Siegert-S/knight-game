@@ -97,13 +97,19 @@ class Keyboard {
     getXYCoordinates(touches) {
         const rect = canvas.getBoundingClientRect();
         const x = touches.clientX - rect.left;
-        let faktorOfX= x/ canvas.width;
-        let canvasX=720 *faktorOfX;
+        let faktorOfX = x / rect.width;
+        let canvasX = canvas.width * faktorOfX;
         const y = touches.clientY - rect.top;
-        let faktorOfY= y/ canvas.height;
-        let canvasY = 480 * faktorOfY;
-        // return {"x":canvasX, "y":canvasY};
-        return { "x": x, "y": y };
+        let faktorOfY = y / rect.height;
+        let canvasY = canvas.height * faktorOfY;
+
+        // console.log('x is ' + x + ' and canvasX is ' + canvasX);
+        // console.log('y is ' + y + ' and canvasY is ' + canvasY);
+
+        // console.log('width  is ' + rect.width);
+        // console.log('height is ' + rect.height);
+        return { "x": canvasX, "y": canvasY };
+        // return { "x": x, "y": y };
     }
 
     checkButtons(x, y, set) {
@@ -122,6 +128,8 @@ class Keyboard {
             if (button.isActiv == true) {
                 button.isHovered = false;
                 if (this.checkBoundrys(button, x, y)) {
+                    // console.log('x from to ' + button.positionX + ' ' + (button.positionX + button.width));
+                    // console.log('y from to ' + button.positionY + ' ' + (button.positionY + button.height));
                     button.isHovered = true;
                 }
             }

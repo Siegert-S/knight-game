@@ -7,7 +7,7 @@ function initButton() {
     createMenuMain();
     createMenuSettings();
     createMenuLegal();
-
+    createMenuControlls();
 
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, 'controlls', 'Back to Main Menu', () => { console.log('mainmenu'); switchTo('main'); });
 
@@ -23,25 +23,25 @@ function createMenuMain() {
 }
 
 function createMenuControlls() {
-    MenuButton.produce(10, 430, 40, 40, 'controlls', 'left', () => { console.log('left'); });
-    MenuButton.produce(60, 430, 40, 40, 'controlls', 'reight', () => { console.log('reight'); });
-    MenuButton.produce(110, 430, 40, 40, 'controlls', 'jump', () => { console.log('jump'); });
-    MenuButton.produce(160, 430, 40, 40, 'controlls', 'attack', () => { console.log('attack'); });
-    MenuButton.produce(210, 430, 40, 40, 'controlls', 'defend', () => { console.log('defend'); });
+    MenuButton.produce(10, 430, 60, 40, 'controlls', 'left', () => { console.log('left'); });
+    MenuButton.produce(90, 430, 60, 40, 'controlls', 'reight', () => { console.log('reight'); });
+    MenuButton.produce(510, 430, 60, 40, 'controlls', 'jump', () => { console.log('jump'); });
+    MenuButton.produce(580, 430, 60, 40, 'controlls', 'attack', () => { console.log('attack'); });
+    MenuButton.produce(650, 430, 60, 40, 'controlls', 'defend', () => { console.log('defend'); });
 }
 
 function createMenuSettings() {
-    Panel.produce(canvasCenter(0, 1, buWi), stackButtons(0, 5), buWi, buHi, 'settings', 'volume', 'Volume');
+    Panel.produce(canvasCenter(0, 1, 280), stackButtons(0, 5), 280, buHi, 'settings', 'volume', 'Volume');
     MenuButton.produce(canvasCenter(0, 3, 80), stackButtons(1, 5), 80, buHi, 'settings', 'up', increaseVolume);
     Panel.produce(canvasCenter(1, 3, 80), stackButtons(1, 5), 80, buHi, 'settings', 'volumevalue', 'volumevalue');
     MenuButton.produce(canvasCenter(2, 3, 80), stackButtons(1, 5), 80, buHi, 'settings', 'down', decreaseVolume);
 
-    Panel.produce(canvasCenter(0, 1, buWi), stackButtons(2, 5), buWi, buHi, 'settings', 'sfx', 'SFX');
+    Panel.produce(canvasCenter(0, 1, 280), stackButtons(2, 5), 280, buHi, 'settings', 'sfx', 'SFX');
     MenuButton.produce(canvasCenter(0, 3, 80), stackButtons(3, 5), 80, buHi, 'settings', 'up', increaseSfx);
     Panel.produce(canvasCenter(1, 3, 80), stackButtons(3, 5), 80, buHi, 'settings', 'sfxvalue', 'sfxvalue');
     MenuButton.produce(canvasCenter(2, 3, 80), stackButtons(3, 5), 80, buHi, 'settings', 'down', decreaseSfx);
 
-    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, 'settings', 'Back to Main Menu', () => { console.log('mainmenu'); switchTo('main'); });
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, 'settings', 'Back to Main Menu', () => { switchTo('main'); });
 }
 
 function createMenuLegal() {

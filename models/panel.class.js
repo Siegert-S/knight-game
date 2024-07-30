@@ -14,6 +14,7 @@ class Panel extends DrawableObject {
         this.height = height;
         this.partOfMenu = partOfMenu;
         this.name = name;
+        this.loadImage('assets/img/brett/brett_2.png');
         this.setTextValue(text);
         this.refreshPanel();
     }
@@ -46,8 +47,9 @@ class Panel extends DrawableObject {
     }
 
     drawFrame() {
-        ctx.fillStyle = '#123456';
-        ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
+        // ctx.fillStyle = '#123456';
+        // ctx.fillRect(this.positionX, this.positionY, this.width, this.height);
+        ctx.drawImage(this.img, this.positionX, this.positionY, this.width, this.height);
     }
 
     drawText() {

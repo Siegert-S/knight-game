@@ -65,6 +65,7 @@ class System {
     scannAll(classRef) {
         classRef.storage.forEach(object => {
             if (object.partOfMenu == this.show) {
+                // console.log(object.partOfMenu);
                 object.draw();
             }
         });
