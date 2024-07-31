@@ -78,10 +78,7 @@ class Keyboard {
 
     addTouchListener() {
         canvas.addEventListener('touchstart', (event) => {
-            console.log(event);
-
             for (let i = 0; i < event.touches.length; i++) {
-
                 let pos = this.getXYCoordinates(event.touches[i]);
                 this.checkButtons(pos.x, pos.y, true);
             }
@@ -90,26 +87,29 @@ class Keyboard {
 
     addToucheEndListener() {
         canvas.addEventListener('touchend', (event) => {
-            // set alle buttons zu isClickt false und reset bestehende touched butten to true
+
+            for (let i = 0; i < event.touches.length; i++) {
+                MenuButton.storage.forEach(button => {
+                    button.isClickt = false;
+                });
+                let pos = this.getXYCoordinates(event.touches[i]);
+                this.checkButtons(pos.x, pos.y, true);
+            }
         });
     }
 
     getXYCoordinates(touches) {
         const rect = canvas.getBoundingClientRect();
+
         const x = touches.clientX - rect.left;
         let faktorOfX = x / rect.width;
         let canvasX = canvas.width * faktorOfX;
+
         const y = touches.clientY - rect.top;
         let faktorOfY = y / rect.height;
         let canvasY = canvas.height * faktorOfY;
-
-        // console.log('x is ' + x + ' and canvasX is ' + canvasX);
-        // console.log('y is ' + y + ' and canvasY is ' + canvasY);
-
-        // console.log('width  is ' + rect.width);
-        // console.log('height is ' + rect.height);
+        
         return { "x": canvasX, "y": canvasY };
-        // return { "x": x, "y": y };
     }
 
     checkButtons(x, y, set) {
@@ -128,8 +128,6 @@ class Keyboard {
             if (button.isActiv == true) {
                 button.isHovered = false;
                 if (this.checkBoundrys(button, x, y)) {
-                    // console.log('x from to ' + button.positionX + ' ' + (button.positionX + button.width));
-                    // console.log('y from to ' + button.positionY + ' ' + (button.positionY + button.height));
                     button.isHovered = true;
                 }
             }
