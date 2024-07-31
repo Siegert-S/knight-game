@@ -19,6 +19,7 @@ class Keyboard {
         this.addMouseUpListener();
         this.addMouseMoveListener();
         this.addTouchListener();
+        this.addToucheEndListener();
     }
 
     addKeydownListener() {
@@ -108,7 +109,7 @@ class Keyboard {
         const y = touches.clientY - rect.top;
         let faktorOfY = y / rect.height;
         let canvasY = canvas.height * faktorOfY;
-        
+
         return { "x": canvasX, "y": canvasY };
     }
 
