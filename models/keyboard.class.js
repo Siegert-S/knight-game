@@ -88,11 +88,11 @@ class Keyboard {
 
     addToucheEndListener() {
         canvas.addEventListener('touchend', (event) => {
-
+            MenuButton.storage.forEach(button => {
+                button.isClickt = false;
+            });
             for (let i = 0; i < event.touches.length; i++) {
-                MenuButton.storage.forEach(button => {
-                    button.isClickt = false;
-                });
+
                 let pos = this.getXYCoordinates(event.touches[i]);
                 this.checkButtons(pos.x, pos.y, true);
             }
