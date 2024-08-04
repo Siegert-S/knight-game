@@ -20,11 +20,23 @@ class Player {
     }
 
     changeStage(levelUp) {
-        let change = (levelUp) ? 1 : -1;
+        // let change = (levelUp) ? 1 : -1;
+        if (this.stage > 0 && !levelUp) {
+            this.stage--;
+        }
+        if (this.stage < this.maxStage && levelUp) {
+            this.stage++;
+        }
     }
 
     increaseDiffilculty(levelUp) {
-        let change = (levelUp) ? 1 : -1;
+        // let change = (levelUp) ? 1 : -1;
+        if (this.difficulty > 0 && !levelUp) {
+            this.difficulty--;
+        }
+        if (this.difficulty < this.maxDiffilculty && levelUp) {
+            this.difficulty++;
+        }
     }
 
     getValueOf(name) {

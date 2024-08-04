@@ -3,6 +3,7 @@ class Panel extends DrawableObject {
     text;
     name;
     isActiv = false;
+    isHovered = false;
 
     refreshPanel;
 
