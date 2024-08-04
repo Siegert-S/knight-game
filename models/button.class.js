@@ -6,7 +6,9 @@ class MenuButton extends DrawableObject {
     isActiv = false;
     connectedFunction;
 
-    constructor(x, y, width, height, partOfMenu, text, connectedFunction = () => { console.log(this.text + 'wurde geclickt'); }) {
+    refreshButton;
+
+    constructor(x, y, width, height, partOfMenu, text, connectedFunction = () => { console.log(this.text + ' wurde geclickt'); }) {
         super();
         this.positionX = x;
         this.positionY = y;
@@ -17,6 +19,25 @@ class MenuButton extends DrawableObject {
         this.connectedFunction = connectedFunction;
         this.loadImage('assets/img/brett/brett_2.png');
     }
+
+    refreshContent(text) {
+
+        ctx.fillStyle = (player.coins < text) ? 'red' : 'white'
+
+    }
+
+    setButtonContent(text) {
+        switch (text) {
+            case 'attack':
+                this.refreshButton = () => { this.refreshContent(text); }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
 
     onClick() {
         if (this.isClickt) {
@@ -31,7 +52,7 @@ class MenuButton extends DrawableObject {
     }
 
     drawButton() {
-        ctx.fillStyle = (this.isHovered) ? this.loadImage('assets/img/brett/brett_2.png') : this.loadImage('assets/img/brett/brett.png');
+        ctx.fillStyle = (this.isHovered) ? this.loadImage('assets/img/brett/brett.png') : this.loadImage('assets/img/brett/brett_2.png');
         if (this.isClickt) {
             ctx.drawImage(this.img, this.positionX, this.positionY + 5, this.width, this.height);
             // ctx.fillRect(this.positionX, this.positionY + 5, this.width, this.height);
@@ -43,7 +64,7 @@ class MenuButton extends DrawableObject {
     }
 
     drawText() {
-        ctx.font = '20px Arial';
+        ctx.font = '20px Tahoma';
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
 

@@ -16,6 +16,7 @@ class System {
         this.menu['legal'] = (new Menu('legal'));
         this.menu['game'] = (new Menu('game'));
         this.menu['skills'] = (new Menu('skills'));
+        this.menu['gamecontroll'] = (new Menu('gamecontroll'));
         // this.menu.push(new Menu('settings'));
         // this.menu.push(new Menu('controlls'));
         // this.menu.push(new Menu('legal'));

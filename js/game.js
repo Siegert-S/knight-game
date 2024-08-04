@@ -7,6 +7,8 @@ let system;
 let volume = 50;
 let SFX = 50;
 
+let player = new Player();
+
 function init() {
     // console.log('finish loading');
 

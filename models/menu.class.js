@@ -7,11 +7,11 @@ class Menu {
     }
 
     draw() {
-        this.drawBachground();
+        this.drawBackground();
         this.drawButtons();
     }
 
-    drawBachground() {
+    drawBackground() {
 
         ctx.fillStyle = 'gray';
         ctx.fillRect(0, 0, canvas.width, canvas.height);

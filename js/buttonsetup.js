@@ -8,6 +8,9 @@ function initButton() {
     createMenuSettings();
     createMenuLegal();
     createMenuControlls();
+    createMenuGame();
+    createMenuGameControlls();
+    createMenuSkills();
 
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, 'controlls', 'Back to Main Menu', () => { console.log('mainmenu'); switchTo('main'); });
 
@@ -16,7 +19,7 @@ function initButton() {
 }
 
 function createMenuMain() {
-    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(0, 4), buWi, buHi, 'main', 'Play', () => { console.log('Play is pressed'); });
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(0, 4), buWi, buHi, 'main', 'Game', () => { switchTo('game'); });
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(1, 4), buWi, buHi, 'main', 'Settings', () => { switchTo('settings'); });
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(2, 4), buWi, buHi, 'main', 'Controlls', () => { switchTo('controlls'); });
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(3, 4), buWi, buHi, 'main', 'Legal', () => { switchTo('legal'); });
@@ -32,14 +35,14 @@ function createMenuControlls() {
 
 function createMenuSettings() {
     Panel.produce(canvasCenter(0, 1, 280), stackButtons(0, 5), 280, buHi, 'settings', 'volume', 'Volume');
-    MenuButton.produce(canvasCenter(0, 3, 80), stackButtons(1, 5), 80, buHi, 'settings', 'up', increaseVolume);
+    MenuButton.produce(canvasCenter(0, 3, 80), stackButtons(1, 5), 80, buHi, 'settings', '<--', increaseVolume);
     Panel.produce(canvasCenter(1, 3, 80), stackButtons(1, 5), 80, buHi, 'settings', 'volumevalue', 'volumevalue');
-    MenuButton.produce(canvasCenter(2, 3, 80), stackButtons(1, 5), 80, buHi, 'settings', 'down', decreaseVolume);
+    MenuButton.produce(canvasCenter(2, 3, 80), stackButtons(1, 5), 80, buHi, 'settings', '-->', decreaseVolume);
 
     Panel.produce(canvasCenter(0, 1, 280), stackButtons(2, 5), 280, buHi, 'settings', 'sfx', 'SFX');
-    MenuButton.produce(canvasCenter(0, 3, 80), stackButtons(3, 5), 80, buHi, 'settings', 'up', increaseSfx);
+    MenuButton.produce(canvasCenter(0, 3, 80), stackButtons(3, 5), 80, buHi, 'settings', '<--', increaseSfx);
     Panel.produce(canvasCenter(1, 3, 80), stackButtons(3, 5), 80, buHi, 'settings', 'sfxvalue', 'sfxvalue');
-    MenuButton.produce(canvasCenter(2, 3, 80), stackButtons(3, 5), 80, buHi, 'settings', 'down', decreaseSfx);
+    MenuButton.produce(canvasCenter(2, 3, 80), stackButtons(3, 5), 80, buHi, 'settings', '-->', decreaseSfx);
 
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, 'settings', 'Back to Main Menu', () => { switchTo('main'); });
 }
@@ -54,6 +57,37 @@ function createMenuShowControlls() {
 
 }
 
+function createMenuGame() {
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(0, 3), buWi, buHi, 'game', 'Start Game', () => { switchTo('gamecontroll'); });
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(1, 3), buWi, buHi, 'game', 'Load Game');
+    // MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(2, 6), buWi, buHi, 'game', 'Skills');
+    // MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(3, 6), buWi, buHi, 'game', 'Level');
+    // MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 6), buWi, buHi, 'game', 'Difilculty');
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(2, 3), buWi, buHi, 'game', 'Back to Main Menu', () => { console.log('mainmenu'); switchTo('main'); });
+
+}
+
+function createMenuGameControlls() {
+
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(0, 5), buWi, buHi, 'gamecontroll', 'Play');
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(1, 5), buWi, buHi, 'gamecontroll', 'Skills', () => { switchTo('skills'); });
+
+    Panel.produce(canvasCenter(0, 4, 100), stackButtons(2, 5), 100, buHi, 'gamecontroll', 'Level', 'Level');
+    MenuButton.produce(canvasCenter(1, 4, 100), stackButtons(2, 5), 100, buHi, 'gamecontroll', '<--');
+    Panel.produce(canvasCenter(2, 4, 100), stackButtons(2, 5), 100, buHi, 'gamecontroll', 'Levelvalue', 'Levelvalue');
+    MenuButton.produce(canvasCenter(3, 4, 100), stackButtons(2, 5), 100, buHi, 'gamecontroll', '-->');
+
+
+    Panel.produce(canvasCenter(0, 4, 100), stackButtons(3, 5), 100, buHi, 'gamecontroll', 'difficulty', 'Difficulty');
+    MenuButton.produce(canvasCenter(1, 4, 100), stackButtons(3, 5), 100, buHi, 'gamecontroll', '<--');
+    Panel.produce(canvasCenter(2, 4, 100), stackButtons(3, 5), 100, buHi, 'gamecontroll', 'difficultyvalue', 'difficultyvalue');
+    MenuButton.produce(canvasCenter(3, 4, 100), stackButtons(3, 5), 100, buHi, 'gamecontroll', '-->');
+
+    // MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 6), buWi, buHi, 'gamecontroll', 'Difilculty');
+
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, 'gamecontroll', 'Back to Game Menu', () => { switchTo('game'); });
+}
+
 function createMenuPlay() {
     Panel.produce();// starte spiel
     Panel.produce();// schwierigkeit 
@@ -61,6 +95,43 @@ function createMenuPlay() {
     Panel.produce();// skills
 }
 
+function createMenuSkills() {
+
+    // console.log(stackButtons(2, 3));
+    // console.log(canvasCenter(0, 1, 75));
+    Panel.produce(317.5, 125, 85, 85, 'skills', 'power', '');
+    Panel.produce(322.5, 130, 75, 75, 'skills', 'power', '', 'assets/img/skills/active1.png');
+    
+    MenuButton.produce(422.5, 145, buWi, buHi, 'skills', '', () => { switchTo('gamecontroll'); });
+
+
+    Panel.produce(317.5, 215, 85, 85, 'skills', 'armor', '',);
+    Panel.produce(322.5, 220, 75, 75, 'skills', 'armor', '', 'assets/img/skills/active6.png');
+
+    MenuButton.produce(422.5, 235, buWi, buHi, 'skills', '', () => { switchTo('gamecontroll'); });
+
+
+    Panel.produce(317.5, 305, 85, 85, 'skills', 'health', '');
+    Panel.produce(322.5, 310, 75, 75, 'skills', 'health', '', 'assets/img/skills/active8.png');
+
+    MenuButton.produce(422.5, 325, buWi, buHi, 'skills', '', () => { switchTo('gamecontroll'); });
+
+    MenuButton.produce(canvasCenter(0, 1, buWi), 400, buWi, buHi, 'skills', 'Back to Game Menu', () => { switchTo('gamecontroll'); });
+
+
+    // Panel.produce(canvasCenter(0, 1, 85), stackButtons(0, 3), 85, 85, 'skills', 'power', '');
+    // Panel.produce(canvasCenter(0, 1, 75), stackButtons(0, 3), 75, 75, 'skills', 'power', '', 'assets/img/skills/active1.png');
+
+
+    // Panel.produce(canvasCenter(0, 1, 85), stackButtons(1, 3), 85, 85, 'skills', 'armor', '',);
+    // Panel.produce(canvasCenter(0, 1, 75), stackButtons(1, 3), 75, 75, 'skills', 'armor', '', 'assets/img/skills/active6.png');
+
+
+    // Panel.produce(canvasCenter(0, 1, 85), stackButtons(2, 3), 85, 85, 'skills', 'health', '');
+    // Panel.produce(canvasCenter(0, 1, 75), stackButtons(2, 3), 75, 75, 'skills', 'health', '', 'assets/img/skills/active8.png');
+
+
+}
 
 
 

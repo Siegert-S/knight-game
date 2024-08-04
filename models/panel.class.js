@@ -6,7 +6,7 @@ class Panel extends DrawableObject {
 
     refreshPanel;
 
-    constructor(x, y, width, height, partOfMenu, name, text = undefined) {
+    constructor(x, y, width, height, partOfMenu, name, text = undefined, img = 'assets/img/brett/brett_2.png') {
         super();
         this.positionX = x;
         this.positionY = y;
@@ -14,7 +14,7 @@ class Panel extends DrawableObject {
         this.height = height;
         this.partOfMenu = partOfMenu;
         this.name = name;
-        this.loadImage('assets/img/brett/brett_2.png');
+        this.loadImage(img);
         this.setTextValue(text);
         this.refreshPanel();
     }
@@ -35,6 +35,9 @@ class Panel extends DrawableObject {
                 this.refreshPanel = () => { this.refreshText(SFX) };
                 break;
 
+            case 'difficultyvalue':
+                this.refreshPanel = () => { this.refreshText(player.difficulty) };
+                break;
             default:
                 this.refreshPanel = () => { this.refreshText(text) };
                 break;
@@ -53,7 +56,7 @@ class Panel extends DrawableObject {
     }
 
     drawText() {
-        ctx.font = '20px Arial';
+        ctx.font = '20px Tahoma';
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
 
