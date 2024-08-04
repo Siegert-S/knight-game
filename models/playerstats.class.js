@@ -19,6 +19,14 @@ class Player {
         }
     }
 
+    changeStage(levelUp) {
+        let change = (levelUp) ? 1 : -1;
+    }
+
+    increaseDiffilculty(levelUp) {
+        let change = (levelUp) ? 1 : -1;
+    }
+
     getValueOf(name) {
         return this[name];
     }
@@ -28,6 +36,6 @@ class Player {
         return cost;
     }
 
-    
+
 
 }
