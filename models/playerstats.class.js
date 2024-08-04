@@ -16,12 +16,6 @@ class Player {
         if (this.coins >= cost) {
             this[stat]++;
             this.coins -= cost;
-            // console.log(this.getValueOf(stat));
-
-            // console.log(this.getValueOf('coins'));
-
-        } else {
-            console.log('nicht genug Coins');
         }
     }
 
@@ -34,18 +28,6 @@ class Player {
         return cost;
     }
 
-    test(name) {
-        let classRef = window[name];
-        console.log(globalThis);
-        if (classRef) {
-            if (classRef.storage) {
-                console.log(classRef.storage);
-            } else {
-                console.log(classRef);
-            }
-        } else {
-            console.log('klasse nich vorhanden.');
-        }
-    }
+    
 
 }
