@@ -39,6 +39,11 @@ class Panel extends DrawableObject {
             case 'difficultyvalue':
                 this.refreshPanel = () => { this.refreshText(player.difficulty) };
                 break;
+
+            case 'Levelvalue':
+                this.refreshPanel = () => { this.refreshText(player.stage) };
+                break;
+                
             default:
                 this.refreshPanel = () => { this.refreshText(text) };
                 break;

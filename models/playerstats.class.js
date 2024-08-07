@@ -6,9 +6,9 @@ class Player {
     maxDiffilculty = 0;
     difficulty = 0;
     attack = 0;
-    health = 1;
-    armor = 2;
-    magic = 3;
+    health = 0;
+    armor = 0;
+    magic = 0;
 
 
     increase(stat) {

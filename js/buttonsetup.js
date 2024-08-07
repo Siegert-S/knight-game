@@ -101,20 +101,20 @@ function createMenuSkills() {
     // console.log(canvasCenter(0, 1, 75));
     Panel.produce(317.5, 125, 85, 85, 'skills', 'power', '');
     Panel.produce(322.5, 130, 75, 75, 'skills', 'power', '', 'assets/img/skills/active1.png');
-    
-    MenuButton.produce(422.5, 145, buWi, buHi, 'skills', '', () => { switchTo('gamecontroll'); });
+
+    MenuButton.produce(422.5, 145, buWi, buHi, 'skills', 'attack', () => { player.increase('attack'); });
 
 
     Panel.produce(317.5, 215, 85, 85, 'skills', 'armor', '',);
     Panel.produce(322.5, 220, 75, 75, 'skills', 'armor', '', 'assets/img/skills/active6.png');
 
-    MenuButton.produce(422.5, 235, buWi, buHi, 'skills', '', () => { switchTo('gamecontroll'); });
+    MenuButton.produce(422.5, 235, buWi, buHi, 'skills', 'armor', () => { player.increase('armor'); });
 
 
     Panel.produce(317.5, 305, 85, 85, 'skills', 'health', '');
     Panel.produce(322.5, 310, 75, 75, 'skills', 'health', '', 'assets/img/skills/active8.png');
 
-    MenuButton.produce(422.5, 325, buWi, buHi, 'skills', '', () => { switchTo('gamecontroll'); });
+    MenuButton.produce(422.5, 325, buWi, buHi, 'skills', 'health', () => { player.increase('health'); });
 
     MenuButton.produce(canvasCenter(0, 1, buWi), 400, buWi, buHi, 'skills', 'Back to Game Menu', () => { switchTo('gamecontroll'); });
 

@@ -5,6 +5,7 @@ class MenuButton extends DrawableObject {
     partOfMenu;
     isActiv = false;
     connectedFunction;
+    fontColor = 'white';
 
     refreshButton;
 
@@ -16,13 +17,14 @@ class MenuButton extends DrawableObject {
         this.height = height;
         this.partOfMenu = partOfMenu;
         this.text = text;
+        this.setButtonContent(text);
         this.connectedFunction = connectedFunction;
         this.loadImage('assets/img/brett/brett_2.png');
     }
 
     refreshContent(text) {
-
-        ctx.fillStyle = (player.coins < text) ? 'red' : 'white'
+        this.text = player.getCoinCostOf(text);
+        this.fontColor = (player.coins < player.getCoinCostOf(text)) ? 'red' : 'white';
 
     }
 
@@ -31,8 +33,15 @@ class MenuButton extends DrawableObject {
             case 'attack':
                 this.refreshButton = () => { this.refreshContent(text); }
                 break;
+            case 'health':
+                this.refreshButton = () => { this.refreshContent(text); }
+                break;
+            case 'armor':
+                this.refreshButton = () => { this.refreshContent(text); }
+                break;
 
             default:
+                this.refreshButton = () => { }
                 break;
         }
     }
@@ -47,6 +56,7 @@ class MenuButton extends DrawableObject {
     }
 
     draw() {
+        this.refreshButton();
         this.drawButton();
         this.drawText();
     }
@@ -65,7 +75,7 @@ class MenuButton extends DrawableObject {
 
     drawText() {
         ctx.font = '20px Tahoma';
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = this.fontColor;
         ctx.textAlign = 'center';
 
 
