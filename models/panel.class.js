@@ -51,6 +51,7 @@ class Panel extends DrawableObject {
     }
 
     draw() {
+        this.refreshPanel();
         this.drawFrame();
         this.drawText();
     }

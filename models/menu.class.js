@@ -4,6 +4,7 @@ class Menu {
 
     constructor(name) {
         this.name = name;
+        this.selectButtons();
     }
 
     draw() {
@@ -21,13 +22,28 @@ class Menu {
         this.buttons.forEach(button => { button.draw(); })
     }
 
+
+    resetButtons(){
+        MenuButton.storage.forEach(button => {
+            button.isActiv=false;
+        })
+    }
+
+    setButtons(){
+        this.buttons.forEach(button => {
+            button.isActiv=true;
+        })
+    }
+
     selectButtons() {
         MenuButton.storage.forEach(button => {
-            button.isActiv = false;
+            let buffer=[];
+           // button.isActiv = false;
             if (button.partOfMenu == this.name) {
-                this.buttons.push(button);
+                buffer.push(button);
                 button.isActiv = true;
             }
+            this.buttons=buffer;
         });
     }
 }
