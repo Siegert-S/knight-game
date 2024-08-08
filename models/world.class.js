@@ -20,7 +20,7 @@ class World {
         // this.canvas = canvas;
         // this.ctx = canvas.getContext("2d");
 
-        this.loadLevel(stage, difficulty);
+        this.loadLevel(player.stage, player.difficulty);
 
         this.draw();
         this.checkCollisions();
@@ -104,7 +104,14 @@ class World {
         this.hud.push(CoinCounter.storage);
     }
 
-    endWorld(){
+    endWorld(victory){
+        if (victory) {
+            player.maxStage++;
+            player.maxDiffilculty++;
+            player.coins = Charackter.storage[0].coins;
+        } else {
+            
+        }
         // löschen aller objekte und speichern von fortschrit bei sieg rückker zum play menu
     }
 
