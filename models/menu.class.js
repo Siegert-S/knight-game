@@ -8,6 +8,7 @@ class Menu {
     }
 
     draw() {
+        this.activadButtons();
         this.drawBackground();
         this.drawButtons();
     }
@@ -22,6 +23,10 @@ class Menu {
         this.buttons.forEach(button => { button.draw(); })
     }
 
+    activadButtons(){
+        this.resetButtons();
+        this.setButtons();
+    }
 
     resetButtons(){
         MenuButton.storage.forEach(button => {
@@ -41,7 +46,7 @@ class Menu {
            // button.isActiv = false;
             if (button.partOfMenu == this.name) {
                 buffer.push(button);
-                button.isActiv = true;
+                // button.isActiv = true;
             }
             this.buttons=buffer;
         });

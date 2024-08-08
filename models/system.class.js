@@ -17,6 +17,9 @@ class System {
         this.menu['game'] = (new Menu('game'));
         this.menu['skills'] = (new Menu('skills'));
         this.menu['gamecontroll'] = (new Menu('gamecontroll'));
+        
+        this.menu['loadsave'] = (new Menu('loadsave'));
+        this.menu['play']= (new World());
         // this.menu.push(new Menu('settings'));
         // this.menu.push(new Menu('controlls'));
         // this.menu.push(new Menu('legal'));
@@ -51,7 +54,7 @@ class System {
 
     setContent() {
         this.renderContent = this.menu[this.show];
-        this.menu[this.show].selectButtons();
+        // this.menu[this.show].selectButtons();
     }
 
     switchingMenu() {
