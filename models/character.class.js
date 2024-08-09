@@ -179,35 +179,35 @@ class Character extends FightingObject {
 
     inputCheck() {
         if (this.status == 'idle' || this.status == 'walk') {
-        if (keyboard.DOWN) {
-            this.setDefend();
-            this.status = 'defend';
-        } else if (keyboard.SPACE) {
-            this.tryAttack();
-            this.status = 'attack';
-        } else {
-            if (keyboard.UP && !this.isAboveGround()) {
+            if (keyboard.DOWN) {
+                this.setDefend();
+                this.status = 'defend';
+            } else if (keyboard.SPACE) {
+                this.tryAttack();
+                this.status = 'attack';
+            } else {
+                if (keyboard.UP && !this.isAboveGround()) {
 
-                this.jump();
-                this.status = 'jump';
-            }
-            if (keyboard.RIGHT && this.positionX < 6500) {
+                    this.jump();
+                    this.status = 'jump';
+                }
+                if (keyboard.RIGHT && this.positionX < 6500) {
 
-                this.moveRight();
-                this.status = 'walk';
-            }
-            if (keyboard.LEFT && this.positionX > 50) {
+                    this.moveRight();
+                    this.status = 'walk';
+                }
+                if (keyboard.LEFT && this.positionX > 50) {
 
-                this.moveLeft();
-                this.status = 'walk';
-            }
-            if (!keyboard.RIGHT && !keyboard.LEFT && !keyboard.UP) {
+                    this.moveLeft();
+                    this.status = 'walk';
+                }
+                if (!keyboard.RIGHT && !keyboard.LEFT && !keyboard.UP) {
 
-                if (this.status == 'walk') {
-                    this.status = 'idle';
+                    if (this.status == 'walk') {
+                        this.status = 'idle';
+                    }
                 }
             }
-        }
         }
 
     }

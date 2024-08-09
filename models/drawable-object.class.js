@@ -7,7 +7,7 @@ class DrawableObject extends ManageableObject {
     img;
     faceingLeft = false;
     groundlevel = 480;
-    
+
 
 
 

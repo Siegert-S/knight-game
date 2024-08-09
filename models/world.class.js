@@ -104,13 +104,13 @@ class World {
         this.hud.push(CoinCounter.storage);
     }
 
-    endWorld(victory){
+    endWorld(victory) {
         if (victory) {
             player.maxStage++;
             player.maxDiffilculty++;
             player.coins = Charackter.storage[0].coins;
         } else {
-            
+
         }
         // löschen aller objekte und speichern von fortschrit bei sieg rückker zum play menu
     }

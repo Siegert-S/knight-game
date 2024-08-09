@@ -23,32 +23,32 @@ class Menu {
         this.buttons.forEach(button => { button.draw(); })
     }
 
-    activadButtons(){
+    activadButtons() {
         this.resetButtons();
         this.setButtons();
     }
 
-    resetButtons(){
+    resetButtons() {
         MenuButton.storage.forEach(button => {
-            button.isActiv=false;
+            button.isActiv = false;
         })
     }
 
-    setButtons(){
+    setButtons() {
         this.buttons.forEach(button => {
-            button.isActiv=true;
+            button.isActiv = true;
         })
     }
 
     selectButtons() {
         MenuButton.storage.forEach(button => {
-            let buffer=[];
-           // button.isActiv = false;
+            let buffer = [];
+            // button.isActiv = false;
             if (button.partOfMenu == this.name) {
                 buffer.push(button);
                 // button.isActiv = true;
             }
-            this.buttons=buffer;
+            this.buttons = buffer;
         });
     }
 }
