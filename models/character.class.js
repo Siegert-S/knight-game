@@ -108,12 +108,31 @@ class Character extends FightingObject {
         this.setAttackboxOffset(140, 10, 80, 130, 35);
         this.setPositionYRelativ(0);
         // this.applyGravity();
-        this.animate();
+        // this.animate();
 
-        this.startAnimation();
+        // this.startAnimation();
         // this.setImages('idle', this.IDLE);
     }
 
+    upDate() {
+        super.upDate();
+        this.inputCheck();
+
+        if (this.status == 'defend') {
+            if (this.faceingLeft) {
+                this.setHitboxOffset(70, 20, 85, 130, 5);
+            } else {
+                this.setHitboxOffset(40, 20, 85, 130, 5);
+            }
+        }
+
+        if (!(this.status == 'defend')) {
+            this.setHitboxOffset(55, 20, 85, 130, 5)
+        }
+        // console.log(system.Menu);
+
+        system.menu.play.cameraX = -(this.positionX - 50);
+    }
 
     animate() {
         this.setAndSaveIntervall(() => {

@@ -4,16 +4,15 @@ class AnimatedObject extends DrawableObject {
     lastImage;
     status = 'idle';
 
+    upDateCount = 0;
+
     IDLE;
 
     animationImages = {
     }
 
-
-
     constructor(x = 0, y = 0) {
         super(x, y);
-        // this.startAnimation();
     }
 
     loadImages(array) {
@@ -29,47 +28,40 @@ class AnimatedObject extends DrawableObject {
         this.loadImages(arrayofimages);
     }
 
-    startAnimation() {
-        this.setAndSaveIntervall(() => { this.animateObject(); }, 1000 / 10)
+    upDate() {
+        this.upDateCount++;
+        let check = this.upDateCount % 6 == 0;
+        if (check) {
+            this.animateObject();
+        }
     }
 
     animateObject() {
-        this.test();
-        // this.animateImage(this.animationImages[this.status]);
-        // if (this.status == 'idle') {
-        //     this.animateImage(this.IDLE);
-        //     console.log(this.animationImages[this.status]); 
-        // }
+        this.selectImage();
     }
 
-    animateImage(images) {
-        // if (this.currentImage < images.length) {
+    setImage(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imgCache[path];
         this.currentImage++;
         this.lastImage = this.status;
-        // } else {
-        //     this.stopAnimateImage();
-        //     this.currentImage = 0;
-        // }
-
     }
 
-    test() {
+    selectImage() {
         if (this.status == 'idle' || this.status == 'walk') {
-            this.animateImage(this.animationImages[this.status]);
+            this.setImage(this.animationImages[this.status]);
         } else {
             if (this.lastImage == 'idle' || this.lastImage == 'walk') {
                 this.currentImage = 0;
-                this.animateImage(this.animationImages[this.status]);
+                this.setImage(this.animationImages[this.status]);
             } else if (this.currentImage < this.animationImages[this.status].length) {
-                this.animateImage(this.animationImages[this.status]);
+                this.setImage(this.animationImages[this.status]);
             } else {
                 if (this.stopAnimateImage()) {
                     this.status = 'idle';
                     this.currentImage = 0;
-                    this.animateImage(this.animationImages[this.status]);
+                    this.setImage(this.animationImages[this.status]);
                 }
             }
         }

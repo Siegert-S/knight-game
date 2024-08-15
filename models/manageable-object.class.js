@@ -21,8 +21,10 @@ class ManageableObject {
 
     deleteSelf() {
         let index = this.constructor.storage.indexOf(this);
-        this.deleteAllIntervalls();
-        this.constructor.storage.splice(index, 1);
+        // this.deleteAllIntervalls();
+        if (index != -1) {
+            this.constructor.storage.splice(index, 1);
+        }
     }
 
     setAndSaveIntervall(fn, ms) {

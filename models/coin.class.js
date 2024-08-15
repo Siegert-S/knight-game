@@ -12,7 +12,7 @@ class Coin extends MoveableObject {
         this.randomY();
         this.width = 25;
         this.height = 25;
-        this.startAnimation();
+        // this.startAnimation();
         this.changeHitbox(25, 25);
         this.dropCoin(drop);
     }
@@ -109,7 +109,8 @@ class Coin extends MoveableObject {
     dropCoin(isDrop) {
         if (isDrop) {
             this.positionY = this.groundlevel;
-            this.applyGravity();
+            // this.applyGravity();
+            this.gravityIs = true;
             let speed = (Math.random() - 0.5) * 13;
             let height = 3 + (Math.random() * 3);
             this.throw(height, speed);

@@ -14,9 +14,16 @@ function init() {
 
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext("2d");
+    // initButton();
     keyboard = new Keyboard();
     // console.log(canvas);
     // console.log(canvas.getAttribute('width'));
     // world = new World();
     system = new System();
+}
+
+function testwelt() {
+    console.log('starte welt');
+    
+    world = new World();
 }

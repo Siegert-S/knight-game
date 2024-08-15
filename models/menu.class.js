@@ -1,16 +1,21 @@
 class Menu {
     name;
     buttons = [];
+    panels = [];
 
     constructor(name) {
         this.name = name;
-        this.selectButtons();
+        this.selectParts();
+    }
+
+    upDate() {
+        this.activadParts();
     }
 
     draw() {
-        this.activadButtons();
         this.drawBackground();
-        this.drawButtons();
+        this.drawParts(this.buttons);
+        this.drawParts(this.panels);
     }
 
     drawBackground() {
@@ -19,36 +24,44 @@ class Menu {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    drawButtons() {
-        this.buttons.forEach(button => { button.draw(); })
+    drawParts(elements) {
+        elements.forEach(element => { element.draw(); })
     }
 
-    activadButtons() {
-        this.resetButtons();
-        this.setButtons();
+    selectParts() {
+        this.buttons = this.selectFrom(MenuButton);
+        this.panels = this.selectFrom(Panel);
+
     }
 
-    resetButtons() {
-        MenuButton.storage.forEach(button => {
-            button.isActiv = false;
+    activadParts() {
+        this.resetParts(MenuButton);
+        this.resetParts(Panel);
+        this.setPart(this.buttons);
+        this.setPart(this.panels);
+    }
+
+    resetParts(classRef) {
+        classRef.storage.forEach(part => {
+            part.isActiv = false;
         })
     }
 
-    setButtons() {
-        this.buttons.forEach(button => {
-            button.isActiv = true;
+    setPart(parts) {
+        parts.forEach(part => {
+            part.isActiv = true;
         })
     }
 
-    selectButtons() {
-        MenuButton.storage.forEach(button => {
-            let buffer = [];
-            // button.isActiv = false;
-            if (button.partOfMenu == this.name) {
-                buffer.push(button);
-                // button.isActiv = true;
+    selectFrom(classRef) {
+        let buffer = [];
+
+        classRef.storage.forEach(elenment => {
+            if (elenment.partOfMenu == this.name) {
+                buffer.push(elenment);
             }
-            this.buttons = buffer;
         });
+
+        return buffer;
     }
 }

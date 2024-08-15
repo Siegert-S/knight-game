@@ -142,7 +142,7 @@ class FightingObject extends MoveableObject {
     stopAnimateImage() {
         if (this.lastImage == this.status) {
             if (this.status == 'dead') {
-                this.deleteAllIntervalls();
+                // this.deleteAllIntervalls();
                 // let self = this;
                 setTimeout(() => {
                     this.deleteSelf();

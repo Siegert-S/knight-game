@@ -44,9 +44,39 @@ class Enemy extends FightingObject {
         this.setHitboxOffset(45, 50, 115, 100, -5);
         this.setAttackboxOffset(145, 20, 85, 120, 10);
         this.setPositionYRelativ(0);
-        this.startAnimation();
-        this.play();
+        // this.startAnimation();
+        // this.play();
 
+    }
+
+    upDate() {
+        super.upDate();
+        if (this.health < 1) {
+            this.dropLoot();
+            this.status = 'dead';
+        } else if (this.status == 'idle' || this.status == 'walk') {
+            if (this.checkDistance() < 0) {
+                this.faceingLeft = false;
+            } else {
+                this.faceingLeft = true;
+            }
+            if (this.checkDistance() < -150) {
+                this.moveRight();
+                this.status = 'walk'
+            } else if (this.checkDistance() > 140 && this.checkDistance() < 350) {
+                this.moveLeft();
+                this.status = 'walk'
+            } else if (this.checkDistance() > 350) {
+                this.status = 'idle'
+            } else {
+                if (this.isHiting(Character.storage[0])) {
+                    this.strike(Character.storage[0]);
+                    let attack = (this.attackCount % 3) + 1;
+                    this.status = `attack${attack}`;
+                    this.attackCount++;
+                }
+            }
+        }
     }
 
     play() {

@@ -2,10 +2,12 @@ class MoveableObject extends CollidableObject {
 
     speedX = 3;
     speedY = 0;
-    gForce = 0.1;
+    // gForce = 0.1;
+    gForce = 0.2;
     direction = 'left';
     throwID;
     groundlevel = 460;
+    gravityIs;
 
     walking_sound_1 = 'assets/audio/footsteps/footstep_grass_000.ogg';
     walking_sound_2 = 'assets/audio/footsteps/footstep_grass_002.ogg';
@@ -18,7 +20,14 @@ class MoveableObject extends CollidableObject {
 
     constructor(x = 0, y = 0, gravity = true) {
         super(x, y);
-        if (gravity) { this.applyGravity(); }
+        this.gravityIs = gravity;
+    }
+
+    upDate() {
+        super.upDate();
+        if (this.gravityIs) {
+            this.gravity();
+        }
     }
 
     moveRight() {
@@ -35,13 +44,17 @@ class MoveableObject extends CollidableObject {
 
     applyGravity() {
         this.setAndSaveIntervall(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.positionY -= this.speedY;
-                this.speedY -= this.gForce;
-            } else {
-                this.speedY = 0;
-            }
+            this.gravity();
         }, 1000 / 120);
+    }
+
+    gravity() {
+        if (this.isAboveGround() || this.speedY > 0) {
+            this.positionY -= this.speedY;
+            this.speedY -= this.gForce;
+        } else {
+            this.speedY = 0;
+        }
     }
 
     isAboveGround() {
@@ -53,7 +66,11 @@ class MoveableObject extends CollidableObject {
         return check;
     }
 
-    jump(speed = 6) {
+    // jump(speed = 6) {
+    //     this.speedY = speed;
+    // }
+
+    jump(speed = 9) {
         this.speedY = speed;
     }
 

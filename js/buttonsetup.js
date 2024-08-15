@@ -69,7 +69,7 @@ function createMenuGame() {
 
 function createMenuGameControlls() {
 
-    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(0, 5), buWi, buHi, 'gamecontroll', 'Play', () => { switchTo('skills'); });
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(0, 5), buWi, buHi, 'gamecontroll', 'Play', () => { switchTo('play'); });
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(1, 5), buWi, buHi, 'gamecontroll', 'Skills', () => { switchTo('skills'); });
 
     Panel.produce(canvasCenter(0, 4, 100), stackButtons(2, 5), 100, buHi, 'gamecontroll', 'Level', 'Level');

@@ -17,18 +17,25 @@ class World {
     character = new Character();
 
     constructor(stage = 0, difficulty = 0) {
+        console.log('world constructor start');
         // this.canvas = canvas;
         // this.ctx = canvas.getContext("2d");
 
         this.loadLevel(player.stage, player.difficulty);
 
-        this.draw();
-        this.checkCollisions();
+        // this.draw();
+        // this.checkCollisions();
+        console.log('world constructor finish');
+        
+    }
+
+    upDate() {
+        this.callUpDate();
+        this.character.upDate();
+        this.collisionCheck();
     }
 
     draw() {
-        // console.log(this.cameraX);
-        // console.log(Enemy.storage);
         if (this.cameraX == -6450 && Enemy.storage.length == 0) {
             console.log('sieg');
             endWorld();
@@ -45,8 +52,8 @@ class World {
         // this.addArrayToMap(this.statusbar);
         this.addContentToMap(this.hud);
 
-        let self = this;
-        requestAnimationFrame(() => { self.draw(); });
+        // let self = this;
+        // requestAnimationFrame(() => { self.draw(); });
     }
 
     addContentToMap(contentArray) {
@@ -87,6 +94,29 @@ class World {
         }, 1000 / 60);
     }
 
+    collisionCheck() {
+        this.entity.forEach((entry) => {
+            entry.forEach((o) => {
+                if (o instanceof Coin || o instanceof Enemy) {
+                    if (this.character.isColliding(o)) {
+                        o.onCollision();
+                    }
+                }
+            })
+        });
+    }
+
+    callUpDate() {
+        this.entity.forEach((entry) => {
+            entry.forEach((o) => {
+                if (typeof o.upDate === 'function') {
+                    // if (o instanceof Coin || o instanceof Enemy) {
+                    o.upDate();
+                }
+            })
+        });
+    }
+
     loadLevel(level, difficulty) {
         Szene.produce(level, difficulty);
         this.collectObjects();
@@ -108,7 +138,7 @@ class World {
         if (victory) {
             player.maxStage++;
             player.maxDiffilculty++;
-            player.coins = Charackter.storage[0].coins;
+            player.coins += Charackter.storage[0].coins;
         } else {
 
         }

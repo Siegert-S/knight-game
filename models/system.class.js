@@ -6,6 +6,7 @@ class System {
     constructor() {
         initButton();
         this.loadMenu();
+        this.upDateCanvas();
         this.renderCanvas();
     }
 
@@ -19,7 +20,9 @@ class System {
         this.menu['gamecontroll'] = (new Menu('gamecontroll'));
 
         this.menu['loadsave'] = (new Menu('loadsave'));
+
         this.menu['play'] = (new World());
+      
         // this.menu.push(new Menu('settings'));
         // this.menu.push(new Menu('controlls'));
         // this.menu.push(new Menu('legal'));
@@ -31,20 +34,32 @@ class System {
         this.world = new World(stage, difficulty);
     }
 
+    upDateCanvas() {
+        setInterval(() => {
+             this.renderContent.upDate();
+            //  console.log(this.renderContent);
+             
+             }, 1000 / 60);
+
+    }
+
     renderCanvas() {
         // die schleifen die den ihalt des canvas rendert
         this.setContent();
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // this.renderContent.draw();
+
+        this.renderContent.draw();
+
         // Panel.storage.forEach(element => {
         //     if (element.partOfMenu == this.show) {
         //         element.draw();
         //     }
         // });
-        this.refresh();
-        this.scannAll(MenuButton);
-        this.scannAll(Panel);
+
+        // this.refresh();
+        // this.scannAll(MenuButton);
+        // this.scannAll(Panel);
 
 
 

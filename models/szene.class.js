@@ -6,13 +6,17 @@ class Szene extends ManageableObject {
     keywords = ['statue', 'dragon', 'tree_face', 'crypt'];
 
     constructor(level = 0, difficulty = 1) {
+        console.log('szene constructor start');
         super();
         this.length = 10;
         this.level = level;
-        this.difficulty = difficulty
+        this.difficulty = difficulty + 1
         this.selectBackground(level);
         this.buildLevel();
         this.fillLevel();
+
+
+        console.log('szene constructor finish');
     }
 
     selectBackground(index = 0) {
