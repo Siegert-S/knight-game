@@ -6,6 +6,11 @@ body {
     margin: 0;
     width: 100vw;
     height: 100vh;
+    background-image: url('./assets/img/background/castel.png');
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 canvas {
@@ -13,7 +18,7 @@ canvas {
     min-width: 720px;
     /* height: 80%; */
     min-height: 480px;
-    background-color: rgb(0, 0, 0);
+    background-color: transparent;
 }
 
 @media (max-width:1024px) {

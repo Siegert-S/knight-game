@@ -17,7 +17,7 @@ class World {
     character = new Character();
 
     constructor(stage = 0, difficulty = 0) {
-        console.log('world constructor start');
+        // console.log('world constructor start');
         // this.canvas = canvas;
         // this.ctx = canvas.getContext("2d");
 
@@ -25,8 +25,8 @@ class World {
 
         // this.draw();
         // this.checkCollisions();
-        console.log('world constructor finish');
-        
+        // console.log('world constructor finish');
+
     }
 
     upDate() {
@@ -36,9 +36,12 @@ class World {
     }
 
     draw() {
-        if (this.cameraX == -6450 && Enemy.storage.length == 0) {
+        // console.log(this.cameraX);
+        // console.log(Enemy.storage.length);
+
+        if (this.cameraX <= -6450 && Enemy.storage.length == 0) {
             console.log('sieg');
-            endWorld();
+            this.endWorld(true);
         }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -135,14 +138,29 @@ class World {
     }
 
     endWorld(victory) {
+        let target;
         if (victory) {
-            player.maxStage++;
-            player.maxDiffilculty++;
-            player.coins += Charackter.storage[0].coins;
+            if (player.maxStage < 7) {
+                player.maxStage++;
+            }
+            if (player.maxDiffilculty == player.difficulty) {
+                player.maxDiffilculty++;
+            }
+            player.coins += Character.storage[0].cash;
+            target = 'victoryPage';
         } else {
-
+            target = 'losePage';
         }
         // löschen aller objekte und speichern von fortschrit bei sieg rückker zum play menu
+        this.deleteObjectsOf(Coin);
+        this.deleteObjectsOf(Enemy);
+        this.deleteObjectsOf(Background);
+
+        switchTo(target);
+    }
+
+    deleteObjectsOf(classRef) {
+        classRef.storage.forEach(object => { object.deleteSelf });
     }
 
 }

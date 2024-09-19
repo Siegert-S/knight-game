@@ -11,6 +11,8 @@ function initButton() {
     createMenuGame();
     createMenuGameControlls();
     createMenuSkills();
+    createlosePage();
+    createvictoryPage();
 
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, 'controlls', 'Back to Main Menu', () => { console.log('mainmenu'); switchTo('main'); });
 
@@ -131,6 +133,14 @@ function createMenuSkills() {
     // Panel.produce(canvasCenter(0, 1, 75), stackButtons(2, 3), 75, 75, 'skills', 'health', '', 'assets/img/skills/active8.png');
 
 
+}
+
+function createlosePage() {
+    Panel.produce(250, 250, 100, 100, 'losePage', 'verloren', 'Verloren')
+}
+
+function createvictoryPage() {
+    Panel.produce(250, 250, 100, 100, 'victoryPage', 'gewonnen', 'Gewonnen')
 }
 
 

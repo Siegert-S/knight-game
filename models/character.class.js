@@ -131,7 +131,7 @@ class Character extends FightingObject {
         }
         // console.log(system.Menu);
 
-        system.menu.play.cameraX = -(this.positionX - 50);
+        system.world.cameraX = -(this.positionX - 50);
     }
 
     animate() {

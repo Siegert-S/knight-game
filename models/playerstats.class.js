@@ -20,7 +20,6 @@ class Player {
     }
 
     changeStage(levelUp) {
-        // let change = (levelUp) ? 1 : -1;
         if (this.stage > 0 && !levelUp) {
             this.stage--;
         }
@@ -30,7 +29,6 @@ class Player {
     }
 
     increaseDiffilculty(levelUp) {
-        // let change = (levelUp) ? 1 : -1;
         if (this.difficulty > 0 && !levelUp) {
             this.difficulty--;
         }

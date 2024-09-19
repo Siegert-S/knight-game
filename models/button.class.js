@@ -22,6 +22,13 @@ class MenuButton extends DrawableObject {
         this.loadImage('assets/img/brett/brett_2.png');
     }
 
+    onClick() {
+        if (this.isClickt) {
+            this.connectedFunction();
+            setTimeout(this.onClick.bind(this), 200);
+        }
+    }
+
     refreshContent(text) {
         this.text = player.getCoinCostOf(text);
         this.fontColor = (player.coins < player.getCoinCostOf(text)) ? 'red' : 'white';
@@ -46,17 +53,12 @@ class MenuButton extends DrawableObject {
         }
     }
 
-
-
-    onClick() {
-        if (this.isClickt) {
-            this.connectedFunction();
-            setTimeout(this.onClick.bind(this), 200);
-        }
+    upDate() {
+        this.refreshButton();
     }
 
     draw() {
-        this.refreshButton();
+
         this.drawButton();
         this.drawText();
     }
