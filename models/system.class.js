@@ -1,11 +1,13 @@
 class System {
     show = 'main';
     menu = {};
-    world = new World();
+    world;
     renderContent;
+    backgroundAudio;
 
     constructor() {
         initButton();
+
         this.loadMenu();
         this.upDateCanvas();
         this.renderCanvas();
@@ -25,19 +27,6 @@ class System {
         this.menu['losePage'] = (this.selectContentOf('losePage'));
 
         this.menu['play'] = (this.selectContentOf('play'));
-
-
-        // this.menu['main'] = (new Menu('main'));
-        // this.menu['settings'] = (new Menu('settings'));
-        // this.menu['controlls'] = (new Menu('controlls'));
-        // this.menu['legal'] = (new Menu('legal'));
-        // this.menu['game'] = (new Menu('game'));
-        // this.menu['skills'] = (new Menu('skills'));
-        // this.menu['gamecontroll'] = (new Menu('gamecontroll'));
-
-        // this.menu['loadsave'] = (new Menu('loadsave'));
-
-        // this.menu['play'] = (new World());
 
     }
 
@@ -78,18 +67,10 @@ class System {
         this.activadPartsOf(name);
     }
 
-
-
-
-    loadWorld(stage, difficulty) {
-        this.world = new World(stage, difficulty);
-    }
-
     upDateCanvas() {
         setInterval(() => {
-            // console.log(this.renderContent);
-            // console.log(this.show);
-            // console.log(typeof this.renderContent);
+            if (this.show == 'play' && !this.world) { this.world = new World(); }
+
             if (this.show != 'play') {
                 this.renderContent.forEach(element => {
                     if (typeof element.upDate !== 'function') {
@@ -101,20 +82,12 @@ class System {
             } else {
                 this.world.upDate();
             }
-
-
-            // this.renderContent.upDate();
         }, 1000 / 60);
     }
 
     renderCanvas() {
-        // die schleifen die den ihalt des canvas rendert
-        // this.setContent();
+
         this.setContentTo(this.show);
-        // console.log(this.renderContent);
-
-
-
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -126,26 +99,29 @@ class System {
             this.world.draw();
         }
 
-        // this.renderContent.draw();
-
         let self = this;
         requestAnimationFrame(() => { self.renderCanvas(); });
     }
 
     setContent() {
         this.renderContent = this.menu[this.show];
-        // this.menu[this.show].selectButtons();
-    }
-
-    switchingMenu() {
-        // die funktion wechseld das angezeigte menu bzw das spiel
-        // breits in buttons implementiert
     }
 
     saveGame() {
         // funktion zum speichern des spielstandes
     }
 
+    // sound handling
+
+startBackgroundAudio(){
+    this.backgroundAudio= new Audio()
+}
+
+    crossfade(duration, newAudio) {
+
+    }
+
+    // veraltet und nicht verwendet.
     scannAll(classRef) {
         classRef.storage.forEach(object => {
             if (object.partOfMenu == this.show) {

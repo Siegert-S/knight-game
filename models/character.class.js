@@ -97,7 +97,7 @@ class Character extends FightingObject {
 
         this.health = 100;
         this.maxhealth = 100;
-        this.power = 15;
+        this.power = 15 * (player.attack + 1);
         this.speedX = 4;
 
         this.positionX = 50;

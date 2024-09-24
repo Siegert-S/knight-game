@@ -59,7 +59,6 @@ class Szene extends ManageableObject {
         for (let i = 0; i < coins; i++) {
             let fixX = (distance * (i + 1));
             let variX = this.intervalVariation(300, false);
-            // console.log('fix ' + fixX + ' vari ' + variX);
             Coin.produce(fixX + variX, 'health');
         }
     }
@@ -70,7 +69,6 @@ class Szene extends ManageableObject {
         for (let i = 0; i < coins; i++) {
             let fixX = (distance * (i + 1));
             let variX = this.intervalVariation(300, false);
-            // console.log('fix ' + fixX + ' vari ' + variX);
             Coin.produce(fixX + variX, 'mana');
         }
     }
@@ -84,14 +82,11 @@ class Szene extends ManageableObject {
     }
 
     placeEnemies() {
-        // console.log('load enemies');
         let enemies = 5 * this.difficulty;
         let distance = (720 * (this.length - 4) / enemies);
         for (let i = 0; i < enemies; i++) {
-            // console.log('load enemy ' + i);
             let fixX = (distance * (i + 1));
             let variX = this.intervalVariation(300, true);
-            // console.log('fix ' + fixX + ' vari ' + variX + ' total ' + (fixX + variX));
             Enemy.produce(fixX + variX, this.difficulty);
         }
     }

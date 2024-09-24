@@ -9,8 +9,8 @@ class MoveableObject extends CollidableObject {
     groundlevel = 460;
     gravityIs;
 
-    walking_sound_1 = 'assets/audio/footsteps/footstep_grass_000.ogg';
-    walking_sound_2 = 'assets/audio/footsteps/footstep_grass_002.ogg';
+    walking_sound_1 = 'assets/audio/sfx/footsteps/footstep_grass_000.ogg';
+    walking_sound_2 = 'assets/audio/sfx/footsteps/footstep_grass_002.ogg';
 
     WALK;
     JUMP;

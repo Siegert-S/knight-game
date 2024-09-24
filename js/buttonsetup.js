@@ -140,7 +140,8 @@ function createlosePage() {
 }
 
 function createvictoryPage() {
-    Panel.produce(250, 250, 100, 100, 'victoryPage', 'gewonnen', 'Gewonnen')
+    Panel.produce(250, 250, 100, 100, 'victoryPage', 'gewonnen', 'Gewonnen');
+    MenuButton.produce(canvasCenter(0, 1, buWi), 400, buWi, buHi, 'victoryPage', 'Back to Game Menu', () => { switchTo('gamecontroll'); });
 }
 
 

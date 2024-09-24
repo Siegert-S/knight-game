@@ -11,7 +11,7 @@ class Enemy extends FightingObject {
     attackCount = 0;
 
     loot;
-    lootDrop = 'assets/audio/coin/impactMetal_light_004.ogg';
+    lootDrop = 'assets/audio/sfx/coin/impactMetal_light_004.ogg';
     count = 0;
 
     constructor(x = 500, difficulty = 1) {

@@ -7,16 +7,17 @@ class World {
     entity = [];
     hud = [];
 
-
+    worldIsRuning = true;
 
     statusbar = [
         new Statusbar(5, 5),
         new Statusbar(5, 35, 'mana'),
         new CoinCounter(5, 65),
     ];
+
     character = new Character();
 
-    constructor(stage = 0, difficulty = 0) {
+    constructor() {
         // console.log('world constructor start');
         // this.canvas = canvas;
         // this.ctx = canvas.getContext("2d");
@@ -30,33 +31,38 @@ class World {
     }
 
     upDate() {
-        this.callUpDate();
-        this.character.upDate();
-        this.collisionCheck();
+        if (this.worldIsRuning) {
+            this.callUpDate();
+            this.character.upDate();
+            this.collisionCheck();
+        }
     }
 
     draw() {
-        // console.log(this.cameraX);
-        // console.log(Enemy.storage.length);
+        if (this.worldIsRuning) {
 
-        if (this.cameraX <= -6450 && Enemy.storage.length == 0) {
-            console.log('sieg');
-            this.endWorld(true);
+            if (this.cameraX <= -6450 && Enemy.storage.length == 0) {
+                console.log('sieg');
+                this.worldIsRuning = false;
+                this.endWorld(true);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                this.translateFrame(true);
+                this.addContentToMap(this.entity);
+                // this.addArrayToMap(this.background);
+                // this.addArrayToMap(this.coins);
+                // this.addArrayToMap(this.enemies);
+                this.addToMap(this.character);
+                this.translateFrame(false);
+                // this.addArrayToMap(this.statusbar);
+                this.addContentToMap(this.hud);
+
+                // let self = this;
+                // requestAnimationFrame(() => { self.draw(); });
+            }
+
+
         }
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.translateFrame(true);
-        this.addContentToMap(this.entity);
-        // this.addArrayToMap(this.background);
-        // this.addArrayToMap(this.coins);
-        // this.addArrayToMap(this.enemies);
-        this.addToMap(this.character);
-        this.translateFrame(false);
-        // this.addArrayToMap(this.statusbar);
-        this.addContentToMap(this.hud);
-
-        // let self = this;
-        // requestAnimationFrame(() => { self.draw(); });
     }
 
     addContentToMap(contentArray) {
@@ -138,29 +144,78 @@ class World {
     }
 
     endWorld(victory) {
+
+
         let target;
         if (victory) {
-            if (player.maxStage < 7) {
-                player.maxStage++;
-            }
-            if (player.maxDiffilculty == player.difficulty) {
-                player.maxDiffilculty++;
-            }
+            this.stageUp();
+            this.difficultyUp();
+
             player.coins += Character.storage[0].cash;
+            earnedCash = Character.storage[0].cash;
+
             target = 'victoryPage';
         } else {
             target = 'losePage';
         }
-        // löschen aller objekte und speichern von fortschrit bei sieg rückker zum play menu
-        this.deleteObjectsOf(Coin);
-        this.deleteObjectsOf(Enemy);
-        this.deleteObjectsOf(Background);
 
         switchTo(target);
+        // löschen aller objekte und speichern von fortschrit bei sieg rückker zum play menu
+        // this.showWorldData();
+        this.deconstructWorld();
+        // this.showWorldData();
+
+
+    }
+
+    stageUp() {
+        if (player.maxStage < 7 && player.stage == player.maxStage) {
+            player.maxStage++;
+            player.stage++;
+            increaseStage = true;
+        } else if (player.stage != player.maxStage) {
+            player.stage++;
+            increaseStage = false;
+        } else {
+            increaseStage = false;
+        }
+    }
+
+    difficultyUp() {
+        if (player.maxDiffilculty == player.difficulty) {
+            player.maxDiffilculty++;
+            increaseDif = true;
+        } else {
+            increaseDif = false;
+        }
     }
 
     deleteObjectsOf(classRef) {
-        classRef.storage.forEach(object => { object.deleteSelf });
+        classRef.storage.forEach(object => { object.deleteSelf() });
     }
 
+    deconstructWorld() {
+        console.log('delete World');
+
+
+        this.deleteObjectsOf(Coin);
+        this.deleteObjectsOf(Enemy);
+        this.deleteObjectsOf(Background);
+        this.deleteObjectsOf(Character);
+        this.deleteObjectsOf(Statusbar);
+        this.deleteObjectsOf(CoinCounter);
+
+        system.world = null;
+
+    }
+
+    showWorldData() {
+        console.log(Coin.storage);
+        console.log(Enemy.storage);
+        console.log(Background.storage);
+        console.log(Character.storage);
+        console.log(Statusbar.storage);
+        console.log(CoinCounter.storage);
+
+    }
 }
