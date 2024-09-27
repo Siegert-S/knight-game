@@ -29,11 +29,11 @@ class Panel extends DrawableObject {
     setTextValue(text) {
         switch (text) {
             case 'volumevalue':
-                this.refreshPanel = () => { this.refreshText(volume) };
+                this.refreshPanel = () => { this.refreshText(audio.volume) };
                 break;
 
             case 'sfxvalue':
-                this.refreshPanel = () => { this.refreshText(SFX) };
+                this.refreshPanel = () => { this.refreshText(audio.SFX) };
                 break;
 
             case 'difficultyvalue':

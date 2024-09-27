@@ -77,6 +77,8 @@ class Keyboard {
         })
     }
 
+
+
     addTouchListener() {
         canvas.addEventListener('touchstart', (event) => {
             for (let i = 0; i < event.touches.length; i++) {

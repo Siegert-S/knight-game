@@ -50,13 +50,13 @@ function createMenuSettings() {
 }
 
 function createMenuLegal() {
-    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(0, 3), buWi, buHi, 'legal', 'legal notice', () => { console.log('legal notice'); });
-    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(1, 3), buWi, buHi, 'legal', 'privat polecey', () => { console.log('privat polecey'); });
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(0, 3), buWi, buHi, 'legal', 'legal notice', () => { openNewPage('https://sascha-siegert.developerakademie.net/rechtliches/impressum.html'); });
+    MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(1, 3), buWi, buHi, 'legal', 'privat polecey', () => { openNewPage('https://sascha-siegert.developerakademie.net/rechtliches/datenschutz.html'); });
     MenuButton.produce(canvasCenter(0, 1, buWi), stackButtons(2, 3), buWi, buHi, 'legal', 'Back to Main Menu', () => { console.log('mainmenu'); switchTo('main'); });
 }
 
 function createMenuShowControlls() {
-
+    // https://sascha-siegert.developerakademie.net/rechtliches/impressum.html
 }
 
 function createMenuGame() {
@@ -177,12 +177,14 @@ function increaseVolume() {
     if (volume < 100) {
         volume++;
     }
+    system.refreshAudioVolume();
 }
 
 function decreaseVolume() {
     if (volume > 0) {
         volume--;
     }
+    system.refreshAudioVolume();
 }
 
 function increaseSfx() {

@@ -3,12 +3,25 @@ class Player {
     coins = 100;
     maxStage = 0;
     stage = 0;
-    maxDiffilculty = 0;
+    maxDifficulty = 0;
     difficulty = 0;
     attack = 0;
     health = 0;
     armor = 0;
     magic = 0;
+
+
+    load(data) {
+        this.coins = data.coins;
+        this.maxStage = data.maxStage;
+        this.stage = data.stage;
+        this.maxDifficulty = data.maxDifficulty;
+        this.difficulty = data.difficulty;
+        this.attack = data.attack;
+        this.health = data.health;
+        this.armor = data.armor;
+        this.magic = data.magic;
+    }
 
 
     increase(stat) {
@@ -32,7 +45,7 @@ class Player {
         if (this.difficulty > 0 && !levelUp) {
             this.difficulty--;
         }
-        if (this.difficulty < this.maxDiffilculty && levelUp) {
+        if (this.difficulty < this.maxDifficulty && levelUp) {
             this.difficulty++;
         }
     }

@@ -4,10 +4,21 @@ let world;
 let keyboard;
 let system;
 
-let volume = 50;
-let SFX = 50;
+let audio = {
+    'volume': 50,
+    'SFX': 50
+}
+
+// let;
+// let SFX = 50;
 
 let player = new Player();
+
+window.addEventListener('blur', endClick)
+document.addEventListener('click', startAudio);
+
+
+
 
 function init() {
     // console.log('finish loading');
@@ -22,8 +33,21 @@ function init() {
     system = new System();
 }
 
-function testwelt() {
-    console.log('starte welt');
-    
-    world = new World();
+function startAudio() {
+    system.backgroundAudio.play();
+    document.removeEventListener('click', startAudio);
+}
+
+function saveAudio() {
+
+}
+
+function openNewPage(url) {
+    window.open(url, '_blank');
+}
+
+function endClick() {
+    MenuButton.storage.forEach(button => {
+        button.isClickt = false;
+    })
 }

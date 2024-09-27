@@ -5,9 +5,11 @@ class System {
     renderContent;
     backgroundAudio;
 
+    audioData = (new Audio('assets/audio/music/traveler.mp3'), new Audio('assets/audio/music/where-the-brave-may-live-forever-viking-background-music-109867.mp3'));
+
     constructor() {
         initButton();
-
+        this.startBackgroundAudio();
         this.loadMenu();
         this.upDateCanvas();
         this.renderCanvas();
@@ -96,7 +98,10 @@ class System {
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             this.renderContent.forEach(element => { element.draw(); })
         } else {
-            this.world.draw();
+            if (this.world) {
+                this.world.draw();
+            }
+
         }
 
         let self = this;
@@ -107,18 +112,44 @@ class System {
         this.renderContent = this.menu[this.show];
     }
 
-    saveGame() {
-        // funktion zum speichern des spielstandes
+    saveGame(slot) {
+        const playerString = JSON.stringify(player);
+        localStorage.setItem(slot, playerString);
+    }
+
+    loadGame(slot) {
+        const playerString = localStorage.getItem(slot);
+        if (playerString) {
+            try {
+                player = JSON.parse(playerString);
+            } catch (error) {
+                console.error("Fehler beim Laden des Spiels: Ungültige Daten.", error);
+            }
+        } else {
+            console.log("Kein gespeichertes Spiel gefunden.");
+        }
     }
 
     // sound handling
 
-startBackgroundAudio(){
-    this.backgroundAudio= new Audio()
-}
+    startBackgroundAudio() {
+        this.backgroundAudio = new Audio('assets/audio/music/traveler.mp3');
+        this.backgroundAudio.volume = audio.volume / 100;
+        this.backgroundAudio.loop = true;
+        this.backgroundAudio.play();
+    }
+
+    refreshAudioVolume() {
+        this.backgroundAudio.volume = audio.volume / 100;
+    }
 
     crossfade(duration, newAudio) {
 
+    }
+
+    switchingBackgroundAudio(newAudio) {
+        this.backgroundAudio.pause();
+        this.backgroundAudio = newAudio;
     }
 
     // veraltet und nicht verwendet.

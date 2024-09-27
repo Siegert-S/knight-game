@@ -182,8 +182,8 @@ class World {
     }
 
     difficultyUp() {
-        if (player.maxDiffilculty == player.difficulty) {
-            player.maxDiffilculty++;
+        if (player.maxDifficulty == player.difficulty) {
+            player.maxDifficulty++;
             increaseDif = true;
         } else {
             increaseDif = false;
