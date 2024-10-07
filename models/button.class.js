@@ -59,8 +59,14 @@ class MenuButton extends DrawableObject {
 
     draw() {
 
+        if (true) {
+            ctx.globalAlpha = 0.75;
+        }
         this.drawButton();
         this.drawText();
+
+
+        ctx.globalAlpha = 1;
     }
 
     drawButton() {

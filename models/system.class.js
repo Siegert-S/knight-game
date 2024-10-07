@@ -3,12 +3,25 @@ class System {
     menu = {};
     world;
     renderContent;
-    backgroundAudio;
+    backgroundAudio = 0;
 
-    audioData = (new Audio('assets/audio/music/traveler.mp3'), new Audio('assets/audio/music/where-the-brave-may-live-forever-viking-background-music-109867.mp3'));
+    audioList = [
+        ['main', 'settings', 'controlls', 'legal', 'game', 'skills', 'gamecontroll', 'loadsave'],
+        ['play'],
+        ['victoryPage'],
+        ['losePage']
+    ];
+
+    audioData = [
+        new Audio('assets/audio/music/traveler.mp3'),
+        new Audio('assets/audio/music/where-the-brave-may-live-forever-viking-background-music-109867.mp3'),
+        new Audio('assets/audio/music/victory.mp3'),
+        new Audio('assets/audio/music/cloud-of-sorrow.mp3')
+    ];
 
     constructor() {
         initButton();
+        this.initAudio();
         this.startBackgroundAudio();
         this.loadMenu();
         this.upDateCanvas();
@@ -130,26 +143,106 @@ class System {
         }
     }
 
+    switchingTo(menu) {
+
+        let audioNumber = this.audioFileForMenu(menu);
+
+        if (this.backgroundAudio !== audioNumber && audioNumber !== -1) {
+            this.crossfade(3000, audioNumber);
+        }
+
+        this.show = menu;
+    }
+
+    audioFileForMenu(name) {
+        // let index = -1;
+
+        // this.audioList.forEach(menu => {
+        //     if (menu.includes(name)) {
+        //         index = this.audioList.indexOf(menu);
+        //     }
+        // });
+        // return index;
+
+        for (let i = 0; i < this.audioList.length; i++) {
+            if (this.audioList[i].includes(name)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+
+
+
+
     // sound handling
 
-    startBackgroundAudio() {
-        this.backgroundAudio = new Audio('assets/audio/music/traveler.mp3');
-        this.backgroundAudio.volume = audio.volume / 100;
-        this.backgroundAudio.loop = true;
-        this.backgroundAudio.play();
+    initAudio() {
+        this.audioData.forEach(audioFile => {
+            audioFile.volume = 0;
+            audioFile.loop = true;
+        })
+    }
+
+    startBackgroundAudio(duration = 5000) {
+        this.audioData[this.backgroundAudio].play();
+
+        let setVolume = audio.volume / 100;
+
+        let fadeIntervall = 50;
+        let fadeStep = setVolume * (fadeIntervall / duration);
+
+        let fadeProcess = setInterval(() => { this.fadeIn(this.backgroundAudio, fadeStep, setVolume, fadeProcess); }, fadeIntervall);
     }
 
     refreshAudioVolume() {
-        this.backgroundAudio.volume = audio.volume / 100;
+        this.audioData[this.backgroundAudio].volume = audio.volume / 100;
     }
 
-    crossfade(duration, newAudio) {
+    fadeIn(index, step, setVolume, intervallID) {
+        if (this.audioData[index].volume < setVolume) {
+            this.audioData[index].volume = Math.min(setVolume, this.audioData[index].volume + step);
+        }
 
+        if (this.audioData[index].volume == setVolume) {
+            clearInterval(intervallID);
+        }
     }
 
-    switchingBackgroundAudio(newAudio) {
-        this.backgroundAudio.pause();
-        this.backgroundAudio = newAudio;
+    crossfade(duration, newAudioIndex) {
+        this.audioData[newAudioIndex].volume = 0;
+        this.audioData[newAudioIndex].play();
+        let oldAudioIndex = this.backgroundAudio;
+
+        let setVolume = audio.volume / 100;
+
+        let fadeIntervall = 50;
+        let fadeStep = setVolume * (fadeIntervall / duration);
+
+        let fadeProcess = setInterval(() => { this.fadeFunction(oldAudioIndex, newAudioIndex, fadeStep, setVolume, fadeProcess); }, fadeIntervall);
+        this.backgroundAudio = newAudioIndex;
+    }
+
+    fadeFunction(oldIndex, newIndex, step, setVolume, intervallID) {
+        if (this.audioData[oldIndex].volume > 0) {
+            this.audioData[oldIndex].volume = Math.max(0, this.audioData[oldIndex].volume - step);
+        }
+
+        if (this.audioData[newIndex].volume < 1) {
+            this.audioData[newIndex].volume = Math.min(setVolume, this.audioData[newIndex].volume + step);
+        }
+
+        if (this.audioData[oldIndex].volume === 0 && this.audioData[newIndex].volume === setVolume) {
+            this.stopAudio(oldIndex);
+            clearInterval(intervallID);
+        }
+    }
+
+    stopAudio(audioIndex) {
+        this.audioData[audioIndex].pause();
+        this.audioData[audioIndex].currentTime = 0;
     }
 
     // veraltet und nicht verwendet.

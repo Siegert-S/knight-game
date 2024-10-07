@@ -87,14 +87,6 @@ class Character extends FightingObject {
         this.setImages('jump', this.JUMP);
         this.setImages('defend', this.DEFEND);
 
-        // this.loadImages(this.IDLE);
-        // this.loadImages(this.WALK);
-        // this.loadImages(this.JUMP);
-        // this.loadImages(this.DEFEND);
-        // this.loadImages(this.ATTACK);
-        // this.loadImages(this.HURT);
-        // this.loadImages(this.DEAD);
-
         this.health = 100;
         this.maxhealth = 100;
         this.power = 15 * (player.attack + 1);
@@ -125,12 +117,9 @@ class Character extends FightingObject {
                 this.setHitboxOffset(40, 20, 85, 130, 5);
             }
         }
-
         if (!(this.status == 'defend')) {
             this.setHitboxOffset(55, 20, 85, 130, 5)
         }
-        // console.log(system.Menu);
-
         system.world.cameraX = -(this.positionX - 50);
     }
 
@@ -161,7 +150,6 @@ class Character extends FightingObject {
             //     }
             // }
             this.inputCheck();
-            // console.log(this.statuss);
             if (this.status == 'defend') {
                 if (this.faceingLeft) {
                     this.setHitboxOffset(70, 20, 85, 130, 5);
@@ -172,8 +160,6 @@ class Character extends FightingObject {
             if (!(this.status == 'defend')) {
                 this.setHitboxOffset(55, 20, 85, 130, 5)
             }
-
-
             world.cameraX = -(this.positionX - 50);
         }, 1000 / 60);
 
@@ -234,9 +220,12 @@ class Character extends FightingObject {
     tryAttack() {
         Enemy.storage.forEach(enemy => {
             if (this.isHiting(enemy)) {
-                // console.log('is hiting ');
                 this.strike(enemy);
+            } else {
+                this.weaponSound(false);
             }
         });
     }
+
+
 }

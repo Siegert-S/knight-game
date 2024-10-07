@@ -143,8 +143,10 @@ class World {
         this.hud.push(CoinCounter.storage);
     }
 
-    endWorld(victory) {
 
+    // beenden der world
+
+    endWorld(victory) {
 
         let target;
         if (victory) {
@@ -152,7 +154,7 @@ class World {
             this.difficultyUp();
 
             player.coins += Character.storage[0].cash;
-            earnedCash = Character.storage[0].cash;
+            result.earnedCash = Character.storage[0].cash;
 
             target = 'victoryPage';
         } else {
@@ -172,21 +174,21 @@ class World {
         if (player.maxStage < 7 && player.stage == player.maxStage) {
             player.maxStage++;
             player.stage++;
-            increaseStage = true;
+            result.increaseStage = true;
         } else if (player.stage != player.maxStage) {
             player.stage++;
-            increaseStage = false;
+            result.increaseStage = false;
         } else {
-            increaseStage = false;
+            result.increaseStage = false;
         }
     }
 
     difficultyUp() {
         if (player.maxDifficulty == player.difficulty) {
             player.maxDifficulty++;
-            increaseDif = true;
+            result.increaseDif = true;
         } else {
-            increaseDif = false;
+            result.increaseDif = false;
         }
     }
 

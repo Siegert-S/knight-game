@@ -7,7 +7,7 @@ class MoveableObject extends CollidableObject {
     direction = 'left';
     throwID;
     groundlevel = 460;
-    gravityIs;
+    gravityIsOn;
 
     walking_sound_1 = 'assets/audio/sfx/footsteps/footstep_grass_000.ogg';
     walking_sound_2 = 'assets/audio/sfx/footsteps/footstep_grass_002.ogg';
@@ -20,12 +20,12 @@ class MoveableObject extends CollidableObject {
 
     constructor(x = 0, y = 0, gravity = true) {
         super(x, y);
-        this.gravityIs = gravity;
+        this.gravityIsOn = gravity;
     }
 
     upDate() {
         super.upDate();
-        if (this.gravityIs) {
+        if (this.gravityIsOn) {
             this.gravity();
         }
     }
@@ -42,11 +42,11 @@ class MoveableObject extends CollidableObject {
         this.footSteps();
     }
 
-    applyGravity() {
-        this.setAndSaveIntervall(() => {
-            this.gravity();
-        }, 1000 / 120);
-    }
+    // applyGravity() {
+    //     this.setAndSaveIntervall(() => {
+    //         this.gravity();
+    //     }, 1000 / 120);
+    // }
 
     gravity() {
         if (this.isAboveGround() || this.speedY > 0) {
@@ -90,15 +90,17 @@ class MoveableObject extends CollidableObject {
     }
 
     footSteps() {
-        if (this.isSteping()) {
+        if (!this.isSteping()) {
             if (this.step) {
                 let sound1 = new Audio(this.walking_sound_1);
-                sound1.volume = 0.18;
+                // sound1.volume = 0.18;
+                sound1.volume = audio.SFX / 100;
                 sound1.play();
                 this.step = false;
             } else {
                 let sound2 = new Audio(this.walking_sound_2);
-                sound2.volume = 0.18;
+                // sound2.volume = 0.18;
+                sound2.volume = audio.SFX / 100;
                 sound2.play();
                 this.step = true;
             }
@@ -108,13 +110,21 @@ class MoveableObject extends CollidableObject {
     }
 
     isSteping() {
-        let time = new Date().getTime();
-        let timepassed = time - this.laststep;
-        return timepassed > 300;
+        return this.checkTime('laststep', 300);
     }
 
     setStep() {
-        this.laststep = new Date().getTime();
+        this.setTime('laststep');
+    }
+
+    checkTime(name, duration) {
+        let time = new Date().getTime();
+        let timepassed = time - this[name];
+        return timepassed < duration;
+    }
+
+    setTime(name) {
+        this[name] = new Date().getTime();
     }
 
     // animateObject() {

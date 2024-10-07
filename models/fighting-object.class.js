@@ -15,6 +15,9 @@ class FightingObject extends MoveableObject {
 
     };
 
+    weaponSound_hit = 'assets/audio/sfx/sword/sword-hit.mp3';
+    weaponSound_miss = 'assets/audio/sfx/sword/sword-miss.mp3';
+
     HURT;
     DEAD;
     ATTACK;
@@ -61,24 +64,29 @@ class FightingObject extends MoveableObject {
         ctx.stroke();
     }
 
+    // isHiting(target) {
+    //     let leftEdge = this.attackbox.posX2 >= target.hitbox.posX1 && target.hitbox.posX1 >= this.attackbox.posX1;
+    //     let rightEdge = this.attackbox.posX2 >= target.hitbox.posX2 && target.hitbox.posX2 >= this.attackbox.posX1;
+    //     let center = this.attackbox.posX2 <= target.hitbox.posX2 && target.hitbox.posX1 <= this.attackbox.posX1;
+
+    //     let top = this.attackbox.posY2 >= target.hitbox.posY1 && target.hitbox.posY1 >= this.attackbox.posY1;
+    //     let bottom = this.attackbox.posY2 >= target.hitbox.posY2 && target.hitbox.posY2 >= this.attackbox.posY1;
+    //     let vcenter = this.attackbox.posY2 <= target.hitbox.posY2 && target.hitbox.posY1 <= this.attackbox.posY1;
+
+    //     let horizontal = leftEdge || rightEdge || center;
+
+    //     let vertical = top || bottom || vcenter;
+
+    //     return horizontal && vertical;
+    // }
+
     isHiting(target) {
-        let leftEdge = this.attackbox.posX2 >= target.hitbox.posX1 && target.hitbox.posX1 >= this.attackbox.posX1;
-        let rightEdge = this.attackbox.posX2 >= target.hitbox.posX2 && target.hitbox.posX2 >= this.attackbox.posX1;
-        let center = this.attackbox.posX2 <= target.hitbox.posX2 && target.hitbox.posX1 <= this.attackbox.posX1;
-
-        let top = this.attackbox.posY2 >= target.hitbox.posY1 && target.hitbox.posY1 >= this.attackbox.posY1;
-        let bottom = this.attackbox.posY2 >= target.hitbox.posY2 && target.hitbox.posY2 >= this.attackbox.posY1;
-        let vcenter = this.attackbox.posY2 <= target.hitbox.posY2 && target.hitbox.posY1 <= this.attackbox.posY1;
-
-        let horizontal = leftEdge || rightEdge || center;
-
-        let vertical = top || bottom || vcenter;
-
-        return horizontal && vertical;
+        return this.isOverlapping(this.attackbox, target.hitbox);
     }
 
     strike(target) {
         if (!this.isAttacking()) {
+            this.weaponSound();
             if (target.health > 0) {
                 if (!target.isDefending()) {
                     target.health = target.health - this.power;
@@ -86,64 +94,36 @@ class FightingObject extends MoveableObject {
                 target.setHurt();
                 this.setAttack();
             }
-        } else {
-
         }
     }
 
     isHurt() {
-        let time = new Date().getTime();
-        let timepassed = time - this.lastHit;
-        // timepassed = timepassed / 1000;
-
-        return timepassed < 300;
+        return this.checkTime('lastHit', 300);
     }
 
     setHurt() {
-        this.lastHit = new Date().getTime();
+        this.setTime('lastHit');
     }
 
     isAttacking() {
-        let time = new Date().getTime();
-        let timepassed = time - this.lastAttack;
-        return timepassed < 1000;
+        return this.checkTime('lastAttack', 1000);
     }
 
     setAttack() {
-        this.lastAttack = new Date().getTime();
+        this.setTime('lastAttack');
     }
 
     isDefending() {
-        let time = new Date().getTime();
-        let timepassed = time - this.lastDefend;
-        return timepassed < 500;
+        return this.checkTime('lastDefend', 500);
     }
 
     setDefend() {
-        this.lastDefend = new Date().getTime();
+        this.setTime('lastDefend');
     }
-
-    // animateObject() {
-    //     if (this.status == 'hurt') {
-    //         this.animateImage(this.HURT);
-    //     }
-    //     if (this.status == 'dead') {
-    //         this.animateImage(this.DEAD);
-    //     }
-    //     if (this.status == 'attack') {
-    //         this.animateImage(this.ATTACK);
-    //     }
-    //     if (this.status == 'defend') {
-    //         this.animateImage(this.DEFEND);
-    //     }
-    //     super.animateObject();
-    // }
 
     stopAnimateImage() {
         if (this.lastImage == this.status) {
             if (this.status == 'dead') {
-                // this.deleteAllIntervalls();
-                // let self = this;
                 setTimeout(() => {
                     this.deleteSelf();
                 }, 2000);
@@ -151,6 +131,18 @@ class FightingObject extends MoveableObject {
             }
         }
         return true;
+    }
+
+    weaponSound(hit = true) {
+        if (hit) {
+            let sound = new Audio(this.weaponSound_hit);
+            sound.volume = audio.SFX / 100;
+            sound.play();
+        } else {
+            let sound = new Audio(this.weaponSound_miss);
+            sound.volume = audio.SFX / 100;
+            sound.play();
+        }
     }
 }
 

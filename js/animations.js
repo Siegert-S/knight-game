@@ -222,3 +222,52 @@ const COIN_SILVER_STAR = [
     'assets/img/coins/Silver/Silver_28.png',
     'assets/img/coins/Silver/Silver_29.png',
 ];
+
+const MAGE_IDLE = [
+    'assets/img/mage/Idel_1.png',
+    'assets/img/mage/Idel_2.png',
+    'assets/img/mage/Idel_3.png',
+    'assets/img/mage/Idel_4.png',
+    'assets/img/mage/Idel_5.png',
+    'assets/img/mage/Idel_6.png',
+    'assets/img/mage/Idel_7.png',
+    'assets/img/mage/Idel_8.png',
+];
+
+const MAGE_HURT = [
+    'assets/img/mage/Hurt_1.png',
+    'assets/img/mage/Hurt_2.png',
+    'assets/img/mage/Hurt_3.png',
+    'assets/img/mage/Hurt_4.png',
+];
+
+const MAGE_SPELLCAST = [
+    'assets/img/mage/Spellcast_1.png',
+    'assets/img/mage/Spellcast_2.png',
+    'assets/img/mage/Spellcast_3.png',
+    'assets/img/mage/Spellcast_4.png',
+    'assets/img/mage/Spellcast_5.png',
+    'assets/img/mage/Spellcast_6.png',
+    'assets/img/mage/Spellcast_7.png',
+    'assets/img/mage/Spellcast_8.png',
+    'assets/img/mage/Spellcast_9.png',
+    'assets/img/mage/Spellcast_10.png',
+    'assets/img/mage/Spellcast_11.png',
+    'assets/img/mage/Spellcast_12.png',
+    'assets/img/mage/Spellcast_13.png',
+    'assets/img/mage/Spellcast_14.png',
+    'assets/img/mage/Spellcast_15.png',
+    'assets/img/mage/Spellcast_16.png',
+];
+
+const MAGICBLAST = [
+    'assets/img/mage/Magicblast_1.png',
+    'assets/img/mage/Magicblast_2.png',
+    'assets/img/mage/Magicblast_3.png',
+    'assets/img/mage/Magicblast_4.png',
+    'assets/img/mage/Magicblast_5.png',
+    'assets/img/mage/Magicblast_6.png',
+    'assets/img/mage/Magicblast_7.png',
+    'assets/img/mage/Magicblast_8.png',
+    'assets/img/mage/Magicblast_9.png',
+];

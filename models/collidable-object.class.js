@@ -46,14 +46,33 @@ class CollidableObject extends AnimatedObject {
         ctx.stroke();
     }
 
-    isColliding(object) {
-        let leftEdge = this.hitbox.posX2 >= object.hitbox.posX1 && object.hitbox.posX1 >= this.hitbox.posX1;
-        let rightEdge = this.hitbox.posX2 >= object.hitbox.posX2 && object.hitbox.posX2 >= this.hitbox.posX1;
-        let center = this.hitbox.posX2 <= object.hitbox.posX2 && object.hitbox.posX1 <= this.hitbox.posX1;
+    // isColliding(object) {
+    //     let leftEdge = this.hitbox.posX2 >= object.hitbox.posX1 && object.hitbox.posX1 >= this.hitbox.posX1;
+    //     let rightEdge = this.hitbox.posX2 >= object.hitbox.posX2 && object.hitbox.posX2 >= this.hitbox.posX1;
+    //     let center = this.hitbox.posX2 <= object.hitbox.posX2 && object.hitbox.posX1 <= this.hitbox.posX1;
 
-        let top = this.hitbox.posY2 >= object.hitbox.posY1 && object.hitbox.posY1 >= this.hitbox.posY1;
-        let bottom = this.hitbox.posY2 >= object.hitbox.posY2 && object.hitbox.posY2 >= this.hitbox.posY1;
-        let vcenter = this.hitbox.posY2 <= object.hitbox.posY2 && object.hitbox.posY1 <= this.hitbox.posY1;
+    //     let top = this.hitbox.posY2 >= object.hitbox.posY1 && object.hitbox.posY1 >= this.hitbox.posY1;
+    //     let bottom = this.hitbox.posY2 >= object.hitbox.posY2 && object.hitbox.posY2 >= this.hitbox.posY1;
+    //     let vcenter = this.hitbox.posY2 <= object.hitbox.posY2 && object.hitbox.posY1 <= this.hitbox.posY1;
+
+    //     let horizontal = leftEdge || rightEdge || center;
+    //     let vertical = top || bottom || vcenter;
+
+    //     return horizontal && vertical;
+    // }
+
+    isColliding(object) {
+        return this.isOverlapping(this.hitbox, object.hitbox);
+    }
+
+    isOverlapping(thisBox, targetBox) {
+        let leftEdge = thisBox.posX2 >= targetBox.posX1 && targetBox.posX1 >= thisBox.posX1;
+        let rightEdge = thisBox.posX2 >= targetBox.posX2 && targetBox.posX2 >= thisBox.posX1;
+        let center = thisBox.posX2 <= targetBox.posX2 && targetBox.posX1 <= thisBox.posX1;
+
+        let top = thisBox.posY2 >= targetBox.posY1 && targetBox.posY1 >= thisBox.posY1;
+        let bottom = thisBox.posY2 >= targetBox.posY2 && targetBox.posY2 >= thisBox.posY1;
+        let vcenter = thisBox.posY2 <= targetBox.posY2 && targetBox.posY1 <= thisBox.posY1;
 
         let horizontal = leftEdge || rightEdge || center;
         let vertical = top || bottom || vcenter;

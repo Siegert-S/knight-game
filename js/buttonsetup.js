@@ -170,31 +170,35 @@ function stackButtons(index, amount) {
 }
 
 function switchTo(menu) {
-    system.show = menu;
+    system.switchingTo(menu);
 }
 
 function increaseVolume() {
-    if (volume < 100) {
-        volume++;
+    if (audio.volume < 100) {
+        audio.volume++;
     }
+    saveAudio();
     system.refreshAudioVolume();
 }
 
 function decreaseVolume() {
-    if (volume > 0) {
-        volume--;
+    if (audio.volume > 0) {
+        audio.volume--;
     }
+    saveAudio();
     system.refreshAudioVolume();
 }
 
 function increaseSfx() {
-    if (SFX < 100) {
-        SFX++;
+    if (audio.SFX < 100) {
+        audio.SFX++;
     }
+    saveAudio();
 }
 
 function decreaseSfx() {
-    if (SFX > 0) {
-        SFX--;
+    if (audio.SFX > 0) {
+        audio.SFX--;
     }
+    saveAudio();
 }

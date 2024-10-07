@@ -23,9 +23,9 @@ class AnimatedObject extends DrawableObject {
         });
     }
 
-    setImages(name, arrayofimages) {
-        this.animationImages[name] = arrayofimages;
-        this.loadImages(arrayofimages);
+    setImages(name, arrayOfImages) {
+        this.animationImages[name] = arrayOfImages;
+        this.loadImages(arrayOfImages);
     }
 
     upDate() {
@@ -38,14 +38,6 @@ class AnimatedObject extends DrawableObject {
 
     animateObject() {
         this.selectImage();
-    }
-
-    setImage(images) {
-        let i = this.currentImage % images.length;
-        let path = images[i];
-        this.img = this.imgCache[path];
-        this.currentImage++;
-        this.lastImage = this.status;
     }
 
     selectImage() {
@@ -65,6 +57,14 @@ class AnimatedObject extends DrawableObject {
                 }
             }
         }
+    }
+
+    setImage(images) {
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.imgCache[path];
+        this.currentImage++;
+        this.lastImage = this.status;
     }
 
     stopAnimateImage() {

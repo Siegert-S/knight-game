@@ -37,7 +37,7 @@ class Enemy extends FightingObject {
         this.speedX = 2;
         this.health = 20 * difficulty;
         this.maxhealth = 20 * difficulty;
-        this.loot = 3 * difficulty;
+        this.loot = 1 * difficulty;
 
         this.width = 220;
         this.height = 150;

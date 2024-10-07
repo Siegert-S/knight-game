@@ -4,15 +4,14 @@ let world;
 let keyboard;
 let system;
 
-let audio = {
-    'volume': 50,
-    'SFX': 50
-}
+// let audio = {
+//     'volume': 50,
+//     'SFX': 50
+// }
 
-// let;
-// let SFX = 50;
+// let player = new Player();
 
-let player = new Player();
+loadAudio();
 
 window.addEventListener('blur', endClick)
 document.addEventListener('click', startAudio);
@@ -21,25 +20,32 @@ document.addEventListener('click', startAudio);
 
 
 function init() {
-    // console.log('finish loading');
 
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext("2d");
-    // initButton();
+
     keyboard = new Keyboard();
-    // console.log(canvas);
     // console.log(canvas.getAttribute('width'));
-    // world = new World();
     system = new System();
 }
 
 function startAudio() {
-    system.backgroundAudio.play();
+    system.startBackgroundAudio();
     document.removeEventListener('click', startAudio);
 }
 
 function saveAudio() {
+    saveLocal('audio', audio);
+}
 
+function loadAudio() {
+    let buffer = loadLocal('audio')
+
+    if (buffer) {
+        audio.volume = buffer.volume;
+        audio.SFX = buffer.SFX;
+
+    }
 }
 
 function openNewPage(url) {
@@ -50,4 +56,14 @@ function endClick() {
     MenuButton.storage.forEach(button => {
         button.isClickt = false;
     })
+}
+
+function saveLocal(key, value) {
+    let buffer = JSON.stringify(value);
+    localStorage.setItem(key, buffer);
+}
+
+function loadLocal(key) {
+    let buffer = localStorage.getItem(key);
+    return JSON.parse(buffer);
 }
