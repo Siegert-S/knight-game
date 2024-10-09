@@ -30,16 +30,24 @@ class MoveableObject extends CollidableObject {
         }
     }
 
-    moveRight() {
+    moveRight(walk = true) {
         this.positionX += this.speedX;
         this.faceingLeft = false;
-        this.footSteps();
+        if (walk) {
+            this.footSteps();
+        }
     }
 
-    moveLeft() {
+    moveLeft(walk = true) {
         this.positionX -= this.speedX;
         this.faceingLeft = true;
-        this.footSteps();
+        if (walk) {
+            this.footSteps();
+        }
+    }
+
+    knockback(power) {
+        this.positionX -= power;
     }
 
     // applyGravity() {

@@ -266,8 +266,40 @@ const MAGICBLAST = [
     'assets/img/mage/Magicblast_3.png',
     'assets/img/mage/Magicblast_4.png',
     'assets/img/mage/Magicblast_5.png',
-    'assets/img/mage/Magicblast_6.png',
-    'assets/img/mage/Magicblast_7.png',
-    'assets/img/mage/Magicblast_8.png',
-    'assets/img/mage/Magicblast_9.png',
+    // 'assets/img/mage/Magicblast_6.png',
+    // 'assets/img/mage/Magicblast_7.png',
+    // 'assets/img/mage/Magicblast_8.png',
+    // 'assets/img/mage/Magicblast_9.png',
+];
+
+const MAGIC_EXPLOSION = [
+    'assets/img/mage/Explosion_1.png',
+    'assets/img/mage/Explosion_2.png',
+    'assets/img/mage/Explosion_3.png',
+    'assets/img/mage/Explosion_4.png',
+    'assets/img/mage/Explosion_5.png',
+    'assets/img/mage/Explosion_6.png',
+    'assets/img/mage/Explosion_7.png',
+    'assets/img/mage/Explosion_8.png',
+    'assets/img/mage/Explosion_9.png',
+    'assets/img/mage/Explosion_10.png',
+];
+
+const MAGE_DEAD = [
+    'assets/img/mage/Dead_1.png',
+    'assets/img/mage/Dead_2.png',
+    'assets/img/mage/Dead_3.png',
+    'assets/img/mage/Dead_4.png',
+];
+
+const MAGE_ATTACK = [
+    'assets/img/mage/Attack_1.png',
+    'assets/img/mage/Attack_2.png',
+    'assets/img/mage/Attack_3.png',
+    'assets/img/mage/Attack_4.png',
+    'assets/img/mage/Attack_5.png',
+    'assets/img/mage/Attack_6.png',
+    'assets/img/mage/Attack_7.png',
+    'assets/img/mage/Attack_8.png',
+    'assets/img/mage/Attack_9.png',
 ];

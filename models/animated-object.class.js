@@ -68,6 +68,14 @@ class AnimatedObject extends DrawableObject {
     }
 
     stopAnimateImage() {
+        if (this.lastImage == this.status) {
+            if (this.status == 'dead') {
+                setTimeout(() => {
+                    this.deleteSelf();
+                }, 1000);
+                return false;
+            }
+        }
         return true;
     }
 

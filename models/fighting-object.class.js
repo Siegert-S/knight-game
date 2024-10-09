@@ -91,8 +91,12 @@ class FightingObject extends MoveableObject {
                 if (!target.isDefending()) {
                     target.health = target.health - this.power;
                 }
+
                 target.setHurt();
                 this.setAttack();
+            }
+            if (target instanceof Projectile) {
+                target.movingLeft = false;
             }
         }
     }

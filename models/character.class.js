@@ -188,7 +188,7 @@ class Character extends FightingObject {
                 this.setDefend();
                 this.status = 'defend';
             } else if (keyboard.SPACE) {
-                this.tryAttack();
+                this.doAttack();
                 this.status = 'attack';
             } else {
                 if (keyboard.UP && !this.isAboveGround()) {
@@ -217,15 +217,51 @@ class Character extends FightingObject {
 
     }
 
-    tryAttack() {
-        Enemy.storage.forEach(enemy => {
-            if (this.isHiting(enemy)) {
-                this.strike(enemy);
-            } else {
-                this.weaponSound(false);
-            }
-        });
+    // tryAttack() {
+    //     Enemy.storage.forEach(enemy => {
+    //         if (this.isHiting(enemy)) {
+    //             this.strike(enemy);
+    //         } else {
+    //             this.weaponSound(false);
+    //         }
+    //     });
+
+    //     Boss.storage.forEach(enemy => {
+    //         if (this.isHiting(enemy)) {
+    //             this.strike(enemy);
+    //         } else {
+    //             this.weaponSound(false);
+    //         }
+    //     });
+    // }
+
+    doAttack() {
+        let hitEnemy;
+
+        hitEnemy = this.checkHit(Enemy);
+        if (hitEnemy == null) {
+            hitEnemy = this.checkHit(Projectile);
+        }
+        if (hitEnemy == null) {
+            hitEnemy = this.checkHit(Boss);
+        }
+
+        if (hitEnemy != null) {
+            this.strike(hitEnemy);
+        } else {
+            this.weaponSound(false);
+        }
     }
 
+    checkHit(classRef) {
+        for (let i = 0; i < classRef.storage.length; i++) {
+            let enemy = classRef.storage[i];
+            if (this.isHiting(enemy)) {
+                return enemy;
+            }
+        }
+
+        return null;
+    }
 
 }

@@ -62,6 +62,13 @@ class CollidableObject extends AnimatedObject {
     // }
 
     isColliding(object) {
+        // if (object instanceof Projectile) {
+        //     console.log(this.hitbox);
+        //     console.log(object.hitbox);
+        //     console.log(this.isOverlapping(this.hitbox, object.hitbox));
+
+        // }
+
         return this.isOverlapping(this.hitbox, object.hitbox);
     }
 

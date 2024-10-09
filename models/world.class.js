@@ -42,7 +42,7 @@ class World {
         if (this.worldIsRuning) {
 
             if (this.cameraX <= -6450 && Enemy.storage.length == 0) {
-                console.log('sieg');
+                // console.log('sieg');
                 this.worldIsRuning = false;
                 this.endWorld(true);
             } else {
@@ -89,19 +89,21 @@ class World {
         }
     }
 
-    checkCollisions() {
-        setInterval(() => {
-            this.entity.forEach((entry) => {
-                entry.forEach((o) => {
-                    if (o instanceof Coin || o instanceof Enemy) {
-                        if (this.character.isColliding(o)) {
-                            o.onCollision();
-                        }
-                    }
-                })
-            })
-        }, 1000 / 60);
-    }
+    // checkCollisions() {
+    //     setInterval(() => {
+    //         this.entity.forEach((entry) => {
+    //             entry.forEach((o) => {
+    //                 if (o instanceof Coin || o instanceof Enemy) {
+    //                     if (this.character.isColliding(o)) {
+    //                         o.onCollision();
+    //                         console.log('old function');
+
+    //                     }
+    //                 }
+    //             })
+    //         })
+    //     }, 1000 / 60);
+    // }
 
     collisionCheck() {
         this.entity.forEach((entry) => {
@@ -136,6 +138,8 @@ class World {
         this.entity.push(Background.storage);
         this.entity.push(Coin.storage);
         this.entity.push(Enemy.storage);
+        this.entity.push(Projectile.storage);
+        this.entity.push(Boss.storage);
     }
 
     collectHudObjects() {
@@ -197,7 +201,7 @@ class World {
     }
 
     deconstructWorld() {
-        console.log('delete World');
+        // console.log('delete World');
 
 
         this.deleteObjectsOf(Coin);

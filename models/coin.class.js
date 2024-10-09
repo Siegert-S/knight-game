@@ -109,8 +109,7 @@ class Coin extends MoveableObject {
     dropCoin(isDrop) {
         if (isDrop) {
             this.positionY = this.groundlevel;
-            // this.applyGravity();
-            this.gravityIs = true;
+            this.gravityIsOn = true;
             let speed = (Math.random() - 0.5) * 13;
             let height = 3 + (Math.random() * 3);
             this.throw(height, speed);

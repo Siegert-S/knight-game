@@ -29,6 +29,8 @@ class DrawableObject extends ManageableObject {
             try {
                 ctx.drawImage(this.img, this.positionX, this.positionY, this.width, this.height);
             } catch (error) {
+                console.log(this);
+
                 console.log(this.img);
             }
         } else {

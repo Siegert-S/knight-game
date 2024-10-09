@@ -85,5 +85,7 @@ class Szene extends ManageableObject {
             let variX = this.intervalVariation(300, true);
             Enemy.produce(fixX + variX, this.difficulty);
         }
+        Projectile.produce();
+        Boss.produce(this.difficulty);
     }
 }
