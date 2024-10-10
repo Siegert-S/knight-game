@@ -20,6 +20,9 @@ class ManageableObject {
     }
 
     deleteSelf() {
+
+        console.log('Call Stack:', new Error().stack);
+
         let index = this.constructor.storage.indexOf(this);
         // this.deleteAllIntervalls();
         if (index != -1) {

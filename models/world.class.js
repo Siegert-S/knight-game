@@ -40,11 +40,19 @@ class World {
 
     draw() {
         if (this.worldIsRuning) {
+            // console.log('gegner');
+            // console.log((this.cameraX <= -6450 && Enemy.storage.length == 0));
+            // console.log('spieler');
+            // console.log(Character.storage[0].gameOver);
 
-            if (this.cameraX <= -6450 && Enemy.storage.length == 0) {
-                // console.log('sieg');
+
+
+            if ((this.cameraX <= -6450 && Enemy.storage.length == 0) || Character.storage[0].gameOver) {
+                console.log('wird erreicht');
+
                 this.worldIsRuning = false;
-                this.endWorld(true);
+                // console.log('sieg');
+                this.endWorld(!this.character.gameOver);
             } else {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 this.translateFrame(true);
@@ -151,7 +159,6 @@ class World {
     // beenden der world
 
     endWorld(victory) {
-
         let target;
         if (victory) {
             this.stageUp();
@@ -206,6 +213,7 @@ class World {
 
         this.deleteObjectsOf(Coin);
         this.deleteObjectsOf(Enemy);
+        this.deleteObjectsOf(Boss);
         this.deleteObjectsOf(Background);
         this.deleteObjectsOf(Character);
         this.deleteObjectsOf(Statusbar);
@@ -216,12 +224,12 @@ class World {
     }
 
     showWorldData() {
-        console.log(Coin.storage);
-        console.log(Enemy.storage);
-        console.log(Background.storage);
-        console.log(Character.storage);
-        console.log(Statusbar.storage);
-        console.log(CoinCounter.storage);
-
+        this.deleteObjectsOf(Coin);
+        this.deleteObjectsOf(Enemy);
+        this.deleteObjectsOf(Boss);
+        this.deleteObjectsOf(Background);
+        this.deleteObjectsOf(Character);
+        this.deleteObjectsOf(Statusbar);
+        this.deleteObjectsOf(CoinCounter);
     }
 }

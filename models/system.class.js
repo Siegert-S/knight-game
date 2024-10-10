@@ -155,21 +155,11 @@ class System {
     }
 
     audioFileForMenu(name) {
-        // let index = -1;
-
-        // this.audioList.forEach(menu => {
-        //     if (menu.includes(name)) {
-        //         index = this.audioList.indexOf(menu);
-        //     }
-        // });
-        // return index;
-
         for (let i = 0; i < this.audioList.length; i++) {
             if (this.audioList[i].includes(name)) {
                 return i;
             }
         }
-
         return -1;
     }
 

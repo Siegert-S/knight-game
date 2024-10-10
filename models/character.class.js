@@ -3,7 +3,7 @@ class Character extends FightingObject {
     mana = 0;
     maxmana = 5;
     cash = 0;
-
+    gameOver = false;
 
     IDLE = [
         'assets/img/knight/Knight_1/single_images/Idle_1.png',
@@ -90,6 +90,7 @@ class Character extends FightingObject {
         this.health = 100;
         this.maxhealth = 100;
         this.power = 15 * (player.attack + 1);
+        this.armor = 5 * (player.armor + 1);
         this.speedX = 4;
 
         this.positionX = 50;
@@ -99,8 +100,6 @@ class Character extends FightingObject {
         this.setHitboxOffset(55, 20, 85, 130)
         this.setAttackboxOffset(140, 10, 80, 130, 35);
         this.setPositionYRelativ(0);
-        // this.applyGravity();
-        // this.animate();
 
         // this.startAnimation();
         // this.setImages('idle', this.IDLE);
@@ -123,98 +122,44 @@ class Character extends FightingObject {
         system.world.cameraX = -(this.positionX - 50);
     }
 
-    animate() {
-        this.setAndSaveIntervall(() => {
-            // if (!keyboard.DOWN) {
-            //     this.setHitboxOffset(55, 20, 85, 130, 5)
-            // }
-            // if (keyboard.DOWN) {
-            //     if (this.faceingLeft) {
-            //         this.setHitboxOffset(70, 20, 85, 130, 5);
 
-            //     } else {
-            //         this.setHitboxOffset(40, 20, 85, 130, 5);
-            //     }
-            //     this.setDefend();
-
-            // } else {
-            //     if (keyboard.UP && !this.isAboveGround()) {
-            //         this.jump();
-            //     }
-            //     if (keyboard.RIGHT) {
-            //         this.moveRight();
-
-            //     }
-            //     if (keyboard.LEFT && this.positionX > 50) {
-            //         this.moveLeft();
-            //     }
-            // }
-            this.inputCheck();
-            if (this.status == 'defend') {
-                if (this.faceingLeft) {
-                    this.setHitboxOffset(70, 20, 85, 130, 5);
-                } else {
-                    this.setHitboxOffset(40, 20, 85, 130, 5);
-                }
-            }
-            if (!(this.status == 'defend')) {
-                this.setHitboxOffset(55, 20, 85, 130, 5)
-            }
-            world.cameraX = -(this.positionX - 50);
-        }, 1000 / 60);
-
-        // this.setAndSaveIntervall(() => {
-        //     if (this.health < 1) {
-        //         this.animateImage(this.DEAD)
-        //     } else if (keyboard.DOWN) {
-        //         this.animateImage(this.DEFEND)
-        //     } else if (this.isHurt()) {
-        //         this.animateImage(this.HURT)
-        //     } else if (this.isAboveGround()) {
-        //         this.animateImage(this.JUMP)
-        //     } else if (keyboard.RIGHT || keyboard.LEFT) {
-        //         this.animateImage(this.WALK)
-        //     } else {
-        //         this.animateImage(this.IDLE)
-        //     }
-
-        // }, 1000 / 10);
-        // war 1000 / 6 
-    }
 
     inputCheck() {
         if (this.status == 'idle' || this.status == 'walk') {
-            if (keyboard.DOWN) {
-                this.setDefend();
-                this.status = 'defend';
-            } else if (keyboard.SPACE) {
-                this.doAttack();
-                this.status = 'attack';
+            if (this.health < 1) {
+                this.status = 'dead';
             } else {
-                if (keyboard.UP && !this.isAboveGround()) {
+                if (keyboard.DOWN) {
+                    this.setDefend();
+                    this.status = 'defend';
+                } else if (keyboard.SPACE) {
+                    this.doAttack();
+                    this.status = 'attack';
+                } else {
+                    if (keyboard.UP && !this.isAboveGround()) {
 
-                    this.jump();
-                    this.status = 'jump';
-                }
-                if (keyboard.RIGHT && this.positionX < 6500) {
+                        this.jump();
+                        this.status = 'jump';
+                    }
+                    if (keyboard.RIGHT && this.positionX < 6500) {
 
-                    this.moveRight();
-                    this.status = 'walk';
-                }
-                if (keyboard.LEFT && this.positionX > 50) {
+                        this.moveRight();
+                        this.status = 'walk';
+                    }
+                    if (keyboard.LEFT && this.positionX > 50) {
 
-                    this.moveLeft();
-                    this.status = 'walk';
-                }
-                if (!keyboard.RIGHT && !keyboard.LEFT && !keyboard.UP) {
+                        this.moveLeft();
+                        this.status = 'walk';
+                    }
+                    if (!keyboard.RIGHT && !keyboard.LEFT && !keyboard.UP) {
 
-                    if (this.status == 'walk') {
-                        this.status = 'idle';
+                        if (this.status == 'walk') {
+                            this.status = 'idle';
+                        }
                     }
                 }
             }
         }
-
     }
 
     // tryAttack() {

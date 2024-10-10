@@ -2,6 +2,7 @@ class FightingObject extends MoveableObject {
     health;
     maxhealth;
     power;
+    armor = 0;
     lastHit = 0;
     lastAttack = 0;
     lastDefend = 0;
@@ -123,18 +124,6 @@ class FightingObject extends MoveableObject {
 
     setDefend() {
         this.setTime('lastDefend');
-    }
-
-    stopAnimateImage() {
-        if (this.lastImage == this.status) {
-            if (this.status == 'dead') {
-                setTimeout(() => {
-                    this.deleteSelf();
-                }, 2000);
-                return false;
-            }
-        }
-        return true;
     }
 
     weaponSound(hit = true) {

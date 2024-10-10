@@ -48,13 +48,8 @@ class MoveableObject extends CollidableObject {
 
     knockback(power) {
         this.positionX -= power;
+        this.status = 'hurt';
     }
-
-    // applyGravity() {
-    //     this.setAndSaveIntervall(() => {
-    //         this.gravity();
-    //     }, 1000 / 120);
-    // }
 
     gravity() {
         if (this.isAboveGround() || this.speedY > 0) {
@@ -93,8 +88,6 @@ class MoveableObject extends CollidableObject {
                 clearInterval(this.throwID);
             }
         }, 1000 / 60);
-
-
     }
 
     footSteps() {
