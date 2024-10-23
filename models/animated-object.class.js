@@ -2,7 +2,7 @@ class AnimatedObject extends DrawableObject {
     imgCache = {};
     currentImage = 0;
     lastImage;
-    _status = 'idle';
+    status = 'idle';
 
     upDateCount = 0;
 
@@ -11,25 +11,23 @@ class AnimatedObject extends DrawableObject {
     animationImages = {
     }
 
+    /**
+     * Constructor for the object.
+     * 
+     * Initializes the object with provided x and y coordinates and calls the parent constructor.
+     * 
+     * @param {number} [x=0] - The x-coordinate of the object. Defaults to 0.
+     * @param {number} [y=0] - The y-coordinate of the object. Defaults to 0.
+     */
     constructor(x = 0, y = 0) {
         super(x, y);
     }
 
-    get status() {
-        if (this instanceof Projectile) {
-            // console.log('getter benutzt');
-        }
-        return this._status;
-    }
-
-    set status(value) {
-        if (this instanceof Character) {
-            console.log(`Status wird geändert von ${this._status} zu ${value}`);
-            console.log('Call Stack:', new Error().stack);
-        }
-        this._status = value;
-    }
-
+    /**
+     * Loads images into the image cache.
+     * 
+     * @param {string[]} array - An array of image paths to load.
+     */
     loadImages(array) {
         array.forEach((path) => {
             let img = new Image();
@@ -38,23 +36,33 @@ class AnimatedObject extends DrawableObject {
         });
     }
 
+    /**
+     * Sets the animation images for a specific action and loads them into the cache.
+     * 
+     * @param {string} name - The name of the action (e.g., 'idle', 'walk').
+     * @param {string[]} arrayOfImages - An array of image paths associated with the action.
+     */
     setImages(name, arrayOfImages) {
         this.animationImages[name] = arrayOfImages;
         this.loadImages(arrayOfImages);
     }
 
+    /**
+     * Updates the object and animates it every 6th frame.
+     */
     upDate() {
         this.upDateCount++;
         let check = this.upDateCount % 6 == 0;
         if (check) {
-            this.animateObject();
+            this.selectImage();
         }
     }
 
-    animateObject() {
-        this.selectImage();
-    }
-
+    /**
+     * Selects the current image to display based on the object's status.
+     * 
+     * The image is chosen based on the status (e.g., 'idle', 'walk'). If the animation has finished, it resets.
+     */
     selectImage() {
         if (this.status == 'idle' || this.status == 'walk') {
             this.setImage(this.animationImages[this.status]);
@@ -65,19 +73,16 @@ class AnimatedObject extends DrawableObject {
             } else if (this.currentImage < this.animationImages[this.status].length) {
                 this.setImage(this.animationImages[this.status]);
             } else {
-
-                if (this.doAnimationCycle) {
-                    this.doAnimationCycle = this.stopAnimateImage();
-                    if (this.doAnimationCycle) {
-                        this.status = 'idle';
-                        this.currentImage = 0;
-                        this.setImage(this.animationImages[this.status]);
-                    }
-                }
+                this.resetImage();
             }
         }
     }
 
+    /**
+     * Sets the current image for rendering.
+     * 
+     * @param {string[]} images - An array of image paths.
+     */
     setImage(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -86,28 +91,42 @@ class AnimatedObject extends DrawableObject {
         this.lastImage = this.status;
     }
 
-    stopAnimateImage() {
-        if (this.lastImage == this.status) {
-            if (this.status == 'dead') {
-                console.log('stop image of');
-                console.log(this);
-
-                let target = this;
-                setTimeout(() => {
-                    if (target instanceof Character) {
-                        console.log('test');
-
-                        Character.storage[0].gameOver = true;
-                        // system.world.endWorld(false);
-                    } else {
-                        this.deleteSelf();
-                    }
-                }, 1000);
-                return false;
+    /**
+     * Resets the animation cycle when necessary.
+     * 
+     * If the animation cycle is completed, it stops the animation and sets the status to 'idle'.
+     */
+    resetImage() {
+        if (this.doAnimationCycle) {
+            this.doAnimationCycle = this.stopAnimateImage();
+            if (this.doAnimationCycle) {
+                this.status = 'idle';
+                this.currentImage = 0;
+                this.setImage(this.animationImages[this.status]);
             }
+        }
+    }
+
+    /**
+     * Stops the image animation if the object is 'dead', and triggers further actions.
+     * 
+     * If the object is dead, it either triggers a game over for characters or deletes the object after a delay.
+     * 
+     * @returns {boolean} - Returns false if the animation should stop, otherwise true.
+     */
+    stopAnimateImage() {
+        if (this.lastImage == this.status && this.status == 'dead') {
+            let target = this;
+            setTimeout(() => {
+                if (target instanceof Character) {
+                    Character.storage[0].gameOver = true;
+                } else {
+                    this.deleteSelf();
+                }
+            }, 1000);
+            return false;
         }
         return true;
     }
-
 
 }

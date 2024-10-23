@@ -1,8 +1,15 @@
 class Statusbar extends AnimatedObject {
-    percentge = 65;
+    percentge = 100;
     color;
     backgroundImg;
     resources;
+
+    /**
+     * Represents a status bar for the player, either for health or mana.
+     * @param {number} x - The x-coordinate of the status bar's position.
+     * @param {number} y - The y-coordinate of the status bar's position.
+     * @param {string} [type='health'] - The type of the status bar ('health' or 'mana').
+     */
     constructor(x, y, type = 'health') {
         super().loadImage('assets/img/knight/Knight_1/single_images/Statusbar_2.png');
         this.loadBackgroundImage('assets/img/knight/Knight_1/single_images/Statusbar_Background.png');
@@ -13,28 +20,40 @@ class Statusbar extends AnimatedObject {
         this.setStatusbarFor(type)
     }
 
+    /**
+     * Loads the background image for the status bar.
+     * @param {string} path - The path to the background image.
+     * @returns {void}
+     */
     loadBackgroundImage(path) {
         let img = new Image();
         img.src = path;
         this.backgroundImg = img;
     }
 
-
+    /**
+     * Draws the status bar on the canvas.
+     * @returns {void}
+     */
     draw() {
         this.computePercentge();
         this.drawBackground();
-        // console.log(ctx.fillStyle);
         this.drawFilling();
-        // console.log(ctx.fillStyle);
         super.draw();
     }
 
+    /**
+     * Draws the background of the status bar.
+     * @returns {void}
+     */
     drawBackground() {
-        // ctx.fillStyle = 'darkbrown';
-        // ctx.fillRect(this.positionX + 4, this.positionY + 4, this.width - 8, this.height - 8);
         ctx.drawImage(this.backgroundImg, this.positionX + 4, this.positionY + 4, this.width - 8, this.height - 8);
     }
 
+    /**
+     * Draws the filling of the status bar based on the current percentage.
+     * @returns {void}
+     */
     drawFilling() {
         let filling = (this.width - 8) * (this.percentge / 100);
         ctx.fillStyle = this.color;
@@ -43,6 +62,10 @@ class Statusbar extends AnimatedObject {
         ctx.fillStyle = 'darkbrown';
     }
 
+    /**
+     * Computes the current percentage for the status bar based on the resource type.
+     * @returns {void}
+     */
     computePercentge() {
         switch (this.resources) {
             case 'health':
@@ -57,6 +80,10 @@ class Statusbar extends AnimatedObject {
         }
     }
 
+    /**
+     * Computes the health percentage of the player.
+     * @returns {void}
+     */
     playerHealth() {
         if (Character.storage[0].health > 0) {
             let health = Character.storage[0].health;
@@ -67,6 +94,10 @@ class Statusbar extends AnimatedObject {
         }
     }
 
+    /**
+     * Computes the mana percentage of the player.
+     * @returns {void}
+     */
     playerMana() {
         if (Character.storage[0].mana > 0) {
             let mana = Character.storage[0].mana;
@@ -77,6 +108,11 @@ class Statusbar extends AnimatedObject {
         }
     }
 
+    /**
+     * Sets the status bar properties based on the specified type.
+     * @param {string} type - The type of the status bar ('health' or 'mana').
+     * @returns {void}
+     */
     setStatusbarFor(type) {
         switch (type) {
             case 'health':

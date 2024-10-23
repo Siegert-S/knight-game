@@ -8,10 +8,16 @@ class Keyboard {
 
     testtime = 0;
 
+    /**
+     * Creates an instance of the InputHandler class and adds key and mouse listeners.
+     */
     constructor() {
         this.addKeyListener();
     }
 
+    /**
+     * Adds key and mouse event listeners.
+     */
     addKeyListener() {
         this.addKeydownListener();
         this.addKeyupListener();
@@ -22,6 +28,9 @@ class Keyboard {
         this.addToucheEndListener();
     }
 
+    /**
+     * Adds a listener for keydown events to track pressed keys.
+     */
     addKeydownListener() {
         window.addEventListener('keydown', (e) => {
             // console.log(e.keyCode);
@@ -39,6 +48,9 @@ class Keyboard {
         });
     }
 
+    /**
+     * Adds a listener for keyup events to track released keys.
+     */
     addKeyupListener() {
         window.addEventListener('keyup', (e) => {
             if (e.keyCode == 37 || e.keyCode == 65) {
@@ -55,6 +67,9 @@ class Keyboard {
         });
     }
 
+    /**
+     * Adds a listener for mousedown events to detect mouse clicks.
+     */
     addMouseDownListerner() {
         canvas.addEventListener('mousedown', (event) => {
             let pos = this.getXYCoordinates(event);
@@ -62,14 +77,20 @@ class Keyboard {
         })
     }
 
+    /**
+     * Adds a listener for mouseup events to reset button states.
+     */
     addMouseUpListener() {
         canvas.addEventListener('mouseup', (event) => {
-            MenuButton.storage.forEach(button => {
+            Button.storage.forEach(button => {
                 button.isClickt = false;
             });
         })
     }
 
+    /**
+     * Adds a listener for mousemove events to handle hover states on buttons.
+     */
     addMouseMoveListener() {
         canvas.addEventListener('mousemove', (event) => {
             let pos = this.getXYCoordinates(event);
@@ -77,8 +98,9 @@ class Keyboard {
         })
     }
 
-
-
+    /**
+     * Adds a listener for touchstart events to handle touch inputs.
+     */
     addTouchListener() {
         canvas.addEventListener('touchstart', (event) => {
             for (let i = 0; i < event.touches.length; i++) {
@@ -88,9 +110,12 @@ class Keyboard {
         });
     }
 
+    /**
+     * Adds a listener for touchend events to reset button states after touch interactions.
+     */
     addToucheEndListener() {
         canvas.addEventListener('touchend', (event) => {
-            MenuButton.storage.forEach(button => {
+            Button.storage.forEach(button => {
                 button.isClickt = false;
             });
             for (let i = 0; i < event.touches.length; i++) {
@@ -101,6 +126,11 @@ class Keyboard {
         });
     }
 
+    /**
+     * Converts touch or mouse event coordinates to canvas coordinates.
+     * @param {TouchEvent|MouseEvent} touches - The touch or mouse event to extract coordinates from.
+     * @returns {{x: number, y: number}} The converted x and y coordinates relative to the canvas.
+     */
     getXYCoordinates(touches) {
         const rect = canvas.getBoundingClientRect();
 
@@ -115,8 +145,14 @@ class Keyboard {
         return { "x": canvasX, "y": canvasY };
     }
 
+    /**
+     * Checks which buttons are clicked based on their coordinates and updates their states.
+     * @param {number} x - The x-coordinate of the click.
+     * @param {number} y - The y-coordinate of the click.
+     * @param {boolean} set - Whether to set the button state to clicked.
+     */
     checkButtons(x, y, set) {
-        MenuButton.storage.forEach(button => {
+        Button.storage.forEach(button => {
             if (button.isActiv) {
                 if (this.checkBoundrys(button, x, y)) {
                     button.isClickt = set;
@@ -126,8 +162,13 @@ class Keyboard {
         });
     }
 
+    /**
+     * Handles hover state for buttons based on mouse or touch coordinates.
+     * @param {number} x - The x-coordinate of the mouse or touch.
+     * @param {number} y - The y-coordinate of the mouse or touch.
+     */
     hoverButton(x, y) {
-        MenuButton.storage.forEach(button => {
+        Button.storage.forEach(button => {
             if (button.isActiv == true) {
                 button.isHovered = false;
                 if (this.checkBoundrys(button, x, y)) {
@@ -137,23 +178,16 @@ class Keyboard {
         })
     }
 
+    /**
+     * Checks if the provided coordinates are within the boundaries of the specified button.
+     * @param {Button} button - The button to check against.
+     * @param {number} x - The x-coordinate to check.
+     * @param {number} y - The y-coordinate to check.
+     * @returns {boolean} True if the coordinates are within the button's boundaries; otherwise, false.
+     */
     checkBoundrys(button, x, y) {
         return button.positionX < x && x < button.positionX + button.width &&
             button.positionY < y && y < button.positionY + button.height;
     }
 
-    setTime() {
-        let time = new Date().getTime();
-        console.log(time - this.testtime);
-        this.testtime = time;
-    }
-
-    testin() {
-        this.testtime = new Date().getTime();
-    }
-
-    testout() {
-        let time = new Date().getTime();
-        console.log(time - this.testtime);
-    }
 }

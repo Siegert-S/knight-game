@@ -1,7 +1,4 @@
 class World {
-
-    // canvas;
-    // ctx;
     cameraX;
 
     entity = [];
@@ -11,25 +8,22 @@ class World {
 
     statusbar = [
         new Statusbar(5, 5),
-        new Statusbar(5, 35, 'mana'),
-        new CoinCounter(5, 65),
+        new CoinCounter(5, 35),
     ];
 
     character = new Character();
 
+    /**
+     * Initializes the World object and loads the level.
+     */
     constructor() {
-        // console.log('world constructor start');
-        // this.canvas = canvas;
-        // this.ctx = canvas.getContext("2d");
-
         this.loadLevel(player.stage, player.difficulty);
-
-        // this.draw();
-        // this.checkCollisions();
-        // console.log('world constructor finish');
-
     }
 
+
+    /**
+     * Updates the world state. Checks if the world is running, updates characters, checks for collisions, and updates entities.
+     */
     upDate() {
         if (this.worldIsRuning) {
             this.callUpDate();
@@ -38,57 +32,59 @@ class World {
         }
     }
 
+    /**
+     * Draws the world and its contents. Clears the canvas, translates the camera, and renders all entities and HUD objects.
+     */
     draw() {
         if (this.worldIsRuning) {
-            // console.log('gegner');
-            // console.log((this.cameraX <= -6450 && Enemy.storage.length == 0));
-            // console.log('spieler');
-            // console.log(Character.storage[0].gameOver);
-
-
-
             if ((this.cameraX <= -6450 && Enemy.storage.length == 0) || Character.storage[0].gameOver) {
-                console.log('wird erreicht');
-
                 this.worldIsRuning = false;
-                // console.log('sieg');
                 this.endWorld(!this.character.gameOver);
             } else {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 this.translateFrame(true);
                 this.addContentToMap(this.entity);
-                // this.addArrayToMap(this.background);
-                // this.addArrayToMap(this.coins);
-                // this.addArrayToMap(this.enemies);
                 this.addToMap(this.character);
                 this.translateFrame(false);
-                // this.addArrayToMap(this.statusbar);
                 this.addContentToMap(this.hud);
-
-                // let self = this;
-                // requestAnimationFrame(() => { self.draw(); });
             }
-
-
         }
     }
 
+    /**
+     * Adds a list of content arrays to the map for rendering.
+     * @param {Array[]} contentArray - Array of content arrays to be rendered.
+     */
     addContentToMap(contentArray) {
         contentArray.forEach(array => { this.addArrayToMap(array); });
     }
 
+    /**
+     * Adds an array of objects to the map.
+     * @param {Object[]} arrayToDraw - The array of objects to be drawn.
+     */
     addArrayToMap(arrayToDraw) {
-        arrayToDraw.forEach(object => { this.addToMap(object); });
+        if (arrayToDraw) {
+            arrayToDraw.forEach(object => { this.addToMap(object); });
+        }
     }
 
+    /**
+     * Draws an object on the map.
+     * @param {Object} objectToDraw - The object to be drawn.
+     */
     addToMap(objectToDraw) {
         objectToDraw.draw();
 
         // if (objectToDraw instanceof DrawableObject) { objectToDraw.drawRect(); }
-        if (objectToDraw instanceof CollidableObject) { objectToDraw.drawHitbox(); }
-        if (objectToDraw instanceof FightingObject) { objectToDraw.drawAttackbox(); }
+        // if (objectToDraw instanceof CollidableObject) { objectToDraw.drawHitbox(); }
+        // if (objectToDraw instanceof FightingObject) { objectToDraw.drawAttackbox(); }
     }
 
+    /**
+     * Translates the camera frame for rendering based on its position.
+     * @param {boolean} lookAtStart - If true, translates the camera to the start position.
+     */
     translateFrame(lookAtStart) {
         if (lookAtStart) {
             ctx.translate(this.cameraX, 0);
@@ -97,51 +93,58 @@ class World {
         }
     }
 
-    // checkCollisions() {
-    //     setInterval(() => {
-    //         this.entity.forEach((entry) => {
-    //             entry.forEach((o) => {
-    //                 if (o instanceof Coin || o instanceof Enemy) {
-    //                     if (this.character.isColliding(o)) {
-    //                         o.onCollision();
-    //                         console.log('old function');
-
-    //                     }
-    //                 }
-    //             })
-    //         })
-    //     }, 1000 / 60);
-    // }
-
+    /**
+     * Checks for collisions between the character and enemies or coins.
+     */
     collisionCheck() {
         this.entity.forEach((entry) => {
-            entry.forEach((o) => {
-                if (o instanceof Coin || o instanceof Enemy) {
-                    if (this.character.isColliding(o)) {
-                        o.onCollision();
+            this.procesEach(entry, 'onCollision', (o) =>
+                (o instanceof Coin || o instanceof Enemy) && this.character.isColliding(o)
+            );
+        });
+    }
+
+    /**
+     * Calls the update function for each entity in the world.
+     */
+    callUpDate() {
+        this.entity.forEach((entry) => {
+            this.procesEach(entry, 'upDate');
+        });
+    }
+
+    /**
+     * Processes each object in an array, performing an action based on the provided method and optional condition.
+     * @param {Object[]} array - Array of objects to process.
+     * @param {string} perform - The method name to be invoked on each object.
+     * @param {function} [condition] - Optional condition to check before invoking the method.
+     */
+    procesEach(array, perform, condition) {
+        if (array) {
+            array.forEach((o) => {
+                if (typeof o[perform] === 'function') {
+                    if (!condition || condition(o)) {
+                        o[perform]();
                     }
                 }
             })
-        });
+        }
     }
 
-    callUpDate() {
-        this.entity.forEach((entry) => {
-            entry.forEach((o) => {
-                if (typeof o.upDate === 'function') {
-                    // if (o instanceof Coin || o instanceof Enemy) {
-                    o.upDate();
-                }
-            })
-        });
-    }
-
+    /**
+     * Loads the level and difficulty settings, initializing the game entities.
+     * @param {number} level - The level to load.
+     * @param {number} difficulty - The difficulty setting of the level.
+     */
     loadLevel(level, difficulty) {
         Szene.produce(level, difficulty);
         this.collectObjects();
         this.collectHudObjects();
     }
 
+    /**
+     * Collects all game entities into the world, including background, coins, enemies, projectiles, and bosses.
+     */
     collectObjects() {
         this.entity.push(Background.storage);
         this.entity.push(Coin.storage);
@@ -150,37 +153,37 @@ class World {
         this.entity.push(Boss.storage);
     }
 
+    /**
+     * Collects HUD (Heads Up Display) objects such as status bars and coin counters.
+     */
     collectHudObjects() {
         this.hud.push(Statusbar.storage);
         this.hud.push(CoinCounter.storage);
     }
 
-
-    // beenden der world
-
+    /**
+     * Ends the world, deconstructs entities, and switches to a victory or loss screen.
+     * @param {boolean} victory - Whether the player won the level.
+     */
     endWorld(victory) {
         let target;
         if (victory) {
             this.stageUp();
             this.difficultyUp();
-
+            player.totalCoins += Character.storage[0].cash;
             player.coins += Character.storage[0].cash;
             result.earnedCash = Character.storage[0].cash;
-
             target = 'victoryPage';
         } else {
             target = 'losePage';
         }
-
         switchTo(target);
-        // löschen aller objekte und speichern von fortschrit bei sieg rückker zum play menu
-        // this.showWorldData();
         this.deconstructWorld();
-        // this.showWorldData();
-
-
     }
 
+    /**
+     * Increases the player's stage if applicable.
+     */
     stageUp() {
         if (player.maxStage < 7 && player.stage == player.maxStage) {
             player.maxStage++;
@@ -194,6 +197,9 @@ class World {
         }
     }
 
+    /**
+     * Increases the player's difficulty level if they are at the maximum difficulty.
+     */
     difficultyUp() {
         if (player.maxDifficulty == player.difficulty) {
             player.maxDifficulty++;
@@ -203,14 +209,18 @@ class World {
         }
     }
 
+    /**
+     * Deletes all objects of a given class from the game.
+     * @param {class} classRef - The class reference of the objects to delete.
+     */
     deleteObjectsOf(classRef) {
         classRef.storage.forEach(object => { object.deleteSelf() });
     }
 
+    /**
+     * Deconstructs the world by deleting all entities, characters, and HUD objects, and resets the game world.
+     */
     deconstructWorld() {
-        // console.log('delete World');
-
-
         this.deleteObjectsOf(Coin);
         this.deleteObjectsOf(Enemy);
         this.deleteObjectsOf(Boss);
@@ -218,18 +228,7 @@ class World {
         this.deleteObjectsOf(Character);
         this.deleteObjectsOf(Statusbar);
         this.deleteObjectsOf(CoinCounter);
-
         system.world = null;
-
     }
 
-    showWorldData() {
-        this.deleteObjectsOf(Coin);
-        this.deleteObjectsOf(Enemy);
-        this.deleteObjectsOf(Boss);
-        this.deleteObjectsOf(Background);
-        this.deleteObjectsOf(Character);
-        this.deleteObjectsOf(Statusbar);
-        this.deleteObjectsOf(CoinCounter);
-    }
 }

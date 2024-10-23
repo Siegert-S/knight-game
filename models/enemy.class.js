@@ -12,12 +12,20 @@ class Enemy extends FightingObject {
 
     loot;
     lootDrop = 'assets/audio/sfx/coin/impactMetal_light_004.ogg';
-    // count = 0;
+
 
     constructor(x = 500, difficulty = 1) {
         super(x, 0);
         this.loadImage(this.IDLE[0]);
+        this.setAllImages();
+        this.setValues(difficulty);
+        this.setHitboxOffset(45, 50, 115, 100, -5);
+        this.setAttackboxOffset(145, 20, 85, 120, 10);
+        this.setPositionYRelativ(0);
+    }
 
+
+    setAllImages() {
         this.setImages('idle', this.IDLE);
         this.setImages('walk', this.WALK);
         this.setImages('attack1', this.ATTACK1);
@@ -25,29 +33,19 @@ class Enemy extends FightingObject {
         this.setImages('attack3', this.ATTACK3);
         this.setImages('dead', this.DEAD);
         this.setImages('hurt', this.HURT);
+    }
 
-        // this.loadImages(this.IDLE);
-        // this.loadImages(this.WALK);
-        // this.loadImages(this.ATTACK);
-        // this.loadImages(this.DEAD);
-        // this.loadImages(this.HURT);
-
+    setValues(difficulty) {
         this.faceingLeft = true;
-        this.power = 2 * difficulty;
+        this.power = 5 * difficulty;
         this.speedX = 2;
         this.health = 20 * difficulty;
         this.maxhealth = 20 * difficulty;
         this.loot = 1 * difficulty;
-
         this.width = 220;
         this.height = 150;
-        this.setHitboxOffset(45, 50, 115, 100, -5);
-        this.setAttackboxOffset(145, 20, 85, 120, 10);
-        this.setPositionYRelativ(0);
-        // this.startAnimation();
-        // this.play();
-
     }
+
 
     upDate() {
         super.upDate();
@@ -79,41 +77,7 @@ class Enemy extends FightingObject {
         }
     }
 
-    play() {
-        this.setAndSaveIntervall(() => {
-
-            if (this.health < 1) {
-                this.dropLoot();
-                this.status = 'dead';
-            } else if (this.status == 'idle' || this.status == 'walk') {
-                if (this.checkDistance() < 0) {
-                    this.faceingLeft = false;
-                } else {
-                    this.faceingLeft = true;
-                }
-                if (this.checkDistance() < -150) {
-                    this.moveRight();
-                    this.status = 'walk'
-                } else if (this.checkDistance() > 140 && this.checkDistance() < 350) {
-                    this.moveLeft();
-                    this.status = 'walk'
-                } else if (this.checkDistance() > 350) {
-                    this.status = 'idle'
-                } else {
-                    if (this.isHiting(Character.storage[0])) {
-                        this.strike(Character.storage[0]);
-                        let attack = (this.attackCount % 3) + 1;
-                        this.status = `attack${attack}`;
-                        this.attackCount++;
-                    }
-                }
-            }
-
-
-
-        }, 1000 / 60);
-    }
-
+    
     dropLoot() {
         if (this.loot > 0) {
             Coin.produce(this.positionX + (this.width / 2), 'cash', true);
@@ -122,6 +86,7 @@ class Enemy extends FightingObject {
             sound.play();
         }
     }
+
 
     checkDistance() {
         return this.positionX - Character.storage[0].positionX;

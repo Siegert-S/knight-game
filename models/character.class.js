@@ -1,7 +1,5 @@
 class Character extends FightingObject {
 
-    mana = 0;
-    maxmana = 5;
     cash = 0;
     gameOver = false;
 
@@ -78,7 +76,15 @@ class Character extends FightingObject {
     constructor() {
         super();
         this.loadImage(this.IDLE[0]);
+        this.setAllImages();
+        this.setValues();
+        this.setHitboxOffset(55, 20, 85, 130)
+        this.setAttackboxOffset(140, 10, 80, 130, 35);
+        this.setPositionYRelativ(0);
+    }
 
+
+    setAllImages() {
         this.setImages('idle', this.IDLE);
         this.setImages('walk', this.WALK);
         this.setImages('attack', this.ATTACK);
@@ -86,9 +92,12 @@ class Character extends FightingObject {
         this.setImages('hurt', this.HURT);
         this.setImages('jump', this.JUMP);
         this.setImages('defend', this.DEFEND);
+    }
 
-        this.health = 100;
-        this.maxhealth = 100;
+
+    setValues() {
+        this.health = 100 + (player.health * 5);
+        this.maxhealth = 100 + (player.health * 5);
         this.power = 15 * (player.attack + 1);
         this.armor = 5 * (player.armor + 1);
         this.speedX = 4;
@@ -96,14 +105,8 @@ class Character extends FightingObject {
         this.positionX = 50;
         this.width = 220;
         this.height = 150;
-        // this.groundlevel = 460;
-        this.setHitboxOffset(55, 20, 85, 130)
-        this.setAttackboxOffset(140, 10, 80, 130, 35);
-        this.setPositionYRelativ(0);
-
-        // this.startAnimation();
-        // this.setImages('idle', this.IDLE);
     }
+
 
     upDate() {
         super.upDate();
@@ -123,7 +126,6 @@ class Character extends FightingObject {
     }
 
 
-
     inputCheck() {
         if (this.status == 'idle' || this.status == 'walk') {
             if (this.health < 1) {
@@ -137,22 +139,18 @@ class Character extends FightingObject {
                     this.status = 'attack';
                 } else {
                     if (keyboard.UP && !this.isAboveGround()) {
-
                         this.jump();
                         this.status = 'jump';
                     }
                     if (keyboard.RIGHT && this.positionX < 6500) {
-
                         this.moveRight();
                         this.status = 'walk';
                     }
                     if (keyboard.LEFT && this.positionX > 50) {
-
                         this.moveLeft();
                         this.status = 'walk';
                     }
                     if (!keyboard.RIGHT && !keyboard.LEFT && !keyboard.UP) {
-
                         if (this.status == 'walk') {
                             this.status = 'idle';
                         }
@@ -162,27 +160,9 @@ class Character extends FightingObject {
         }
     }
 
-    // tryAttack() {
-    //     Enemy.storage.forEach(enemy => {
-    //         if (this.isHiting(enemy)) {
-    //             this.strike(enemy);
-    //         } else {
-    //             this.weaponSound(false);
-    //         }
-    //     });
-
-    //     Boss.storage.forEach(enemy => {
-    //         if (this.isHiting(enemy)) {
-    //             this.strike(enemy);
-    //         } else {
-    //             this.weaponSound(false);
-    //         }
-    //     });
-    // }
 
     doAttack() {
         let hitEnemy;
-
         hitEnemy = this.checkHit(Enemy);
         if (hitEnemy == null) {
             hitEnemy = this.checkHit(Projectile);
@@ -190,13 +170,13 @@ class Character extends FightingObject {
         if (hitEnemy == null) {
             hitEnemy = this.checkHit(Boss);
         }
-
         if (hitEnemy != null) {
             this.strike(hitEnemy);
         } else {
             this.weaponSound(false);
         }
     }
+
 
     checkHit(classRef) {
         for (let i = 0; i < classRef.storage.length; i++) {

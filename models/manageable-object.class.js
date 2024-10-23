@@ -1,42 +1,40 @@
 class ManageableObject {
-    objectIntervalls = [];
-    id;
 
+    /**
+    * Constructor for the class.
+    * 
+    * Initializes the class by checking if a storage array exists for the class, 
+    * and if not, it creates one. Then it adds the current instance to the storage array.
+    */
     constructor() {
         if (!this.constructor.storage) {
             this.constructor.storage = [];
         }
         this.constructor.storage.push(this);
-        this.createID();
     }
 
-    createID() {
-        let date = new Date;
-        this.id = date.getTime();
-    }
-
+    /**
+     * Static method to create an instance of the class.
+     * 
+     * @param {...any} args - Arguments that are passed to the constructor of the class.
+     * @returns {void} This function does not return anything, but creates an instance of the class.
+     */
     static produce(...args) {
         let instanz = new this(...args);
     }
 
+    /**
+    * Deletes the current instance from the class storage array.
+    * 
+    * Finds the index of the current instance in the storage array and removes it from the array if found.
+    * 
+    * @returns {void} This function does not return anything.
+    */
     deleteSelf() {
-
-        console.log('Call Stack:', new Error().stack);
-
         let index = this.constructor.storage.indexOf(this);
-        // this.deleteAllIntervalls();
         if (index != -1) {
             this.constructor.storage.splice(index, 1);
         }
     }
 
-    setAndSaveIntervall(fn, ms) {
-        let id = setInterval(fn, ms);
-        this.objectIntervalls.push(id);
-        // return id;
-    }
-
-    deleteAllIntervalls() {
-        this.objectIntervalls.forEach(clearInterval);
-    }
 }

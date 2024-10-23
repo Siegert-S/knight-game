@@ -1,27 +1,47 @@
 class Coin extends MoveableObject {
     cointype;
 
+    faces = {
+        'b_one': COIN_BRONZE_ONE,
+        'b_heart': COIN_BRONZE_HEART,
+        'b_star': COIN_BRONZE_STAR,
+        's_one': COIN_SILVER_ONE,
+        's_heart': COIN_SILVER_HEART,
+        's_star': COIN_SILVER_STAR,
+        'g_one': COIN_GOLD_ONE,
+        'g_heart': COIN_GOLD_HEART,
+        'g_star': COIN_GOLD_STAR
+    };
+
+    /**
+   * Creates a new Coin instance.
+   * @param {number} x - The x-coordinate of the coin.
+   * @param {string} [cointype='health'] - The type of the coin ('health', 'mana', or 'cash').
+   * @param {boolean} [drop=false] - Whether the coin is dropped with gravity.
+   */
     constructor(x, cointype = 'health', drop = false) {
         super(x, 0, false);
         this.cointype = cointype;
         this.choseCoin();
-        // this.loadImages(this.IDLE);
         this.loadImage(this.IDLE[0]);
-
-
         this.randomY();
         this.width = 25;
         this.height = 25;
-        // this.startAnimation();
         this.changeHitbox(25, 25);
         this.dropCoin(drop);
     }
 
+    /**
+     * Randomly sets the y-position of the coin within a range.
+     */
     randomY() {
         let y = Math.random() * 170;
         this.positionY = 145 + y;
     }
 
+    /**
+     * Chooses the coin's face and tail images based on the coin type.
+     */
     choseCoin() {
         switch (this.cointype) {
             case 'health':
@@ -36,6 +56,11 @@ class Coin extends MoveableObject {
         }
     }
 
+    /**
+     * Sets the coin's face and tail images.
+     * @param {string} heads - The key for the head side image.
+     * @param {string} tails - The key for the tail side image.
+     */
     setCoinfaces(heads, tails) {
         let haed = this.setFace(heads);
         let tail = this.setFace(tails);
@@ -43,49 +68,36 @@ class Coin extends MoveableObject {
         this.setImages('idle', this.IDLE);
     }
 
+    /**
+     * Returns the coin face image based on the given face identifier.
+     * @param {string} face - The identifier for the face image.
+     * @returns {Array} The corresponding face images array.
+     */
     setFace(face) {
-        switch (face) {
-            case 'b_one':
-                return COIN_BRONZE_ONE;
-            case 'b_heart':
-                return COIN_BRONZE_HEART;
-            case 'b_star':
-                return COIN_BRONZE_STAR;
-            case 's_one':
-                return COIN_SILVER_ONE;
-            case 's_heart':
-                return COIN_SILVER_HEART;
-            case 's_star':
-                return COIN_SILVER_STAR;
-            case 'g_one':
-                return COIN_GOLD_ONE;
-            case 'g_heart':
-                return COIN_GOLD_HEART;
-            case 'g_star':
-                return COIN_GOLD_STAR;
-            default:
-                return COIN_BRONZE_ONE;
-        }
+        return this.faces[face] || COIN_BRONZE_ONE;
     }
 
+    /**
+     * Handles collision behavior based on the coin type and then deletes the coin.
+     */
     onCollision() {
         switch (this.cointype) {
             case 'health':
                 this.healthCoin();
-                this.deleteSelf();
                 break;
             case 'mana':
                 this.manaCoin();
-                this.deleteSelf();
                 break;
             case 'cash':
                 this.cashCoin();
-                this.deleteSelf();
                 break;
-
         }
+        this.deleteSelf();
     }
 
+    /**
+     * Increases the character's health if applicable.
+     */
     healthCoin() {
         if (Character.storage[0].health <= Character.storage[0].maxhealth - 20) {
             Character.storage[0].health = Character.storage[0].health + 20;
@@ -94,6 +106,9 @@ class Coin extends MoveableObject {
         }
     }
 
+    /**
+     * Increases the character's mana if applicable.
+     */
     manaCoin() {
         if (Character.storage[0].mana <= Character.storage[0].maxmana - 1) {
             Character.storage[0].mana = Character.storage[0].mana + 1;
@@ -102,10 +117,17 @@ class Coin extends MoveableObject {
         }
     }
 
+    /**
+     * Increases the character's cash by 1.
+     */
     cashCoin() {
         Character.storage[0].cash = Character.storage[0].cash + 1;
     }
 
+    /**
+     * If the coin is dropped, applies gravity and sets the speed and height for throwing the coin.
+     * @param {boolean} isDrop - Whether the coin is dropped with gravity.
+     */
     dropCoin(isDrop) {
         if (isDrop) {
             this.positionY = this.groundlevel;

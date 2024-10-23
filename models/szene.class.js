@@ -5,6 +5,11 @@ class Szene extends ManageableObject {
     background;
     keywords = ['statue', 'dragon', 'tree_face', 'crypt'];
 
+    /**
+       * Initializes the level with a specific length, level number, and difficulty.
+       * @param {number} [level=0] - The level number (default is 0).
+       * @param {number} [difficulty=1] - The difficulty of the level (default is 1).
+       */
     constructor(level = 0, difficulty = 1) {
         super();
         this.length = 10;
@@ -15,9 +20,12 @@ class Szene extends ManageableObject {
         this.fillLevel();
     }
 
+    /**
+     * Selects the background for the level based on the given index.
+     * @param {number} [index=0] - The index for the background selection.
+     */
     selectBackground(index = 0) {
         let buffer = [];
-        // Object.values(BACKGROUND[`bg${index}`]).forEach(element => {buffer.push(element);});
 
         for (const key in BACKGROUND[`bg${index}`]) {
             buffer.push(BACKGROUND[`bg${index}`][key]);
@@ -25,6 +33,9 @@ class Szene extends ManageableObject {
         this.background = buffer;
     }
 
+    /**
+      * Constructs the level by producing background elements.
+      */
     buildLevel() {
         for (let i = 0; i < this.length; i++) {
             if (i == this.length - 2) {
@@ -39,16 +50,24 @@ class Szene extends ManageableObject {
         }
     }
 
+    /**
+     * Fills the level with coins and enemies.
+     */
     fillLevel() {
         this.placeCoins();
         this.placeEnemies();
     }
 
+    /**
+     * Places health coins in the level.
+     */
     placeCoins() {
         this.healthCoins();
-        this.manaCoins();
     }
 
+    /**
+     * Generates health coins based on the level's difficulty.
+     */
     healthCoins() {
         let coins = 15 / this.difficulty;
         let distance = (720 * (this.length - 2) / coins);
@@ -59,6 +78,9 @@ class Szene extends ManageableObject {
         }
     }
 
+    /**
+     * Generates mana coins in the level. (no longer used)
+     */
     manaCoins() {
         let coins = 5;
         let distance = (720 * (this.length - 4) / coins);
@@ -69,6 +91,12 @@ class Szene extends ManageableObject {
         }
     }
 
+    /**
+     * Returns a random variation based on the provided value and direction.
+     * @param {number} value - The maximum variation value.
+     * @param {boolean} positiveDirection - If true, the variation is positive; otherwise, it is positive or negative.
+     * @returns {number} A random variation value.
+     */
     intervalVariation(value, positiveDirection) {
         if (positiveDirection) {
             return Math.random() * value;
@@ -77,6 +105,9 @@ class Szene extends ManageableObject {
         }
     }
 
+    /**
+     * Places enemies in the level based on the difficulty.
+     */
     placeEnemies() {
         let enemies = 5 * this.difficulty;
         let distance = (720 * (this.length - 4) / enemies);
@@ -85,7 +116,7 @@ class Szene extends ManageableObject {
             let variX = this.intervalVariation(300, true);
             Enemy.produce(fixX + variX, this.difficulty);
         }
-        Projectile.produce();
+        Projectile.produce(-10);
         Boss.produce(this.difficulty);
     }
 }

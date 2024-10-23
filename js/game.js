@@ -4,20 +4,10 @@ let world;
 let keyboard;
 let system;
 
-// let audio = {
-//     'volume': 50,
-//     'SFX': 50
-// }
-
-// let player = new Player();
-
 loadAudio();
 
 window.addEventListener('blur', endClick)
 document.addEventListener('click', startAudio);
-
-
-
 
 function init() {
 
@@ -25,7 +15,6 @@ function init() {
     ctx = canvas.getContext("2d");
 
     keyboard = new Keyboard();
-    // console.log(canvas.getAttribute('width'));
     system = new System();
 }
 
@@ -44,7 +33,6 @@ function loadAudio() {
     if (buffer) {
         audio.volume = buffer.volume;
         audio.SFX = buffer.SFX;
-
     }
 }
 
@@ -53,7 +41,7 @@ function openNewPage(url) {
 }
 
 function endClick() {
-    MenuButton.storage.forEach(button => {
+    Button.storage.forEach(button => {
         button.isClickt = false;
     })
 }

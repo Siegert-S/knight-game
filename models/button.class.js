@@ -4,6 +4,7 @@ class MenuButton extends DrawableObject {
     text;
     partOfMenu;
     isActiv = false;
+    enabel = true;
     connectedFunction;
     fontColor = 'white';
 
@@ -23,10 +24,26 @@ class MenuButton extends DrawableObject {
     }
 
     onClick() {
-        if (this.isClickt) {
-            this.connectedFunction();
-            setTimeout(this.onClick.bind(this), 200);
+        if (this.enabel) {
+            if (this.isClickt) {
+                this.connectedFunction();
+                setTimeout(this.onClick.bind(this), 200);
+            }
         }
+    }
+
+    handleAction(action, ...args) {
+        const result = action(...args);
+        if (result === true) {
+
+        } else if (result === false) {
+
+        }
+
+    }
+
+    useFunction (action, ...args){
+        [action](...args);
     }
 
     refreshContent(text) {
@@ -59,7 +76,7 @@ class MenuButton extends DrawableObject {
 
     draw() {
 
-        if (true) {
+        if (!this.enabel) {
             ctx.globalAlpha = 0.75;
         }
         this.drawButton();

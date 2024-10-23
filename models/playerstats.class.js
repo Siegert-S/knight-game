@@ -1,6 +1,6 @@
 class Player {
-    saveName;
-    coins = 100;
+    totalCoins = 0;
+    coins = 0;
     maxStage = 0;
     stage = 0;
     maxDifficulty = 0;
@@ -8,19 +8,18 @@ class Player {
     attack = 0;
     health = 0;
     armor = 0;
-    magic = 0;
 
 
     load(data) {
-        this.coins = data.coins;
-        this.maxStage = data.maxStage;
-        this.stage = data.stage;
         this.maxDifficulty = data.maxDifficulty;
         this.difficulty = data.difficulty;
+        this.totalCoins = data.totalCoins;
+        this.maxStage = data.maxStage;
         this.attack = data.attack;
         this.health = data.health;
         this.armor = data.armor;
-        this.magic = data.magic;
+        this.stage = data.stage;
+        this.coins = data.coins;
     }
 
 
@@ -58,7 +57,5 @@ class Player {
         let cost = this[name] + 1;
         return cost;
     }
-
-
 
 }
