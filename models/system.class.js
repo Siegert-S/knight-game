@@ -118,14 +118,14 @@ class System {
     upDateCanvas() {
         setInterval(() => {
             if (this.show == 'play' && !this.world) { this.world = new World(); }
-            if (this.show != 'play') {
-                this.renderContent.forEach(element => {
-                    if (typeof element.upDate !== 'function') {
-                        console.log(element); // Gibt das Objekt aus, wenn es die Methode `upDate()` nicht hat
-                    }
-                    element.upDate();
-                })
-            } else {
+
+            this.renderContent.forEach(element => {
+                if (typeof element.upDate !== 'function') {
+                    console.log(element); // Gibt das Objekt aus, wenn es die Methode `upDate()` nicht hat
+                }
+                element.upDate();
+            })
+            if (this.show == 'play') {
                 this.world.upDate();
             }
         }, 1000 / 60);
@@ -144,6 +144,8 @@ class System {
         } else {
             if (this.world) {
                 this.world.draw();
+
+                this.renderContent.forEach(element => { element.draw(); })
             }
         }
         let self = this;

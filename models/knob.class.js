@@ -4,6 +4,9 @@ class Button extends DrawableObject {
     isActiv = false;
     enabel = true;
 
+    useOnClickEnd = false;
+    wasClicked = false;
+
     posY;
     posYClicked;
 
@@ -21,26 +24,30 @@ class Button extends DrawableObject {
     fontColor = 'white';
 
     /**
-     * Represents a button in the menu.
-     * @param {number} x - The x-coordinate of the button's position.
-     * @param {number} y - The y-coordinate of the button's position.
+     * Creates a new button object with specified properties such as position, size, images, and functionality.
+     * 
+     * @constructor
+     * @param {number} x - The X-coordinate for the button's position.
+     * @param {number} y - The Y-coordinate for the button's position.
      * @param {number} w - The width of the button.
      * @param {number} h - The height of the button.
+     * @param {boolean} useOnClickEnd - If `true`, the button's `onClick` function will be triggered on mouse up.
      * @param {string} imgDef - The source path for the default button image.
-     * @param {string} imgHov - The source path for the hover button image.
-     * @param {string} partof - The part of the menu this button belongs to.
-     * @param {string} content - The content that the button will display.
-     * @param {function} funktion - The function to be executed when the button is clicked.
-     * @param {function} encon - A condition function that enables/disables the button.
-     * @param {function} focon - A condition function to determine the font color.
+     * @param {string} imgHov - The source path for the hover state button image.
+     * @param {string} partof - Identifier for the menu that the button is a part of.
+     * @param {string} content - The content to be displayed on the button.
+     * @param {Function} funktion - The function to be called when the button is clicked.
+     * @param {Function} encon - A function that determines if the button is enabled.
+     * @param {Function} focon - A function that determines the font color condition.
      */
-    constructor(x, y, w, h, imgDef, imgHov, partof, content, funktion, encon, focon) {
+    constructor(x, y, w, h, useOnClickEnd, imgDef, imgHov, partof, content, funktion, encon, focon) {
         super();
         this.positionX = x;
         this.posY = y;
         this.posYClicked = this.posY + 5;
         this.width = w;
         this.height = h;
+        this.useOnClickEnd = useOnClickEnd;
         this.imageDefault.src = imgDef;
         this.imageHover.src = imgHov;
         this.partOfMenu = partof;
@@ -51,13 +58,17 @@ class Button extends DrawableObject {
     }
 
     /**
-     * Updates the button state by enabling/disabling it and selecting the font color.
-     * @returns {void}
+     * Updates the button's state. Enables or disables the button based on conditions, selects the font color,
+     * and depending on the `useOnClickEnd` flag, either handles repeat clicks or checks the button's state.
      */
     upDate() {
         this.enabelButton(this.enabelCondition);
         this.selectFontColor(this.fontColorCondition);
-        this.repeatClick();
+        if (!this.useOnClickEnd) {
+            this.repeatClick();
+        } else {
+            this.checkButtonState();
+        }
     }
 
     /**
@@ -121,15 +132,44 @@ class Button extends DrawableObject {
     }
 
     /**
-     * Handles click events for the button. Calls the connected function if the button is enabled and active.
-     * @returns {void}
+     * Executes the function connected to the button when the button is clicked.
+     * This method is triggered if the button is enabled, active, and has been clicked.
+     * 
+     * @returns {boolean} - Returns `true` if the function was successfully triggered, otherwise returns `false`.
      */
     onClick() {
         if (this.enabel && this.isClickt && this.isActiv) {
-            this.connectedFunction();
-            this.frequency = Math.max(3, this.frequency - 1);
+            this.connectedFunction(true);
+            return true;
         } else {
-            this.frequency = 30;
+            return false;
+        }
+    }
+
+    /**
+     * Executes the function connected to the button when the click has ended. 
+     * This method is triggered only if the button is enabled, has been clicked, is active, and the `useOnClickEnd` flag is true.
+     *
+     * @returns {boolean} - Returns `false` after the click event is processed.
+     */
+    onClickEnd() {
+        if (this.enabel && !this.isClickt && this.isActiv && this.useOnClickEnd) {
+            this.connectedFunction(false);
+            return false
+        }
+    }
+
+    /**
+     * Checks the current state of the button to determine whether to trigger an onClick or onClickEnd event.
+     * - If the button is clicked and wasn't previously clicked, `onClick` is triggered.
+     * - If the button is no longer clicked and was previously clicked, `onClickEnd` is triggered.
+     */
+    checkButtonState() {
+        if (this.isClickt && !this.wasClicked) {
+            this.wasClicked = this.onClick()
+        }
+        if (!this.isClickt && this.wasClicked) {
+            this.wasClicked = this.onClickEnd();
         }
     }
 
@@ -139,7 +179,7 @@ class Button extends DrawableObject {
      */
     repeatClick() {
         if (!(this.clock % this.frequency)) {
-            this.onClick();
+            this.frequency = (this.onClick()) ? Math.max(3, this.frequency - 1) : 30;
         }
         this.clock++;
     }

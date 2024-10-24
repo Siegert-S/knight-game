@@ -146,17 +146,21 @@ class Keyboard {
     }
 
     /**
-     * Checks which buttons are clicked based on their coordinates and updates their states.
-     * @param {number} x - The x-coordinate of the click.
-     * @param {number} y - The y-coordinate of the click.
-     * @param {boolean} set - Whether to set the button state to clicked.
-     */
+    * Checks if the given coordinates (x, y) are within the boundaries of any active button.
+    * If true, the button is marked as clicked and the associated `onClick` method is called.
+    * 
+    * @param {number} x - The X-coordinate to check.
+    * @param {number} y - The Y-coordinate to check.
+    * @param {boolean} set - Determines whether the button should be marked as clicked (`true` = clicked, `false` = not clicked).
+    */
     checkButtons(x, y, set) {
         Button.storage.forEach(button => {
             if (button.isActiv) {
                 if (this.checkBoundrys(button, x, y)) {
                     button.isClickt = set;
-                    button.onClick();
+                    if (!button.useOnClickEnd) {
+                        button.onClick();
+                    }
                 }
             }
         });
