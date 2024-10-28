@@ -19,6 +19,7 @@ class Keyboard {
      * Adds key and mouse event listeners.
      */
     addKeyListener() {
+        this.suppressContextMenu();
         this.addKeydownListener();
         this.addKeyupListener();
         this.addMouseDownListerner();
@@ -26,6 +27,12 @@ class Keyboard {
         this.addMouseMoveListener();
         this.addTouchListener();
         this.addToucheEndListener();
+    }
+
+    suppressContextMenu() {
+        canvas.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+        });
     }
 
     /**
@@ -103,6 +110,7 @@ class Keyboard {
      */
     addTouchListener() {
         canvas.addEventListener('touchstart', (event) => {
+            event.preventDefault();
             for (let i = 0; i < event.touches.length; i++) {
                 let pos = this.getXYCoordinates(event.touches[i]);
                 this.checkButtons(pos.x, pos.y, true);
@@ -115,6 +123,7 @@ class Keyboard {
      */
     addToucheEndListener() {
         canvas.addEventListener('touchend', (event) => {
+            event.preventDefault();
             Button.storage.forEach(button => {
                 button.isClickt = false;
             });
@@ -173,8 +182,8 @@ class Keyboard {
      */
     hoverButton(x, y) {
         Button.storage.forEach(button => {
+            button.isHovered = false;
             if (button.isActiv == true) {
-                button.isHovered = false;
                 if (this.checkBoundrys(button, x, y)) {
                     button.isHovered = true;
                 }

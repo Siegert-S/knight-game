@@ -68,6 +68,7 @@ class Boss extends FightingObject {
             Coin.produce(this.positionX + (this.width / 2), 'cash', true);
             this.loot--;
             const sound = new Audio(this.lootDrop);
+            sound.volume = audio.volume / 100;
             sound.play();
         }
     }

@@ -49,6 +49,20 @@ const KNIGHT_ATTACK = [
     'assets/img/knight/Knight_1/single_images/Attack_13.png',
 ];
 
+const KNIGHT_HURT = [
+    'assets/img/knight/Knight_1/single_images/Hurt_1.png',
+    'assets/img/knight/Knight_1/single_images/Hurt_2.png',
+];
+
+const KNIGHT_DEAD = [
+    'assets/img/knight/Knight_1/single_images/Dead_1.png',
+    'assets/img/knight/Knight_1/single_images/Dead_2.png',
+    'assets/img/knight/Knight_1/single_images/Dead_3.png',
+    'assets/img/knight/Knight_1/single_images/Dead_4.png',
+    'assets/img/knight/Knight_1/single_images/Dead_5.png',
+    'assets/img/knight/Knight_1/single_images/Dead_6.png',
+];
+
 const SKELETON_WARRIOR_IDLE = [
     'assets/img/skeleton/Skeleton_Warrior/singels/Idle_1.png',
     'assets/img/skeleton/Skeleton_Warrior/singels/Idle_2.png',

@@ -28,10 +28,15 @@ let condition = {
     "canBuyArmorUp": () => { return appState.player.coins >= appState.player.getCoinCostOf('armor'); },
     "unlockNewLevel": () => { return appState.result.increaseStage; },
     "unlockNewDifficulty": () => { return appState.result.increaseDif; },
-    "save1Exist": () => { return checkSave('save1') },
-    "save2Exist": () => { return checkSave('save2') },
-    "save3Exist": () => { return checkSave('save3') },
+    "save1Exist": () => { return checkSave('save1'); },
+    "save2Exist": () => { return checkSave('save2'); },
+    "save3Exist": () => { return checkSave('save3'); },
+    "save1Loaded": () => { return appState.loaded == 'save1'; },
+    "save2Loaded": () => { return appState.loaded == 'save2'; },
+    "save3Loaded": () => { return appState.loaded == 'save3'; },
     "isMobileView": () => { return window.innerWidth < 1024; },
+    "isPortraitFormat": () => { return window.innerWidth < window.innerHeight },
+    "isLandscapeFormat": () => { return window.innerWidth > window.innerHeight },
 };
 
 /**
@@ -49,17 +54,21 @@ function initButton() {
     createMenuSkills();
     createlosePage();
     createvictoryPage();
-    createTouchButton();
+
+    if (isMobileDevice()) {
+        createTouchButton();
+    }
+    createWideScreenNotification();
 }
 
 /**
  * Creates the main menu buttons.
  */
 function createMenuMain() {
-    Button.produce(canvasCenter(0, 1, buWi), stackButtons(0, 4), buWi, buHi, false, defaultImg, hoverImg, 'main', 'text.mainMenuButton1', () => { switchTo('game'); });
-    Button.produce(canvasCenter(0, 1, buWi), stackButtons(1, 4), buWi, buHi, false, defaultImg, hoverImg, 'main', 'text.mainMenuButton2', () => { switchTo('settings'); });
-    Button.produce(canvasCenter(0, 1, buWi), stackButtons(2, 4), buWi, buHi, false, defaultImg, hoverImg, 'main', 'text.mainMenuButton3', () => { switchTo('controlls'); });
-    Button.produce(canvasCenter(0, 1, buWi), stackButtons(3, 4), buWi, buHi, false, defaultImg, hoverImg, 'main', 'text.mainMenuButton4', () => { switchTo('legal'); });
+    Button.produce(canvasCenter(0, 1, buWi), stackButtons(0, 4), buWi, buHi, false, defaultImg, hoverImg, 'main', 'text.mainMenuButton1', () => { switchTo('game'); }, condition['isLandscapeFormat']);
+    Button.produce(canvasCenter(0, 1, buWi), stackButtons(1, 4), buWi, buHi, false, defaultImg, hoverImg, 'main', 'text.mainMenuButton2', () => { switchTo('settings'); }, condition['isLandscapeFormat']);
+    Button.produce(canvasCenter(0, 1, buWi), stackButtons(2, 4), buWi, buHi, false, defaultImg, hoverImg, 'main', 'text.mainMenuButton3', () => { switchTo('controlls'); }, condition['isLandscapeFormat']);
+    Button.produce(canvasCenter(0, 1, buWi), stackButtons(3, 4), buWi, buHi, false, defaultImg, hoverImg, 'main', 'text.mainMenuButton4', () => { switchTo('legal'); }, condition['isLandscapeFormat']);
 }
 
 /**
@@ -81,16 +90,20 @@ function createMenuControlls() {
  * Creates the settings menu and its buttons.
  */
 function createMenuSettings() {
-    Panel.produce(canvasCenter(0, 1, 280), stackButtons(0, 5), 280, buHi, defaultImg, 'settings', 'white', 'text.settingsMenuPanel1');
-    Panel.produce(canvasCenter(1, 3, 80), stackButtons(1, 5), 80, buHi, defaultImg, 'settings', 'white', 'audio.volume');
-    Panel.produce(canvasCenter(0, 1, 280), stackButtons(2, 5), 280, buHi, defaultImg, 'settings', 'white', 'text.settingsMenuPanel2');
-    Panel.produce(canvasCenter(1, 3, 80), stackButtons(3, 5), 80, buHi, defaultImg, 'settings', 'white', 'audio.SFX');
+    Panel.produce(canvasCenter(0, 1, 280), stackButtons(0, 7), 280, buHi, defaultImg, 'settings', 'white', 'text.settingsMenuPanel1');
+    Panel.produce(canvasCenter(1, 3, 80), stackButtons(1, 7), 80, buHi, defaultImg, 'settings', 'white', 'audio.volume');
+    Panel.produce(canvasCenter(0, 1, 280), stackButtons(2, 7), 280, buHi, defaultImg, 'settings', 'white', 'text.settingsMenuPanel2');
+    Panel.produce(canvasCenter(1, 3, 80), stackButtons(3, 7), 80, buHi, defaultImg, 'settings', 'white', 'audio.SFX');
 
-    Button.produce(canvasCenter(0, 3, 80), stackButtons(1, 5), 80, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton1', increaseVolume, condition['volLessThenMax']);
-    Button.produce(canvasCenter(2, 3, 80), stackButtons(1, 5), 80, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton2', decreaseVolume, condition['volMoreThenMin']);
-    Button.produce(canvasCenter(0, 3, 80), stackButtons(3, 5), 80, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton1', increaseSfx, condition['SFXLessThenMax']);
-    Button.produce(canvasCenter(2, 3, 80), stackButtons(3, 5), 80, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton2', decreaseSfx, condition['SFXMoreThenMin']);
-    Button.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton3', () => { switchTo('main'); });
+    Button.produce(canvasCenter(0, 3, 80), stackButtons(1, 7), 80, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton1', increaseVolume, condition['volLessThenMax']);
+    Button.produce(canvasCenter(2, 3, 80), stackButtons(1, 7), 80, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton2', decreaseVolume, condition['volMoreThenMin']);
+    Button.produce(canvasCenter(0, 3, 80), stackButtons(3, 7), 80, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton1', increaseSfx, condition['SFXLessThenMax']);
+    Button.produce(canvasCenter(2, 3, 80), stackButtons(3, 7), 80, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton2', decreaseSfx, condition['SFXMoreThenMin']);
+
+    Button.produce(canvasCenter(0, 1, 280), stackButtons(4, 7), 280, buHi, true, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton4', (value) => { muteSound(value); });
+    Button.produce(canvasCenter(0, 1, 280), stackButtons(5, 7), 280, buHi, true, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton5', (value) => { changeLanguage(value); });
+
+    Button.produce(canvasCenter(0, 1, buWi), stackButtons(6, 7), buWi, buHi, false, defaultImg, hoverImg, 'settings', 'text.settingsMenuButton3', () => { switchTo('main'); });
 }
 
 /**
@@ -117,17 +130,17 @@ function createMenuGame() {
  * Creates the game controls menu and its buttons.
  */
 function createMenuGameControlls() {
-    Panel.produce(canvasCenter(0, 4, 100), stackButtons(2, 5), 100, buHi, defaultImg, 'gamecontroll', 'white', 'text.gamecontrollMenuPanel1');
-    Panel.produce(canvasCenter(2, 4, 100), stackButtons(2, 5), 100, buHi, defaultImg, 'gamecontroll', 'white', 'player.stage');
-    Panel.produce(canvasCenter(0, 4, 100), stackButtons(3, 5), 100, buHi, defaultImg, 'gamecontroll', 'white', 'text.gamecontrollMenuPanel2');
-    Panel.produce(canvasCenter(2, 4, 100), stackButtons(3, 5), 100, buHi, defaultImg, 'gamecontroll', 'white', 'player.difficulty');
+    Panel.produce(canvasCenter(0, 4, 110), stackButtons(2, 5), 110, buHi, defaultImg, 'gamecontroll', 'white', 'text.gamecontrollMenuPanel1');
+    Panel.produce(canvasCenter(2, 4, 110), stackButtons(2, 5), 110, buHi, defaultImg, 'gamecontroll', 'white', 'player.stage');
+    Panel.produce(canvasCenter(0, 4, 110), stackButtons(3, 5), 110, buHi, defaultImg, 'gamecontroll', 'white', 'text.gamecontrollMenuPanel2');
+    Panel.produce(canvasCenter(2, 4, 110), stackButtons(3, 5), 110, buHi, defaultImg, 'gamecontroll', 'white', 'player.difficulty');
 
     Button.produce(canvasCenter(0, 1, buWi), stackButtons(0, 5), buWi, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton1', () => { switchTo('play'); });
     Button.produce(canvasCenter(0, 1, buWi), stackButtons(1, 5), buWi, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton2', () => { switchTo('skills'); });
-    Button.produce(canvasCenter(1, 4, 100), stackButtons(2, 5), 100, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton3', increaseStage, condition['levelLessThenMax']);
-    Button.produce(canvasCenter(3, 4, 100), stackButtons(2, 5), 100, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton4', decreaseStage, condition['levelMoreThenMin']);
-    Button.produce(canvasCenter(1, 4, 100), stackButtons(3, 5), 100, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton3', increaseDifficulty, condition['difficultyLessThenMax']);
-    Button.produce(canvasCenter(3, 4, 100), stackButtons(3, 5), 100, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton4', decreaseDifficulty, condition['difficultyMoreThenMin']);
+    Button.produce(canvasCenter(1, 4, 110), stackButtons(2, 5), 110, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton3', increaseStage, condition['levelLessThenMax']);
+    Button.produce(canvasCenter(3, 4, 110), stackButtons(2, 5), 110, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton4', decreaseStage, condition['levelMoreThenMin']);
+    Button.produce(canvasCenter(1, 4, 110), stackButtons(3, 5), 110, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton3', increaseDifficulty, condition['difficultyLessThenMax']);
+    Button.produce(canvasCenter(3, 4, 110), stackButtons(3, 5), 110, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton4', decreaseDifficulty, condition['difficultyMoreThenMin']);
     Button.produce(canvasCenter(0, 1, buWi), stackButtons(4, 5), buWi, buHi, false, defaultImg, hoverImg, 'gamecontroll', 'text.gamecontrollMenuButton5', () => { switchTo('game'); });
 }
 
@@ -138,6 +151,10 @@ function createMenuLoadGame() {
     Panel.produce(canvasCenter(0, 3, buWi), stackButtons(0, 3) - 75, buWi + 35, buHi + 75, imageText, 'loadgame', 'black', 'save1.totalCoins');
     Panel.produce(canvasCenter(1, 3, buWi), stackButtons(0, 3) - 75, buWi + 35, buHi + 75, imageText, 'loadgame', 'black', 'save2.totalCoins');
     Panel.produce(canvasCenter(2, 3, buWi), stackButtons(0, 3) - 75, buWi + 35, buHi + 75, imageText, 'loadgame', 'black', 'save3.totalCoins');
+
+    Panel.produce(canvasCenter(0, 3, buWi), stackButtons(0, 3) - 75, buWi + 35, buHi + 75, imageText, 'loadgame', 'black', 'text.loadgameMenuPanel1', condition['save1Loaded']);
+    Panel.produce(canvasCenter(1, 3, buWi), stackButtons(0, 3) - 75, buWi + 35, buHi + 75, imageText, 'loadgame', 'black', 'text.loadgameMenuPanel1', condition['save2Loaded']);
+    Panel.produce(canvasCenter(2, 3, buWi), stackButtons(0, 3) - 75, buWi + 35, buHi + 75, imageText, 'loadgame', 'black', 'text.loadgameMenuPanel1', condition['save3Loaded']);
 
     Button.produce(canvasCenter(0, 3, buWi), stackButtons(1, 3), buWi, buHi, false, defaultImg, hoverImg, 'loadgame', 'text.loadgameMenuButton1', () => { loadGame('save1'); }, condition['save1Exist']);
     Button.produce(canvasCenter(1, 3, buWi), stackButtons(1, 3), buWi, buHi, false, defaultImg, hoverImg, 'loadgame', 'text.loadgameMenuButton1', () => { loadGame('save2'); }, condition['save2Exist']);
@@ -215,176 +232,6 @@ function createTouchButton() {
     Button.produce(660, 425, 50, 50, true, attackImg, attackImg, 'play', 'text.empty', (value) => { setInput('SPACE', value); });
 }
 
-/**
- * Calculates the horizontal center position of an element based on its index and the total amount.
- * 
- * @param {number} index - The index of the element in the row.
- * @param {number} amount - The total number of elements in the row.
- * @param {number} buWi - The width of each button.
- * @returns {number} - The calculated center position for the element.
- */
-function canvasCenter(index, amount, buWi) {
-    let center = canvas.width / 2;
-    if (amount == 1) {
-        return center - (buWi / 2);
-    } else {
-        let row = center - (((buWi * amount) + (spaceBetweenHorizontel * (amount - 1))) / 2);
-        let position = row + (index * (buWi + spaceBetweenHorizontel));
-        return position;
-    }
-
-}
-
-/**
- * Calculates the vertical stacking position of buttons based on their index and the total amount.
- * 
- * @param {number} index - The index of the button in the stack.
- * @param {number} amount - The total number of buttons in the stack.
- * @returns {number} - The calculated position for the button.
- */
-function stackButtons(index, amount) {
-    let center = canvas.height / 2;
-    if (amount == 1) {
-        return center - buHi / 2;
-    } else {
-        let startStack = center - (((buHi * amount) + (spaceBetweenVertical * (amount - 1))) / 2);
-        let position = startStack + (index * (buHi + spaceBetweenVertical));
-        return position;
-    }
-}
-
-/**
- * Switches to the specified menu.
- * 
- * @param {string} menu - The name of the menu to switch to.
- */
-function switchTo(menu) {
-    system.switchingTo(menu);
-}
-
-
-/**
- * Increases the audio volume by 1, ensuring it doesn't exceed 100.
- */
-function increaseVolume() {
-    if (audio.volume < 100) {
-        audio.volume++;
-    }
-    saveAudio();
-    system.refreshAudioVolume();
-}
-
-
-/**
- * Decreases the audio volume by 1, ensuring it doesn't go below 0.
- */
-function decreaseVolume() {
-    if (audio.volume > 0) {
-        audio.volume--;
-    }
-    saveAudio();
-    system.refreshAudioVolume();
-}
-
-/**
- * Increases the sound effects (SFX) volume by 1, ensuring it doesn't exceed 100.
- */
-function increaseSfx() {
-    if (audio.SFX < 100) {
-        audio.SFX++;
-    }
-    saveAudio();
-}
-
-/**
- * Decreases the sound effects (SFX) volume by 1, ensuring it doesn't go below 0.
- */
-function decreaseSfx() {
-    if (audio.SFX > 0) {
-        audio.SFX--;
-    }
-    saveAudio();
-}
-
-/**
- * Decreases the player's stage level by 1 if it's above the minimum level.
- */
-function decreaseStage() {
-    if (condition.levelMoreThenMin()) {
-        player.stage--;
-    }
-}
-
-/**
- * Increases the player's stage level by 1 if it's below the maximum level.
- */
-function increaseStage() {
-    if (condition.levelLessThenMax()) {
-        player.stage++;
-    }
-}
-
-/**
- * Decreases the player's difficulty level by 1 if it's above the minimum difficulty.
- */
-function decreaseDifficulty() {
-    if (condition.difficultyMoreThenMin()) {
-        player.difficulty--;
-    }
-}
-
-/**
- * Increases the player's difficulty level by 1 if it's below the maximum difficulty.
- */
-function increaseDifficulty() {
-    if (condition.difficultyLessThenMax()) {
-        player.difficulty++;
-    }
-}
-
-
-/**
- * Saves the player's game state to the specified slot.
- * 
- * @param {string} slot - The save slot to use.
- */
-function saveGame(slot) {
-    system.saveGame(slot);
-    appState[slot] = player;
-}
-
-/**
- * Loads the player's game state from the specified slot if a save exists.
- * 
- * @param {string} slot - The save slot to load from.
- */
-function loadGame(slot) {
-    if (checkSave(slot)) {
-        player.load(appState[slot]);
-    }
-}
-
-/**
- * Checks if a save exists in the specified slot and matches the player's structure.
- * 
- * @param {string} slot - The save slot to check.
- * @returns {boolean} - True if the save is valid, false otherwise.
- */
-function checkSave(slot) {
-    let keyset1 = Object.keys(player);
-    let keyset2 = Object.keys(appState[slot]);
-    if (keyset1.length !== keyset2.length) {
-        return false
-    }
-    return keyset1.every(key => keyset2.includes(key));
-}
-
-/**
- * Sets the state of a specific keyboard input.
- * 
- * @param {string} name - The name of the keyboard input to set.
- * @param {boolean} state - The state to assign (true for pressed, false for released).
- */
-function setInput(name, state) {
-    keyboard[name] = state;
+function createWideScreenNotification() {
+    Panel.produce(0, 0, 720, 480, defaultImg, 'main', 'white', 'text.wideScreenNotification', condition['isPortraitFormat']);
 }

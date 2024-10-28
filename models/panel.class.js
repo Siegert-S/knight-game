@@ -100,7 +100,7 @@ class Panel extends DrawableObject {
         // const textWidth = ctx.measureText(this.text).width;
         // console.log('Text width: von '+ this.text+' ist ' + textWidth + ' pixels');
 
-        ctx.fillText(this.selectValue(this.content), this.positionX + (this.width / 2), this.positionY + (this.height / 1.5));
+        ctx.fillText(this.selectValue(this.content), this.positionX + (this.width / 2), this.positionY + ((this.height / 2) + 10));
     }
 
     /**

@@ -148,8 +148,19 @@ class System {
                 this.renderContent.forEach(element => { element.draw(); })
             }
         }
+        this.setCursor();
         let self = this;
         requestAnimationFrame(() => { self.renderCanvas(); });
+    }
+
+    setCursor() {
+        let check = false
+        this.renderContent.forEach(button => {
+            if (button instanceof Button) {
+                check = check || button.isHovered;
+            }
+        });
+        canvas.style.cursor = (check) ? 'pointer' : 'default';
     }
 
     /**

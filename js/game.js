@@ -26,7 +26,7 @@ function init() {
  * Removes the event listener after starting the audio to prevent multiple starts.
  */
 function startAudio() {
-    system.startBackgroundAudio();
+    system.startBackgroundAudio(2000);
     document.removeEventListener('click', startAudio);
 }
 
