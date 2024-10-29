@@ -136,22 +136,51 @@ class Keyboard {
     }
 
     /**
-     * Converts touch or mouse event coordinates to canvas coordinates.
-     * @param {TouchEvent|MouseEvent} touches - The touch or mouse event to extract coordinates from.
-     * @returns {{x: number, y: number}} The converted x and y coordinates relative to the canvas.
+     * Calculates the adjusted x and y coordinates relative to the actual visible canvas area,
+     * taking into account any offsets due to maintaining the canvas aspect ratio in fullscreen mode.
+     *
+     * @param {Touch | MouseEvent} touches - The event containing the x and y screen coordinates.
+     * @returns {{x: number, y: number}} An object with the adjusted `x` and `y` coordinates
+     * relative to the actual canvas content area.
      */
     getXYCoordinates(touches) {
         const rect = canvas.getBoundingClientRect();
 
-        const x = touches.clientX - rect.left;
-        let faktorOfX = x / rect.width;
-        let canvasX = canvas.width * faktorOfX;
+        const { visibleWidth, visibleHeight, offsetX, offsetY } = this.getActualCanvasSize();
 
-        const y = touches.clientY - rect.top;
-        let faktorOfY = y / rect.height;
-        let canvasY = canvas.height * faktorOfY;
+        const canvasX = (touches.clientX - rect.left - offsetX) * (canvas.width / visibleWidth);
+        const canvasY = (touches.clientY - rect.top - offsetY) * (canvas.height / visibleHeight);
 
         return { "x": canvasX, "y": canvasY };
+    }
+
+    /**
+     * Calculates the actual visible dimensions of the canvas within the screen bounds while
+     * maintaining the original aspect ratio, as well as any horizontal or vertical offset 
+     * (padding) needed to center the canvas area.
+     *
+     * @returns {{visibleWidth: number, visibleHeight: number, offsetX: number, offsetY: number}} 
+     * An object containing:
+     * - `visibleWidth`: The calculated width of the canvas while maintaining the aspect ratio.
+     * - `visibleHeight`: The calculated height of the canvas while maintaining the aspect ratio.
+     * - `offsetX`: Horizontal offset to center the canvas content within the available screen area.
+     * - `offsetY`: Vertical offset to center the canvas content within the available screen area.
+     */
+    getActualCanvasSize() {
+        const rect = canvas.getBoundingClientRect();
+        const aspectRatio = 720 / 480;
+        let visibleWidth = rect.width;
+        let visibleHeight = rect.height;
+
+        if (rect.width / rect.height > aspectRatio) {
+            visibleWidth = rect.height * aspectRatio;
+        } else {
+            visibleHeight = rect.width / aspectRatio;
+        }
+        const offsetX = (rect.width - visibleWidth) / 2;
+        const offsetY = (rect.height - visibleHeight) / 2;
+
+        return { visibleWidth, visibleHeight, offsetX, offsetY };
     }
 
     /**

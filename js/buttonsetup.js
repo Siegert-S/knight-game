@@ -13,6 +13,13 @@ let rightImg = 'assets/img/box-right.svg';
 let upImg = 'assets/img/box-up.svg';
 let defendImg = 'assets/img/box-shield.svg';
 let attackImg = 'assets/img/box-sword.svg';
+let fullScreenonImg = 'assets/img/fullscreen-on.svg';
+let fullScreenonImgHover = 'assets/img/fullscreen-on-hover.svg';
+let fullScreenoffImg = 'assets/img/fullscreen-off.svg';
+let fullScreenoffImgHover = 'assets/img/fullscreen-off-hover.svg';
+let fullscreenOnButton;
+let fullScreenOffButton;
+let fullScreenOnFlag = false;
 
 let condition = {
     "volLessThenMax": () => { return appState.audio.volume < 100; },
@@ -59,6 +66,7 @@ function initButton() {
         createTouchButton();
     }
     createWideScreenNotification();
+    fullscreenButton();
 }
 
 /**
@@ -232,6 +240,28 @@ function createTouchButton() {
     Button.produce(660, 425, 50, 50, true, attackImg, attackImg, 'play', 'text.empty', (value) => { setInput('SPACE', value); });
 }
 
+/**
+ * Creates a widescreen notification panel on the canvas when the device is in portrait mode.
+ * This panel displays a message advising the user to rotate their device to landscape mode.
+ *
+ * @function createWideScreenNotification
+ * @returns {void} No return value.
+ */
 function createWideScreenNotification() {
     Panel.produce(0, 0, 720, 480, defaultImg, 'main', 'white', 'text.wideScreenNotification', condition['isPortraitFormat']);
+}
+
+/**
+ * Initializes two buttons for toggling fullscreen mode, positioned at the top-right corner of the canvas.
+ * The buttons alternate between enabling and disabling fullscreen mode, depending on the current state.
+ *
+ * @function fullscreenButton
+ * @returns {void} No return value.
+ */
+function fullscreenButton() {
+    let width = 30;
+
+    fullscreenOnButton = new Button(720 - width, 0, width, width, true, fullScreenoffImg, fullScreenoffImgHover, 'screen', 'text.empty', (value) => { system.enterFullscreen(value); });
+    fullScreenOffButton = new Button(720 - width, 0, width, width, true, fullScreenonImg, fullScreenonImgHover, 'screen', 'text.empty', (value) => { system.exitFullscreen(value); });
+
 }

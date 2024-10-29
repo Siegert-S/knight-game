@@ -148,6 +148,7 @@ class System {
                 this.renderContent.forEach(element => { element.draw(); })
             }
         }
+        this.fullscreenSwitch();
         this.setCursor();
         let self = this;
         requestAnimationFrame(() => { self.renderCanvas(); });
@@ -320,4 +321,71 @@ class System {
         this.audioData[audioIndex].currentTime = 0;
     }
 
+    /**
+     * Requests the canvas element to enter fullscreen mode if the `buttonDown` parameter is true.
+     * This function checks for fullscreen support across different browsers and adjusts the
+     * `fullScreenOnFlag` to indicate the fullscreen state.
+     *
+     * @function enterFullscreen
+     * @param {boolean} buttonDown - Indicates whether the fullscreen button was pressed.
+     * @returns {void} No return value.
+     */
+    enterFullscreen(buttonDown) {
+        if (buttonDown) {
+            if (canvas.requestFullscreen) {
+                canvas.requestFullscreen();
+            } else if (canvas.mozRequestFullScreen) { // Firefox
+                canvas.mozRequestFullScreen();
+            } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari und Opera
+                canvas.webkitRequestFullscreen();
+            } else if (canvas.msRequestFullscreen) { // IE/Edge
+                canvas.msRequestFullscreen();
+            }
+            fullScreenOnFlag = true;
+        }
+    }
+
+    /**
+     * Exits fullscreen mode if the `buttonDown` parameter is true, adjusting for compatibility across browsers.
+     * Resets the `fullScreenOnFlag` to false after exiting fullscreen.
+     *
+     * @function exitFullscreen
+     * @param {boolean} buttonDown - Indicates whether the exit fullscreen button was pressed.
+     * @returns {void} No return value.
+     */
+    exitFullscreen(buttonDown) {
+        if (buttonDown) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { // Firefox
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { // Chrome, Safari und Opera
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE/Edge
+                document.msExitFullscreen();
+            }
+            fullScreenOnFlag = false;
+        }
+    }
+
+    /**
+     * Toggles the visibility and activity of the fullscreen on and off buttons based on the fullscreen state.
+     * When fullscreen mode is active, the `fullScreenOffButton` is displayed; otherwise, the `fullscreenOnButton` is displayed.
+     *
+     * @function fullscreenSwitch
+     * @returns {void} No return value.
+     */
+    fullscreenSwitch() {
+        if (fullScreenOnFlag) {
+            fullScreenOffButton.isActiv = true;
+            fullscreenOnButton.isActiv = false;
+            fullScreenOffButton.upDate();
+            fullScreenOffButton.draw();
+        } else {
+            fullScreenOffButton.isActiv = false;
+            fullscreenOnButton.isActiv = true;
+            fullscreenOnButton.upDate();
+            fullscreenOnButton.draw();
+        }
+    }
 }
